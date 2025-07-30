@@ -30,8 +30,9 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
-				<true/>
-			</dict>
+		<true/>
+		<!-- <key>NSExceptionDomains</key> -->
+		<dict>
 			<key>110.44.126.145</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>

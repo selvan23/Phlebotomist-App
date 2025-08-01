@@ -12,10 +12,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Image,
   Dimensions,
   Platform,
-  alert,
+  AppState,
+  PermissionsAndroid,
 } from 'react-native';
 import Constants from '../../util/Constants';
 import Utility from '../../util/Utility';
@@ -28,15 +28,33 @@ import {
 } from '../../actions/PendingScreenAction';
 import {getNotificationCount} from '../../actions/NotificationAction';
 import moment from 'moment';
-import { promptForEnableLocationIfNeeded } from 'react-native-android-location-enabler';
 import Geolocation from '@react-native-community/geolocation';
 import {updateGPSLocation, setLocationMessage} from '../../actions/GpsAction';
-import GPSState from 'react-native-gps-state';
 import { navigate } from '../../rootNavigation';
+import DeviceInfo from 'react-native-device-info';
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
   : Dimensions.get('window').height;
+
+const INTERVALS = {
+  NOTIFICATION: 30 * 1000, // 30 seconds
+  LOCATION_UPDATE: 5 * 60 * 1000, // 5 minutes
+  LOCATION_STATUS: 5 * 1000, // 5 seconds
+};
+
+const FILTER_TYPES = {
+  PENDING: 'P',
+  COMPLETED: 'C',
+  CANCELLED: 'R',
+};
+
+const TAB_INDICES = {
+  PENDING: 0,
+  COMPLETED: 1,
+  CANCELLED: 2,
+};
 
 class SchedulesTabBar extends Component {
   static propTypes = {
@@ -44,382 +62,374 @@ class SchedulesTabBar extends Component {
     pendingCount: PropTypes.number,
     completedCount: PropTypes.number,
     cancelledCount: PropTypes.number,
-
-    getPendingList: PropTypes.func,
-    getNotificationCount: PropTypes.func,
+    getPendingList: PropTypes.func.isRequired,
+    getNotificationCount: PropTypes.func.isRequired,
     userName: PropTypes.string,
-    gpsLocationChange: PropTypes.func,
-    setLocationMessage: PropTypes.func,
+    gpsLocationChange: PropTypes.func.isRequired,
+    setLocationMessage: PropTypes.func.isRequired,
+    updateGPSLocation: PropTypes.func.isRequired,
+    isCalenderDateSelected: PropTypes.bool,
+    pendingDate: PropTypes.string,
+    isLoggedIn: PropTypes.bool,
+    state: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      // date: moment().utcOffset('+05:30').format('YYYY/MM/DD'),
-      Latitude: '',
-      Longitude: '',
-      oneTimeLocationPermission: true,
+      latitude: '',
+      longitude: '',
       pendingBtnClick: false,
       completedBtnClick: false,
       cancelledBtnClick: false,
-      collectorCode: this.props.collectorCode,
       pendingDate:
         this.props.isCalenderDateSelected === true
           ? this.props.pendingDate
           : moment().utcOffset('+05:30').format('YYYY/MM/DD'),
+      isLocationEnabled: null,
+      isLocationPermissionGranted: null,
     };
+
+    // Bind methods to avoid creating new functions on each render
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
+    this.getLocationStatus = this.getLocationStatus.bind(this);
+    this.getNotificationCountAPI = this.getNotificationCountAPI.bind(this);
+    this.getCurrentLocationHandler = this.getCurrentLocationHandler.bind(this);
   }
 
   componentDidMount() {
-    this.getNotificationCountAPI();
+    this.initializeComponent();
+  }
 
-    this.checkGpsState();
-    if (this.timer === undefined) {
-      this.timer = setInterval(() => this.getNotificationCountAPI(), 1000 * 30);
-    } else {
-      clearInterval(this.timer);
-    }
-    if (this.timerLocation === undefined) {
-      this.timerLocation = setInterval(
-        () => this._getCurrentLocationHandler(),
-        5000 * 60,
-      );
-    } else {
-      clearInterval(this.timerLocation);
-    }
+  componentDidUpdate(prevProps, prevState) {
+    this.handleLocationStateChanges(prevState);
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
-    clearInterval(this.timerLocation);
-    GPSState.removeListener();
+    this.cleanup();
   }
 
+  initializeComponent = () => {
+    this.getNotificationCountAPI();
+    this.checkGpsEnabled();
+    this.handleAppStateChange();
+    
+    // Add app state listener
+    this.appStateSubscription = AppState.addEventListener('change', this.handleAppStateChange);
+    
+    this.checkGpsState();
+    this.setupIntervals();
+  };
+
+  setupIntervals = () => {
+    // Clear existing intervals
+    this.clearIntervals();
+
+    // Setup notification interval
+    this.notificationTimer = setInterval(
+      this.getNotificationCountAPI, 
+      INTERVALS.NOTIFICATION
+    );
+
+    // Setup location update interval
+    this.locationTimer = setInterval(
+      this.getCurrentLocationHandler,
+      INTERVALS.LOCATION_UPDATE
+    );
+
+    // Setup location status check interval
+    this.locationStatusInterval = setInterval(
+      this.getLocationStatus, 
+      INTERVALS.LOCATION_STATUS
+    );
+  };
+
+  clearIntervals = () => {
+    if (this.notificationTimer) {
+      clearInterval(this.notificationTimer);
+      this.notificationTimer = null;
+    }
+    if (this.locationTimer) {
+      clearInterval(this.locationTimer);
+      this.locationTimer = null;
+    }
+    if (this.locationStatusInterval) {
+      clearInterval(this.locationStatusInterval);
+      this.locationStatusInterval = null;
+    }
+  };
+
+  cleanup = () => {
+    this.clearIntervals();
+    if (this.appStateSubscription) {
+      this.appStateSubscription.remove();
+    }
+  };
+
+  handleLocationStateChanges = (prevState) => {
+    const { isLocationEnabled, isLocationPermissionGranted } = this.state;
+    
+    if (
+      prevState.isLocationEnabled !== null &&
+      !isLocationEnabled &&
+      isLocationPermissionGranted
+    ) {
+      this.props.gpsLocationChange(false);
+      this.props.setLocationMessage("Kindly enable location");
+    } else if (
+      prevState.isLocationEnabled !== null &&
+      isLocationEnabled &&
+      isLocationPermissionGranted
+    ) {
+      this.props.gpsLocationChange(true);
+    }
+  };
+
+  handleAppStateChange = async (nextAppState) => {
+    if (nextAppState === 'active') {
+      // await this.checkGpsEnabled();
+      console.log('Trigger here')
+      this.checkGpsState();
+    }
+    console.log('AppState changed:', nextAppState);
+    this.getLocationStatus();
+    this.setState({ appState: nextAppState });
+  };
+
+  getLocationStatus = () => {
+    DeviceInfo.isLocationEnabled()
+      .then((enabled) => {
+        this.setState({ isLocationEnabled: enabled });
+      })
+      .catch((err) => {
+        console.warn('Error checking location:', err);
+      });
+  };
+
   async getNotificationCountAPI() {
-    if (this.props.isLoggedIn) {
-      this.props.getNotificationCount(this.props.userName);
+    if (this.props.isLoggedIn && this.props.userName) {
+      try {
+        await this.props.getNotificationCount(this.props.userName);
+      } catch (error) {
+        console.warn('Error fetching notification count:', error);
+      }
     }
   }
 
-  checkGpsState = () => {
-    GPSState.addListener((status) => {
-      switch (status) {
-        case GPSState.NOT_DETERMINED:
-          console.log('NOT_DETERMINED');
-          break;
-
-        case GPSState.RESTRICTED:
-          this.props.gpsLocationChange(false);
-          this.props.setLocationMessage('Kindly enable location');
-          if (this.state.oneTimeLocationPermission) {
-            this.getLocationPermission();
-            this.setState({oneTimeLocationPermission: false});
-          }
-          break;
-
-        case GPSState.DENIED:
-          this.props.gpsLocationChange(false);
-          this.props.setLocationMessage(
-            'Location permission denied - Enable it in settings',
-          );
-          GPSState.requestAuthorization(GPSState.AUTHORIZED_ALWAYS);
-          break;
-        case GPSState.AUTHORIZED:
-          this.props.gpsLocationChange(true);
-          this.getLocationPermission();
-          break;
-        case GPSState.AUTHORIZED_ALWAYS:
-          this.props.gpsLocationChange(true);
-          break;
-
-        case GPSState.AUTHORIZED_WHENINUSE:
-          this.props.gpsLocationChange(true);
-          break;
+  requestLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        console.log({'permissionRequestLoss': granted})
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn('Location permission error:', err);
+        return false;
       }
-    });
-    GPSState.requestAuthorization(GPSState.AUTHORIZED_ALWAYS);
+    }
+    return true; // iOS permissions handled differently
   };
 
-  getLocationPermission() {
-    if (this.props.isLoggedIn) {
-      if (!GPSState.isDenied()) {
-        if (Platform.OS === 'android') {
-          promptForEnableLocationIfNeeded({
-            interval: 10000,
-            fastInterval: 5000,
-          })
-            .then((data) => {
-              this._getCurrentLocationHandler();
-            })
-            .catch((err) => {
-              console.log('Location Error 1', err);
-              this.props.gpsLocationChange(false);
+  checkGpsState = async () => {
+    try {
+      const permission =
+        Platform.OS === 'android'
+          ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+          : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE;
+
+      const result = await check(permission);
+      console.log('resultHere:', result);
+      
+      if (result === RESULTS.DENIED || result === RESULTS.BLOCKED) {
+        this.setState({ isLocationPermissionGranted: false });
+        this.props.gpsLocationChange(false);
+        this.props.setLocationMessage('Location permission denied - Enable it in settings');
+      } else {
+        this.setState({ isLocationPermissionGranted: true });
+        this.props.gpsLocationChange(true);
+      }
+    } catch (error) {
+      console.warn('Error checking GPS state:', error);
+    }
+  };
+
+  checkGpsEnabled = async () => {
+    try {
+      const permissionGranted = await this.requestLocationPermission();
+
+      if (!permissionGranted) {
+        console.warn("Location permission not granted");
+        return;
+      }
+
+      const isEnabled = await DeviceInfo.isLocationEnabled();
+      console.log("GPS Enabled:", isEnabled);
+    } catch (error) {
+      console.warn('Error checking GPS enabled state:', error);
+    }
+  };
+
+  getCurrentLocationHandler = async () => {
+    try {
+      const permissionGranted = await this.requestLocationPermission();
+
+      if (permissionGranted) {
+        Geolocation.getCurrentPosition(
+          (position) => {
+            this.setState({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
             });
-        } else {
-          Geolocation.requestAuthorization();
-          this._getCurrentLocationHandler();
-        }
+            this.props.gpsLocationChange(true);
+            this.updateGCSLocationApi();
+          },
+          (error) => {
+            console.warn('Geolocation error:', error);
+            if (error.code === 2) {
+              this.props.gpsLocationChange(false);
+              this.props.setLocationMessage(
+                'Location permission denied - Enable it in settings',
+              );
+            }
+          },
+          {
+            enableHighAccuracy: false,
+            timeout: 20000,
+            maximumAge: 60000,
+          },
+        );
       } else {
         this.props.gpsLocationChange(false);
         this.props.setLocationMessage(
           'Location permission denied - Enable it in settings',
         );
       }
-    }
-  }
-
-  // getCurrent Location
-  _getCurrentLocationHandler = () => {
-    if (GPSState.isAuthorized()) {
-      Geolocation.getCurrentPosition(
-        (pos) => {
-          this.setState({
-            Latitude: pos.coords.latitude,
-            Longitude: pos.coords.longitude,
-          });
-          this.props.gpsLocationChange(true);
-          this._updateGCSLocationApi();
-        },
-        (err) => {
-          if (err.code === 2) {
-            this.props.gpsLocationChange(false);
-            this.props.setLocationMessage(
-              'Location permission denied - Enable it in settings',
-            );
-          }
-        },
-        {
-          enableHighAccuracy: false,
-          timeout: 200000,
-          maximumAge: 1000,
-        },
-      );
-    } else {
-      if (GPSState.isDenied()) {
-        this.props.gpsLocationChange(false);
-        this.props.setLocationMessage(
-          'Location permission denied - Enable it in settings',
-        );
-      }
+    } catch (error) {
+      console.warn('Error getting current location:', error);
     }
   };
 
-  _updateGCSLocationApi = () => {
-    let postValue = {
+  updateGCSLocationApi = () => {
+    if (!this.props.collectorCode || !this.state.latitude || !this.state.longitude) {
+      return;
+    }
+
+    const postValue = {
       Collector_Code: this.props.collectorCode,
-      Latitude: this.state.Latitude,
-      Longitude: this.state.Longitude,
+      Latitude: this.state.latitude,
+      Longitude: this.state.longitude,
     };
-    this.props.updateGPSLocation(postValue);
+    
+    try {
+      this.props.updateGPSLocation(postValue);
+    } catch (error) {
+      console.warn('Error updating GPS location:', error);
+    }
+  };
+
+  handleTabPress = async (filterType, tabName, stateKey) => {
+    // Prevent multiple rapid taps
+    if (this.state[stateKey]) {
+      return;
+    }
+
+    this.setState({ [stateKey]: true });
+
+    try {
+      const postData = {
+        Collector_Code: this.props.collectorCode,
+        Schedule_Date: this.props.isCalenderDateSelected === true
+          ? this.props.pendingDate
+          : moment().utcOffset('+05:30').format('YYYY/MM/DD'),
+        Filter_Type: filterType,
+      };
+
+      await this.props.getPendingList(postData, (callBack) => {
+        if (callBack) {
+          navigate(tabName);
+        }
+      });
+    } catch (error) {
+      console.warn(`Error handling ${tabName} press:`, error);
+    } finally {
+      // Reset button state after a delay
+      setTimeout(() => {
+        this.setState({ [stateKey]: false });
+      }, 1000);
+    }
+  };
+
+  renderTabButton = (title, count, color, filterType, tabName, stateKey, tabIndex) => {
+    const { state } = this.props;
+    const activeTabIndex = state.index;
+    const isDisabled = this.state[stateKey];
+
+    return (
+      <TouchableOpacity
+        style={styles.subContainer}
+        disabled={isDisabled}
+        onPress={() => this.handleTabPress(filterType, tabName, stateKey)}
+        activeOpacity={0.7}>
+        <View style={styles.bodyContainer}>
+          <Text style={[styles.tabTitle, { color }]}>
+            {title}
+          </Text>
+          <View style={[styles.countBadge, { borderColor: color }]}>
+            <Text style={[styles.countText, { color }]}>
+              {count || 0}
+            </Text>
+          </View>
+        </View>
+        {this.renderTabIndicator(activeTabIndex, tabIndex, color)}
+      </TouchableOpacity>
+    );
+  };
+
+  renderTabIndicator = (activeIndex, tabIndex, color) => {
+    return activeIndex === tabIndex ? (
+      <View style={[styles.indicator, { backgroundColor: color }]} />
+    ) : (
+      <View style={styles.inactiveIndicator} />
+    );
   };
 
   render() {
-    const {state} = this.props;
-    const activeTabIndex = state.index;
     return (
       <View style={styles.mainContainer}>
-        <TouchableOpacity
-          style={styles.subContainer}
-          disabled={this.state.pendingBtnClick}
-          onPress={() => {
-            this.setState({
-              pendingBtnClick: true,
-            });
-            let postData = {
-              Collector_Code: this.state.collectorCode,
-              Schedule_Date:
-                this.props.isCalenderDateSelected === true
-                  ? this.props.pendingDate
-                  : moment().utcOffset('+05:30').format('YYYY/MM/DD'),
-              Filter_Type: 'P',
-            };
-            this.props.getPendingList(postData, (callBack) => {
-              if (callBack) {
-                // Actions.pendingTab();
-                navigate('pendingTab');
-              }
-            });
-            setTimeout(() => {
-              this.setState({
-                pendingBtnClick: false,
-              });
-            }, 1000);
-          }}>
-          <View style={styles.bodyContainer}>
-            <Text
-              style={{
-                color: Constants.COLOR.PENDING_TAB,
-                alignSelf: 'center',
-                fontSize: Constants.FONT_SIZE.SM,
-              }}>
-              Pending
-            </Text>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderColor: Constants.COLOR.PENDING_TAB,
-                borderWidth: 1.5,
-                width: 25,
-                height: 25,
-                borderRadius: 25 / 2,
-                marginLeft: 5,
-              }}>
-              <Text style={{fontSize: 10, color: Constants.COLOR.PENDING_TAB}}>
-                {this.props.pendingCount}
-              </Text>
-            </View>
-          </View>
-          {this._displayPendingIndicator(activeTabIndex)}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.subContainer}
-          disabled={this.state.completedBtnClick}
-          onPress={() => {
-            this.setState({
-              completedBtnClick: true,
-            });
-            let postData = {
-              Collector_Code: this.state.collectorCode,
-              Schedule_Date:
-                this.props.isCalenderDateSelected === true
-                  ? this.props.pendingDate
-                  : moment().utcOffset('+05:30').format('YYYY/MM/DD'),
-              Filter_Type: 'C',
-            };
-            this.props.getPendingList(postData, (callBack) => {
-              if (callBack) {
-                // Actions.completedTab();
-                navigate('completedTab');
-              }
-            });
-            setTimeout(() => {
-              this.setState({
-                completedBtnClick: false,
-              });
-            }, 1000);
-          }}>
-          <View style={styles.bodyContainer}>
-            <Text
-              style={{
-                color: Constants.COLOR.COMPLETED_TAB,
-                alignSelf: 'center',
-                fontSize: Constants.FONT_SIZE.SM,
-              }}>
-              Completed
-            </Text>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderColor: Constants.COLOR.COMPLETED_TAB,
-                borderWidth: 1.5,
-                width: 25,
-                height: 25,
-                borderRadius: 25 / 2,
-                marginLeft: 5,
-              }}>
-              <Text
-                style={{fontSize: 10, color: Constants.COLOR.COMPLETED_TAB}}>
-                {this.props.completedCount}
-              </Text>
-            </View>
-          </View>
-          {this._displayCompletedIndicator(activeTabIndex)}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.subContainer}
-          disabled={this.state.cancelledBtnClick}
-          onPress={() => {
-            this.setState({
-              cancelledBtnClick: true,
-            });
-            let postData = {
-              Collector_Code: this.state.collectorCode,
-              Schedule_Date:
-                this.props.isCalenderDateSelected === true
-                  ? this.props.pendingDate
-                  : moment().utcOffset('+05:30').format('YYYY/MM/DD'),
-              Filter_Type: 'R',
-            };
-            this.props.getPendingList(postData, (callBack) => {
-              if (callBack) {
-                // Actions.cancelledTab();
-                navigate('cancelledTab');
-              }
-            });
-            this.setState({
-              cancelledBtnClick: false,
-            });
-          }}>
-          <View style={styles.bodyContainer}>
-            <Text
-              style={{
-                color: Constants.COLOR.CANCELED_TAB,
-                alignSelf: 'center',
-                fontSize: Constants.FONT_SIZE.SM,
-              }}>
-              Cancelled
-            </Text>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderColor: Constants.COLOR.CANCELED_TAB,
-                borderWidth: 1.5,
-                width: 25,
-                height: 25,
-                borderRadius: 25 / 2,
-                marginLeft: 5,
-              }}>
-              <Text style={{fontSize: 10, color: Constants.COLOR.CANCELED_TAB}}>
-                {this.props.cancelledCount}
-              </Text>
-            </View>
-          </View>
-          {this._displayCancelledIndicator(activeTabIndex)}
-        </TouchableOpacity>
+        {this.renderTabButton(
+          'Pending',
+          this.props.pendingCount,
+          Constants.COLOR.PENDING_TAB,
+          FILTER_TYPES.PENDING,
+          'pendingTab',
+          'pendingBtnClick',
+          TAB_INDICES.PENDING
+        )}
+        
+        {this.renderTabButton(
+          'Completed',
+          this.props.completedCount,
+          Constants.COLOR.COMPLETED_TAB,
+          FILTER_TYPES.COMPLETED,
+          'completedTab',
+          'completedBtnClick',
+          TAB_INDICES.COMPLETED
+        )}
+        
+        {this.renderTabButton(
+          'Cancelled',
+          this.props.cancelledCount,
+          Constants.COLOR.CANCELED_TAB,
+          FILTER_TYPES.CANCELLED,
+          'cancelledTab',
+          'cancelledBtnClick',
+          TAB_INDICES.CANCELLED
+        )}
       </View>
     );
   }
-  _displayPendingIndicator = (index) => {
-    return index === 0 ? (
-      <View
-        style={[
-          styles.indicator,
-          {backgroundColor: Constants.COLOR.PENDING_TAB},
-        ]}
-      />
-    ) : (
-      <View style={{marginTop: 10}} />
-    );
-  };
-  _displayCompletedIndicator = (index) => {
-    return index === 1 ? (
-      <View
-        style={[
-          styles.indicator,
-          {backgroundColor: Constants.COLOR.COMPLETED_TAB},
-        ]}
-      />
-    ) : (
-      <View style={{marginTop: 10}} />
-    );
-  };
-  _displayCancelledIndicator = (index) => {
-    return index === 2 ? (
-      <View
-        style={[
-          styles.indicator,
-          {backgroundColor: Constants.COLOR.CANCELED_TAB},
-        ]}
-      />
-    ) : (
-      <View style={{marginTop: 10}} />
-    );
-  };
 }
 
 const mapStateToProps = (state, props) => {
@@ -435,8 +445,8 @@ const mapStateToProps = (state, props) => {
       completedDate,
       isCalenderDateSelected,
     },
-    configState: {collectorCode, userName},
-    deviceState: {isLocationEnable, isLoggedIn},
+    configState: { collectorCode, userName },
+    deviceState: { isLocationEnable, isLoggedIn },
   } = state;
 
   return {
@@ -468,6 +478,7 @@ const mapDispatchToProps = (dispatch) => {
     dispatch,
   );
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(SchedulesTabBar);
 
 const styles = StyleSheet.create({
@@ -479,26 +490,27 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     flexDirection: 'row',
-    // paddingTop: 30,
+    alignItems: 'center',
   },
   subContainer: {
     flex: 1,
     alignItems: 'center',
   },
-  imageBackground: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 5,
+  tabTitle: {
     alignSelf: 'center',
+    fontSize: Constants.FONT_SIZE.SM,
   },
-  avatar: {
-    width: deviceHeight / 25,
-    height: deviceHeight / 25,
+  countBadge: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    width: 25,
+    height: 25,
+    borderRadius: 12.5,
+    marginLeft: 5,
   },
-  label: {
-    alignSelf: 'center',
-    padding: 8,
-    fontSize: Constants.FONT_SIZE.L,
+  countText: {
+    fontSize: 10,
   },
   indicator: {
     width: '90%',
@@ -506,4 +518,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 3,
   },
+  inactiveIndicator: {
+    marginTop: 10,
+    height: 2,
+  },
+  // Removed unused styles
 });

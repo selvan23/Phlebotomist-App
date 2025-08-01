@@ -23,6 +23,7 @@ import {LogBox} from 'react-native';
  */
 import {YellowBox} from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 YellowBox.ignoreWarnings(['']);
 class App extends Component {
   // constructor(properties) {
@@ -61,9 +62,13 @@ class App extends Component {
   render() {
     return (
       <Provider store={Store}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <RouteNavigator />
-        </GestureHandlerRootView>
+        <SafeAreaProvider>
+          <SafeAreaView style={{flex: 1}}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <RouteNavigator />
+            </GestureHandlerRootView>
+          </SafeAreaView>
+        </SafeAreaProvider>
       </Provider>
     );
   }

@@ -483,16 +483,19 @@ class SampleCollectionDetail extends Component {
               onSubmitEditing={() => {
                 this._onPressSubmitOTP();
               }}
-              maxLength={15}
+              maxLength={4}
               numberOfLines={1}
               editable={!this.state.isOTPSubmit}
               style={styles.locationTextEdit}
+              blurOnSubmit={false}
               value={this.state.OTPCode}
-              onChangeText={(OTPCode) =>
-                this.setState({
-                  OTPCode: OTPCode,
-                })
-              }
+              keyboardType="number-pad"
+              onChangeText={(OTPCode) => {
+                const numericValue = OTPCode.replace(/[^0-9]/g, '');
+                if (numericValue === OTPCode) {
+                  this.setState({ OTPCode: numericValue });
+                }
+              }}
             />
             <TouchableOpacity
               disabled={this.state.isOTPSubmit}

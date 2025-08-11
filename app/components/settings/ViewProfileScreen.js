@@ -388,13 +388,13 @@ class ViewProfileScreen extends Component {
   _launchCamera = () => {
     launchCamera(options, (response) => {
       console.log("Launch Camera");
-      if (response.didCancel) {
+      if (response?.didCancel) {
         console.log("User cancelled image picker");
-      } else if (response.error) {
+      } else if (response?.error) {
         console.log("ImagePicker Error: ", response.error);
-      } else if (response.customButton) {
+      } else if (response?.customButton) {
         console.log("User tapped custom button: ", response.customButton);
-        Alert.alert(response.customButton);
+        Alert.alert(response?.customButton);
       } else {
         const fileData = {
           fileUri: response.assets[0].uri,
@@ -426,10 +426,10 @@ class ViewProfileScreen extends Component {
           this.setState(
             {
               fileData,
-              userImageUrl: response.assets[0].uri,
-              fileType: response.assets[0].type,
-              fileUri: response.assets[0].uri,
-              fileName: response.assets[0].fileName,
+              userImageUrl: response?.assets[0].uri,
+              fileType: response?.assets[0].type,
+              fileUri: response?.assets[0].uri,
+              fileName: response?.assets[0].fileName,
               isRemoveProfilePicture: "false",
             },
             () => {
@@ -471,34 +471,25 @@ class ViewProfileScreen extends Component {
 
   _chooseGallery = () => {
     launchImageLibrary(options, (response) => {
-      console.log("response", response);
-      console.log("respo filedata", {
-        fileData: response.assets[0],
-        userImageUrl: response.assets[0].uri,
-        fileType: response.assets[0].type,
-        fileUri: response.assets[0].uri,
-        fileName: response.assets[0].fileName,
-        isRemoveProfilePicture: "false",
-      });
-      if (response.didCancel) {
+      if (response?.didCancel) {
         console.log("User cancelled image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else if (response.customButton) {
-        console.log("User tapped custom button: ", response.customButton);
+      } else if (response?.error) {
+        console.log("ImagePicker Error: ", response?.error);
+      } else if (response?.customButton) {
+        console.log("User tapped custom button: ", response?.customButton);
       } else {
         const fileData = {
-          fileUri: response.assets[0].uri,
-          type: response.assets[0].type,
-          fileName: response.assets[0].fileName,
+          fileUri: response?.assets[0].uri,
+          type: response?.assets[0].type,
+          fileName: response?.assets[0].fileName,
         };
         if (this.props.profileUploadSize !== "") {
-          if (this.props.profileUploadSize >= response.assets[0].fileSize) {
+          if (this.props.profileUploadSize >= response?.assets[0].fileSize) {
             let path = response.assets[0].uri;
             if (Platform.OS === "ios") {
               path = "~" + path.substring(path.indexOf("/Documents"));
             }
-            if (!response.assets[0].fileName) {
+            if (!response?.assets[0].fileName) {
               response.assets[0].fileName = path.split("/").pop();
             }
             this.setState(

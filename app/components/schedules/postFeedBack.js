@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     borderRadius: 10,
     height: deviceHeight / 4,
+    color:"black"
   },
   yesBtnView: {
     marginTop: 20,

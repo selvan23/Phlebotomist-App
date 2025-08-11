@@ -68,12 +68,9 @@ class DeliveredScreen extends Component {
   }
   componentDidMount() {
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
-      this.willFocusSubscription = this.props.navigation.addListener(
-        'willFocus',
-        () => {
-          this._getAsyncAndAPICall();
-        },
-      );
+      this.focusListener = this.props.navigation.addListener('focus', () => {
+        this._getAsyncAndAPICall();
+      });
     } else {
       this.internetAlert(Constants.VALIDATION_MSG.NO_INTERNET);
     }
@@ -81,7 +78,7 @@ class DeliveredScreen extends Component {
 
   componentWillUnmount() {
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
-      this.willFocusSubscription();
+      this.focusListener();
     }
   }
 
@@ -114,10 +111,15 @@ class DeliveredScreen extends Component {
       } else {
         return (
           <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <RefreshControl refreshing={this.state.isPullToRefresh} onRefresh={this._onRefresh}>
-              <Text style={{ color: 'black' }} >No Data Found!</Text>
-            </RefreshControl>
+            >
+              <FlatList data={[]} keyExtractor={(item, index) => index.toString()} ListEmptyComponent={()=>(
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height:deviceHeight*.8}}>
+              <Text style={{ color: 'black' }}>No Data Found!</Text>
+            </View>
+              )} 
+               onRefresh={() => this._onRefresh()}
+               refreshing={this.state.isPullToRefresh}
+              />
           </View>
         );
       }

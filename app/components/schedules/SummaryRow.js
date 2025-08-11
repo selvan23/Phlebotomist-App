@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Constants from "../../util/Constants";
 import HTML from "react-native-render-html";
+import RiyalPrice from "../common/RiyalPrice";
 
 class SummaryRow extends Component {
   constructor(props) {
@@ -51,12 +52,9 @@ class SummaryRow extends Component {
     );
     return (
       <View style={styles.rowText}>
-        <HTML
-          baseStyle={styles.rowTextAmt}
-          source={{
-            html: this.props.currency + " " + this.props.rowData.Service_Amount,
-          }}
-        />
+        <View style ={styles.rowTextAmt}>
+          <RiyalPrice amount={(this.props.rowData.Service_Amount)} dynamicHeight={0.029} />
+        </View>
       </View>
     );
   };

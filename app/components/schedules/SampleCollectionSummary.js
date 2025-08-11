@@ -44,6 +44,7 @@ import {
 } from "../../actions/SampleCollectionSummaryAction";
 import moment from "moment";
 import { nativationPop, navigate, navigationRef } from "../../rootNavigation";
+import RiyalPrice from "../common/RiyalPrice";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -251,12 +252,9 @@ class SampleCollectionSummary extends Component {
           />
 
           <Text style={styles.tickTitle}>Collect Payment</Text>
-          <HTML
-            baseStyle={styles.ticAmountVal}
-            source={{
-              html: this.props.currency + " " + bookingDetail.Patient_Due,
-            }}
-          />
+        <View style ={styles.ticAmountVal}>
+          <RiyalPrice amount={(bookingDetail?.Patient_Due)} dynamicHeight={0.05} />
+        </View>
         </View>
       );
     }

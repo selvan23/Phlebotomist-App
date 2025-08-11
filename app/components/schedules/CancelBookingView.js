@@ -70,12 +70,7 @@ export default class CancelBookingView extends Component {
                       btnCloseImage: true,
                     });
                     // Actions.pop();
-                    if (this.props.route.params?.onGoBack) {
-                      this.props.route.params.onGoBack("P");
-                      this.props.route.params.onGoBack("C");
-                      this.props.route.params.onGoBack("R");
-                    }
-                    nativationPop();
+                     this.props.navigation.goBack();
                     setTimeout(() => {
                       this.setState({
                         btnCloseImage: false,

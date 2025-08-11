@@ -118,7 +118,7 @@ class AboutScreen extends Component {
         <KeyboardAwareScrollView>
           {this._renderMainLogo()}
           <Text
-            style={{ fontSize: Constants.FONT_SIZE.XXXL, textAlign: 'center' }}>
+            style={{ fontSize: Constants.FONT_SIZE.XXXL, textAlign: 'center', color: 'black' }}>
             {this.props.arrAboutInfo.Client_Name}
           </Text>
           {this._renderContentView()}

@@ -23,7 +23,7 @@ import {connect} from 'react-redux';
 import Loading from '../common/LoadingScreen';
 import LoadingScreen from '../common/LoadingScreen';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import { nativationPop, navigationSetParams } from '../../rootNavigation';
+import { nativationPop } from '../../rootNavigation';
 const deviceWidth = Dimensions.get('window').width;
 
 const deviceHeight = Utility.isiPhoneX()
@@ -154,16 +154,7 @@ class PostFeedBack extends Component {
   };
 
   _closePreviousScreenAlso = () => {
-    // Actions.pop({
-    //   refresh: {isCloseScreen: true},
-    //   timeout: 1,
-    // });
-    navigationSetParams({
-      isCloseScreen: true,
-    });
-    setTimeout(() => {
-      nativationPop();
-    }, 500);
+    this.props.goBack()
   };
 
   _renderScreen = () => {

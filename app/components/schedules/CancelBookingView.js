@@ -90,6 +90,12 @@ export default class CancelBookingView extends Component {
                 <PostFeedBack
                   cancelBtnClicked={this.state.cancelBtnClicked}
                   arrpostMessage={this.props.route.params.arrBookingDetail}
+                  goBack={()=>{
+                    this.props.route.params.cancelBookingStatusSuccess(true)
+                    this.props.navigation.navigate('homeTabBar', {
+                      screen: 'Schedules'
+                    });
+                  }}
                 />
               </View>
             </KeyboardAwareScrollView>

@@ -436,6 +436,7 @@ class PendingDetailScreen extends Component {
                 arrBookingDetail: this.props.bookingDetail,
                 collectorCode: this.props.collectorCode,
                 onGoBack: this._loadBookingList.bind(this),
+                cancelBookingStatusSuccess: this.props.route.params.cancelBookingStatusSuccess
               });
             }
           }}
@@ -455,6 +456,8 @@ class PendingDetailScreen extends Component {
                 isFromCancel: true,
                 arrBookingDetail: this.props.bookingDetail,
                 onGoBack: this._loadBookingList.bind(this),
+                cancelBookingStatusSuccess: this.props.route.params.cancelBookingStatusSuccess
+
               });
             }
           }}

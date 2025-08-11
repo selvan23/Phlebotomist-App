@@ -56,6 +56,7 @@ class PendingScreen extends Component {
           : moment().utcOffset("+05:30").format("YYYY/MM/DD"),
       collectorCode: this.props.collectorCode,
       filter_Type: "P",
+      cancelBookingStatus: false
     };
     this.focusRetrieved = false;
     console.log("pending constructor: ", this.props.pendingBookingList);
@@ -98,12 +99,25 @@ class PendingScreen extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     console.log('pending screen component updating ', prevProps);
     // if (this.props.isFocused && !this.focusRetrieved) {
     //   this._getAsyncAndAPICall();
     //   this.focusRetrieved = true;
     // }
+    if(prevState.cancelBookingStatus !== this.state.cancelBookingStatus && this.state.cancelBookingStatus){
+      this.setState({
+        cancelBookingStatus: false
+      });
+      let postData = {
+        Collector_Code: this.state.collectorCode,
+        // Schedule_Date: this.state.date,
+        Schedule_Date: this.props.pendingDate,
+        Filter_Type: this.state.filter_Type,
+      };
+      this.props.getPendingList(postData, (isSuccess) => {});
+    }
+
     if (prevProps.pendingDate !== this.props.pendingDate) {
       let postData = {
         Collector_Code: this.state.collectorCode,
@@ -224,6 +238,11 @@ class PendingScreen extends Component {
                 Booking_Date: item.Booking_Date,
                 Booking_Type: item.Booking_Type,
               },
+              cancelBookingStatusSuccess: (status)=>{
+                this.setState({
+                  cancelBookingStatus: status
+                });
+              }
             });
           }
         }}

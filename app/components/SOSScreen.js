@@ -30,7 +30,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateSOSAlert, showSosLoading, hideSosLoading } from '../actions/SosAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { nativationPop } from '../rootNavigation';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Utility.isiPhoneX()
@@ -47,7 +46,6 @@ class SOSScreen extends Component {
   };
 
   constructor(props) {
-    console.log('sos screen construction');
     super(props)
     this.state = {
       formatAddress: '',
@@ -99,8 +97,7 @@ class SOSScreen extends Component {
           text: Constants.ALERT.BTN.OK,
           onPress: () => {
             if (isClose) {
-              // Actions.pop()
-              nativationPop();
+              this.props.navigation.goBack(); 
             }
           },
         },
@@ -111,7 +108,7 @@ class SOSScreen extends Component {
 
   componentDidMount() {
     //Init Geocoder with Api key...
-    Geocoder.init('AIzaSyC5NYjd063ybuLVcVreJ7Up9PSH1q8CHdA', {
+    Geocoder?.init('AIzaSyC5NYjd063ybuLVcVreJ7Up9PSH1q8CHdA', {
       language: 'en',
     });
   }
@@ -132,10 +129,8 @@ class SOSScreen extends Component {
     return (
       <View style={styles.mainContainer}>
         <TouchableOpacity
-          onPress={() => {
-            // Actions.pop();
-            nativationPop();
-          }}>
+          onPress={() => this.props.navigation.goBack(null)}
+        >
           <Image
             style={styles.headerRightImage}
             resizeMode="contain"
@@ -162,15 +157,10 @@ class SOSScreen extends Component {
             disabled={this.state.isNoButtonClicked}
             style={styles.noButton}
             onPress={() => {
-              this.setState({
-                isNoButtonClicked: true
-              })
-              // Actions.pop()
-              nativationPop();
+              this.setState({ isNoButtonClicked: true });
+              this.props.navigation.goBack();
               setTimeout(() => {
-                this.setState({
-                  isNoButtonClicked: false,
-                });
+                this.setState({ isNoButtonClicked: false });
               }, 2000);
             }}>
             <Text style={styles.buttonText}> No </Text>
@@ -180,133 +170,133 @@ class SOSScreen extends Component {
     );
   };
 
-  //Tap to Locate me Button
-  _onPressLocateMe = () => {
+  _onPressLocateMe = async () => {
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
       if (this.props.isLocationEnable) {
-        this.setState({
-          isYesButtonClicked: true
-        })
-        //Check Location is enable or not
-        if (Platform.OS === 'android') {
-          {
+        this.setState({ isYesButtonClicked: true });
+
+        try {
+          if (Platform.OS === 'android') {
             promptForEnableLocationIfNeeded({
               interval: 10000,
               fastInterval: 5000,
-            })
-              .then(data => {
-                this._getCurrentLocationHandler();
-              })
-              .catch(err => {
-                console.log(err);
-              });
+            });
+          } else {
+            Geolocation.requestAuthorization();
           }
-        } else {
-          Geolocation.requestAuthorization();
-          this._getCurrentLocationHandler();
+          await this._getCurrentLocationHandler();
+        } catch (err) {
+          console.error('Location enabling error:', err);
+          Utility.showSnackBar(this.props.locationAlert);
+        } finally {
+          setTimeout(() => {
+            this.setState({ isYesButtonClicked: false });
+          }, 2000);
         }
-        setTimeout(() => {
-          this.setState({
-            isYesButtonClicked: false,
-          });
-        }, 2000);
-      }else{
-        Utility.showSnackBar(this.props.locationAlert)
-        // this.enableLocationPermissionAlert(this.props.locationAlert)
+      } else {
+        Utility.showSnackBar(this.props.locationAlert);
       }
     } else {
       this.internetAlert(Constants.VALIDATION_MSG.NO_INTERNET, false);
     }
   };
 
-  // getCurrent Location
-  _getCurrentLocationHandler = () => {
-    Geolocation.getCurrentPosition(
-      pos => {
-        this.props.showSosLoading()
-        this.getAddress(pos.coords.latitude, pos.coords.longitude)
-
-      },
-      err => {
-        console.log(err);
-        this.props.hideSosLoading()
-        //Check enable Location on IOS
-        if (Platform.OS === 'ios') {
-          if (err.code === 2) {
-            this.enableLocationAlert();
-          }
-        }
-      },
-      {
-        enableHighAccuracy: false,
-        timeout: 200000,
-        maximumAge: 10000,
-      },
-    );
-  };
-
-  //Get Address Results
-  getAddress = (lat, lng) => {
+  _getCurrentLocationHandler = async () => {
     try {
-      Geocoder.from(lat, lng)
-        .then(json => {
-          let address_components = json.results[0].address_components;
-          if (address_components.length > 0) {
-            this.setState(prevState => {
-              return {
-                formatAddress: json.results[0].formatted_address,
-                latitude: lat.toString(),
-                longitude: lng.toString(),
-              };
-            });
+      const position = await new Promise((resolve, reject) => {
+        Geolocation.getCurrentPosition(
+          resolve,
+          reject,
+          {
+            enableHighAccuracy: false,
+            timeout: 200000,
+            maximumAge: 10000,
+          },
+        );
+      });
+      this.props.showSosLoading();
+      await this.getAddress(position.coords.latitude, position.coords.longitude);
+    } catch (err) {
+      console.error('Error getting location or address:', err);
+      this.props.hideSosLoading();
 
-            if (this.state.formatAddress !== ''
-              && this.state.latitude !== ''
-              && this.state.longitude !== '') {
-
-              let postData = {
-                Collector_Code: this.props.collectorCode,
-                Latitude: this.state.latitude,
-                Longitude: this.state.longitude,
-                Full_Address: this.state.formatAddress
-              }
-              this.props.updateSOSAlert(postData, (isSuccess, responseData) => {
-                let smsLink = AsyncStorage.configUri.sm_gw_li
-                  .replace(
-                    '$MOBILE_NO$',
-                    responseData.Alert_Receive_Numbers,
-                )
-                  .replace('$MESSAGE$', responseData.Alert_Content);
-
-                fetch(smsLink, {
-                  method: 'GET',
-                })
-                  .then(response => response.json())
-                  .then(responseJson => {
-                    console.log(smsLink);
-                    console.log(responseJson);
-                  })
-                  .catch(error => {
-                    console.error(error);
-                  });
-              });
-            }
-          } else {
-            this.props.hideSosLoading()
-            this.setState({
-              formatAddress: '',
-              latitude: lat.toString(),
-              longitude: lng.toString(),
-            });
-          }
-        })
-        .catch(error => console.warn(error));
-    } catch (e) {
-      console.log('Error, ', e);
-      this.props.hideSosLoading()
+      if (Platform.OS === 'ios' && err.code === 2) {
+        this.enableLocationAlert();
+      }
     }
   };
 
+  getAddress = async (lat, lng) => {
+    const apiKey = 'AIzaSyCR_Jh0VwkkEprAsYZb-g0FFTzpcNff_5c';
+    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+    try {
+      const response = await fetch(geocodeUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+
+      const responseJson = await response.json();
+
+      if (responseJson.results && responseJson.results.length > 0) {
+        const formattedAddress = responseJson.results[0].formatted_address;
+
+        this.setState({
+          formatAddress: formattedAddress,
+          latitude: lat.toString(),
+          longitude: lng.toString(),
+        });
+
+        if (formattedAddress) {
+          const postData = {
+            Collector_Code: this.props.collectorCode,
+            Latitude: lat.toString(),
+            Longitude: lng.toString(),
+            Full_Address: formattedAddress,
+          };
+
+          this.props.updateSOSAlert(postData, async (isSuccess, responseData) => {
+            if (isSuccess) {
+              const configUri = await AsyncStorage.getItem('configUri');
+              if (!configUri) {
+                throw new Error('Config URI not found in AsyncStorage');
+              }
+
+              const parsedConfigUri = JSON.parse(configUri);
+              const smsLinkTemplate = parsedConfigUri.sm_gw_li;
+              const smsLink = smsLinkTemplate
+                .replace('XXXMOBILE_NOXXX', encodeURIComponent(responseData.Alert_Receive_Numbers))
+                .replace('XXXMESSAGEXXX', encodeURIComponent(responseData.Alert_Content));
+
+              const smsResponse = await fetch(smsLink, { method: 'GET' });
+              if (!smsResponse.ok) {
+                throw new Error('Network response was not ok ' + smsResponse.statusText);
+              }
+
+              const smsResponseJson = await smsResponse.json();
+            } else {
+              console.error('Update SOS Alert failed');
+            }
+          });
+        }
+
+      } else {
+        this.setState({
+          formatAddress: '',
+          latitude: lat.toString(),
+          longitude: lng.toString(),
+        });
+      }
+
+    } catch (error) {
+      console.error('Error in getAddress:', error);
+      this.props.hideSosLoading();
+      Utility.showAlert(
+        Constants.ALERT.TITLE.FAILED,
+        Constants.VALIDATION_MSG.ADDRESS_ALERT,
+      );
+    }
+  };
 
 }
 const mapStateToProps = (state, props) => {

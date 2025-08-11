@@ -24,6 +24,7 @@ import LoadingScreen from './common/LoadingScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { nativationPop } from '../rootNavigation';
+import CustomInput from './common/CustomInput';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -168,31 +169,19 @@ class VerificationScreen extends Component {
               style={styles.image}
             />
             <Text style={styles.placeholder}>Username</Text>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Enter the User Name"
-              placeholderTextColor={Constants.COLOR.FONT_HINT}
+            <CustomInput
+              placeholder={'Enter the Username'}
               value={this.state.userName}
-              keyboardType="default"
-              underlineColorAndroid="transparent"
-              onChangeText={(userName) => this.setState({userName})}
-              returnKeyType={'next'}
-              onSubmitEditing={() => this.phoneNumber.focus()}
+              onChangeText={(userName) => this.setState({ userName })}
+              selectedLanguage={'en'}
             />
-
             <Text style={styles.placeholder}>Mobile Number</Text>
-            <TextInput
-              ref={(input) => (this.phoneNumber = input)}
-              style={styles.inputs}
-              placeholder="Enter the Mobile Number"
-              placeholderTextColor={Constants.COLOR.FONT_HINT}
+            <CustomInput
+              placeholder={'Enter the Mobile Number'}
               value={this.state.phoneNumber}
+              onChangeText={(phoneNumber) => this.setState({ phoneNumber })}
+              selectedLanguage={'en'}
               keyboardType="number-pad"
-              underlineColorAndroid="transparent"
-              onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-              onSubmitEditing={() => {
-                this._validateInputs();
-              }}
             />
             {this._renderOtpView()}
             {this._renderButtonView()}
@@ -231,6 +220,7 @@ class VerificationScreen extends Component {
           <TextInput
             style={styles.inputs}
             placeholder="Enter OTP"
+            placeholderTextColor={Constants.COLOR.FONT_HINT}
             keyboardType="numeric"
             autoCapitalize={'none'}
             returnKeyType={'done'}

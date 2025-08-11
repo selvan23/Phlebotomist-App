@@ -27,6 +27,7 @@ import {
   setUserName,
 } from '../actions/ConfigAction';
 import { navigate } from '../rootNavigation';
+import CustomInput from './common/CustomInput';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -35,7 +36,7 @@ const deviceHeight = Utility.isiPhoneX()
 class SetPasswordScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {password: '', confirmPassword: '', otp: '', userName: ''};
+    this.state = {password: '', confirmPassword: '', otp: '', userName: '', showPassword: false, showConfirmPassword: false};
   }
 
   static propTypes = {
@@ -117,37 +118,28 @@ class SetPasswordScreen extends Component {
               style={styles.image}
             />
             <Text style={styles.placeholder}>Enter Password</Text>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Enter the password"
-              placeholderTextColor={Constants.COLOR.FONT_HINT}
+            <CustomInput
+              placeholder={'Enter the Password'}
               value={this.state.password}
-              editable={true}
-              keyboardType="default"
-              underlineColorAndroid="transparent"
-              secureTextEntry={true}
-              returnKeyType={'next'}
-              onSubmitEditing={() => this.re_enter_password.focus()}
-              onChangeText={(password) => this.setState({password})}
+              onChangeText={(password) => this.setState({ password })}
+              secureTextEntry={!this.state.showPassword}
+              showPassword={this.state.showPassword}
+              setShowPassword={(show) => {
+                console.log({show})
+                this.setState({showPassword: show})}}
+              selectedLanguage={'en'}
             />
             <Text style={styles.placeholder}>Confirm Password</Text>
-            <TextInput
-              ref={(input) => (this.re_enter_password = input)}
-              style={styles.inputs}
-              placeholder="Re-enter the password"
-              placeholderTextColor={Constants.COLOR.FONT_HINT}
-              keyboardType="default"
-              secureTextEntry={true}
-              underlineColorAndroid="transparent"
-              autoCapitalize={'none'}
-              returnKeyType={'done'}
+            <CustomInput
+              placeholder={'Re-enter the Password'}
               value={this.state.confirmPassword}
-              onChangeText={(confirmPassword) =>
-                this.setState({confirmPassword})
-              }
-              onSubmitEditing={() => {
-                this._validateInputs();
-              }}
+              onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+              secureTextEntry={!this.state.showConfirmPassword}
+              showPassword={this.state.showConfirmPassword}
+              setShowPassword={(show) => {
+                console.log({show})
+                this.setState({showConfirmPassword: show})}}
+              selectedLanguage={'en'}
             />
             <Text style={styles.link}>
               Password should be 8 or more characters with alpha numeric

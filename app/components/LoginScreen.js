@@ -31,6 +31,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DeviceInfo from "react-native-device-info";
 import { navigate, navigationRef, navigationReplace } from "../rootNavigation";
+import CustomInput from "./common/CustomInput";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -40,7 +41,7 @@ let currentScene = "LoginScreen";
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { userName: "", password: "", oneSignalId: "" };
+    this.state = { userName: "", password: "", oneSignalId: "", showPassword: false };
   }
 
   static propTypes = {
@@ -98,38 +99,23 @@ class LoginScreen extends Component {
               style={styles.image}
             />
             <Text style={styles.placeholder}>Username</Text>
-            <TextInput
-              style={styles.inputs}
-              placeholder="Enter the User Name"
-              placeholderTextColor={Constants.COLOR.FONT_HINT}
+            <CustomInput
+              placeholder={'Enter the Username'}
               value={this.state.userName}
-              editable={true}
-              keyboardType="default"
-              underlineColorAndroid="transparent"
-              returnKeyType={"next"}
-              onSubmitEditing={() => this.password.focus()}
-              onChangeText={(userName) =>
-                this.setState({
-                  userName: userName,
-                })
-              }
+              onChangeText={(userName) => this.setState({ userName })}
+              selectedLanguage={'en'}
             />
             <Text style={styles.placeholder}>Password</Text>
-            <TextInput
-              ref={(input) => (this.password = input)}
-              style={styles.inputs}
+            <CustomInput
+              placeholder={'Enter the Password'}
               value={this.state.password}
-              placeholder="Enter the password"
-              placeholderTextColor={Constants.COLOR.FONT_HINT}
-              keyboardType="default"
-              secureTextEntry={true}
-              underlineColorAndroid="transparent"
-              autoCapitalize={"none"}
-              returnKeyType={"done"}
               onChangeText={(password) => this.setState({ password })}
-              onSubmitEditing={() => {
-                this._validateInputs();
-              }}
+              secureTextEntry={!this.state.showPassword}
+              showPassword={this.state.showPassword}
+              setShowPassword={(show) => {
+                console.log({show})
+                this.setState({showPassword: show})}}
+              selectedLanguage={'en'}
             />
             <TouchableOpacity
               style={styles.linkView}

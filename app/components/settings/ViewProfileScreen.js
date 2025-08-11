@@ -47,6 +47,7 @@ import Permissions from "react-native-permissions";
 import HTML from "react-native-render-html";
 import moment from "moment";
 import { nativationPop, navigate } from "../../rootNavigation";
+import CustomDatePicker from "../common/CustomDatePicker";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -93,6 +94,7 @@ class ViewProfileScreen extends Component {
       aboutCollector: "",
       imageLoading: false,
       isDatePickerOpen: false,
+      showDatePicker: false,
     };
   }
   async componentWillMount() {
@@ -600,7 +602,7 @@ class ViewProfileScreen extends Component {
   };
 
   _renderBodyView = () => {
-    const { name, dob, email, phoneNumber, isEditable } = this.state;
+    const { name, dob, email, phoneNumber, isEditable, showDatePicker } = this.state;
     return (
       <View style={styles.mainContainer}>
         <View style={styles.profileHeader}>
@@ -721,66 +723,9 @@ class ViewProfileScreen extends Component {
             <View style={styles.innerbody}>
               <Text style={styles.bodyheaderText}> D.O.B </Text>
               {/* <Text style={styles.bodyText}>19/05/1999</Text> */}
-              {Boolean(this.state.isDatePickerOpen) && (
-                <>
-                  <DatePicker
-                    modal={this.state.isDatePickerOpen}
-                    // style={{
-                    //   flex: 1,
-                    //   width: deviceWidth - 50,
-                    //   marginVertical: 8,
-                    //   borderBottomWidth: isEditable === true ? 0.5 : 0,
-                    //   borderBottomColor: '#A9A9A9',
-                    // }}
-                    // date={dob}
-                    date={
-                      new Date(moment(dob, ["DD/MM/YYYY"]).format("YYYY-MM-DD"))
-                    }
-                    // mode={'date'}
-                    // showIcon={false}
-                    // disabled={!isEditable}
-                    // maxDate={new Date()}
-                    // placeholderTextColor={Constants.COLOR.FONT_HINT}
-                    // format={'DD/MM/YYYY'}
-                    // confirmBtnText={'Done'}
-                    cancelBtnText={"Cancel"}
-                    onConfirm={(date) => {
-                      const dt = moment(date).format("DD/MM/YYYY");
-                      this.setState({
-                        dob: dt,
-                        isDatePickerOpen: false,
-                      });
-                    }}
-                    onCancel={() => {
-                      this.setState({
-                        isDatePickerOpen: false,
-                      });
-                    }}
-                    // onDateChange={(dob) => {
-                    //   this.setState({
-                    //     dob,
-                    //   });
-                    // }}
-                    // customStyles={{
-                    //   placeholderText: {
-                    //     fontSize: Constants.FONT_SIZE.M,
-                    //     color: Constants.COLOR.FONT_HINT,
-                    //   },
-                    //   dateText: {
-                    //     fontSize: Constants.FONT_SIZE.M,
-                    //   },
-                    //   dateInput: {
-                    //     paddingVertical: deviceHeight / 133.4,
-                    //     borderWidth: 0,
-                    //     alignItems: 'flex-start',
-                    //   },
-                    //   disabled: {
-                    //     backgroundColor: '#eef3fd',
-                    //   },
-                    // }}
-                  />
-                </>
-              )}
+              <TouchableOpacity disabled={!isEditable} onPress={()=>{this.setState({showDatePicker: !showDatePicker})}}>
+                <Text style={styles.bodyText}>{dob}</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.innerbody}>
               <Text style={styles.bodyheaderText}> Remarks </Text>
@@ -811,6 +756,17 @@ class ViewProfileScreen extends Component {
             </Text>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
+        <CustomDatePicker
+            dob={dob}
+            setDob={date => {
+              this.setState({dob: date});
+            }}
+            visible={showDatePicker}
+            setVisible={visible => {
+              this.setState({showDatePicker: visible});
+            }}
+            isDateInverted={false}
+          />
       </View>
     );
   };

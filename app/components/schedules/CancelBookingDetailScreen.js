@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Utility from '../../util/Utility';
 import Constants from '../../util/Constants';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';

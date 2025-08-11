@@ -12,7 +12,7 @@ import {
   ImageBackground,
   Platform,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Constants from '../util/Constants';
 import Utility from '../util/Utility';
 import PropTypes from 'prop-types';
@@ -94,7 +94,7 @@ class SetPasswordScreen extends Component {
   _renderSetPasswordMainView = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView enableOnAndroid={true}>
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>
               <Text style={styles.title}>Set Password </Text>

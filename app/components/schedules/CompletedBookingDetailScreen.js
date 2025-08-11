@@ -27,7 +27,7 @@ const deviceWidth = Dimensions.get('window').width;
 import RatingsView from './RatingsView';
 import PostReviews from './PostReviews';
 import ButtonBack from '../common/ButtonBack';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 import SwitchToggle from 'react-native-switch-toggle';
 import { bindActionCreators } from 'redux';
@@ -44,6 +44,7 @@ import {
 import { getPdfReport } from '../../actions/PendingDetailAction';
 import moment from 'moment';
 import { nativationPop, navigate, navigationRef } from '../../rootNavigation';
+import RiyalPrice from '../common/RiyalPrice';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -263,7 +264,11 @@ class CompletedBookingDetailScreen extends Component {
   _renderBodyView = () => {
     return (
       <View style={styles.mainContainer}>
-        <KeyboardAwareScrollView style={styles.subContainer}>
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          extraScrollHeight={200}
+          style={styles.subContainer}
+        >
           {this._renderPDFImageView()}
           {this._renderNameView()}
           {this._renderTickAmountView()}
@@ -340,12 +345,7 @@ class CompletedBookingDetailScreen extends Component {
               ? this.props.bookingDetail.Payment_Full_Desc
               : 'Collected Payment '}
           </Text>
-          <HTML
-            baseStyle={styles.ticAmountVal}
-            source={{
-              html: this.props.currency + ' ' + this.props.bookingDetail.Paid_Amount
-            }}
-          />
+          <RiyalPrice textStyle={{ fontWeight: 'regular'}} amount={this.props.bookingDetail.Paid_Amount} dynamicHeight={0.042} />
         </View>
       );
     }

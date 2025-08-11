@@ -13,7 +13,7 @@ import {
   Platform,
   BackHandler,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Constants, {ACTIONS} from '../util/Constants';
 import Utility from '../util/Utility';
 import PropTypes from 'prop-types';
@@ -81,7 +81,7 @@ class VerificationScreen extends Component {
           onSwipe={(direction) => this.onSwipe(direction)}
           config={config}
           style={{flex: 1}}>
-          <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView enableOnAndroid={true}>
             <View style={styles.bodyContainerTop}>
               <View style={styles.titleView}>
                 {this._renderBackButton()}
@@ -99,7 +99,7 @@ class VerificationScreen extends Component {
       );
     } else {
       return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView enableOnAndroid={true}>
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>
               {this._renderBackButton()}
@@ -119,7 +119,7 @@ class VerificationScreen extends Component {
   _renderVerificationMainViewAndroid = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView enableOnAndroid={true}>
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>
               {this._renderBackButton()}

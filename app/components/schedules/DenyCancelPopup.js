@@ -15,7 +15,7 @@ import ButtonBack from '../common/ButtonBack';
 import PostReviews from './PostReview';
 import Constants from '../../util/Constants';
 import Utility from '../../util/Utility';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { nativationPop } from '../../rootNavigation';
 
 const deviceWidth = Dimensions.get('window').width;

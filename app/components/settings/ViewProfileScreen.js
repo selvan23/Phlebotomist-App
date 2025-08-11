@@ -40,7 +40,7 @@ import {
   updateProfileDetails,
 } from "../../actions/ProfileAction";
 import { setProfileImage } from "../../actions/ConfigAction";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import DeviceInfo from "react-native-device-info";
 import Permissions from "react-native-permissions";

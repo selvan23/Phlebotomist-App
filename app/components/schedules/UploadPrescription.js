@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import Utility from '../../util/Utility';
 import Constants from '../../util/Constants';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DeviceInfo from 'react-native-device-info';
 import Permissions from 'react-native-permissions';
 import LoadingScreen from '../common/LoadingScreen';

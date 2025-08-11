@@ -20,7 +20,7 @@ import {
 import Utility from '../../util/Utility';
 import Constants from '../../util/Constants';
 import ButtonBack from '../common/ButtonBack';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

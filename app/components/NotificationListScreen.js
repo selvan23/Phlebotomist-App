@@ -14,7 +14,7 @@ import {
   SectionList,
   Modal,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Constants from '../util/Constants';
 import Utility from '../util/Utility';
 import PropTypes from 'prop-types';

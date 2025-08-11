@@ -23,7 +23,6 @@ import {
 import Constants from '../../util/Constants';
 import Utility from '../../util/Utility';
 
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import LoadingScreen from '../common/LoadingScreen';

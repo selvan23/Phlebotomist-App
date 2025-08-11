@@ -27,7 +27,7 @@ const deviceWidth = Dimensions.get("window").width;
 import RatingsView from "./RatingsView";
 import PostReviews from "./PostReviews";
 import ButtonBack from "../common/ButtonBack";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PropTypes from "prop-types";
 import SwitchToggle from "react-native-switch-toggle";
 import { bindActionCreators } from "redux";
@@ -166,7 +166,7 @@ class SampleCollectionSummary extends Component {
   _renderBodyView = () => {
     console.log('render body view:: ', this.props.route.params.bookingDetail);
     return (
-      <KeyboardAwareScrollView style={styles.mainContainer}>
+      <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={200} style={styles.mainContainer}>
         {this._renderNameView()}
         {this._renderNavigationButton()}
         {this._renderTickAmountView()}
@@ -666,38 +666,16 @@ class SampleCollectionSummary extends Component {
   };
 
   _callFinish = () => {
-    const bookingDetail = this.props.route.params.bookingDetail;
-    console.log("calls finish:: ", bookingDetail);
-    console.log("update finish::... ", this.props.route.params.updateCollectionData);
     let postData = this.props.route.params.updateCollectionData;
+    const bookingDetail = this.props.route.params.bookingDetail;
+
     if (this.state.cashSwitchValue) {
-      postData.Pay_Mode = "C";
+      postData.Pay_Mode = 'C';
     } else if (this.state.phonepePaymentValue) {
-      postData.Pay_Mode = "F";
+      postData.Pay_Mode = 'F';
       postData.Pay_Ref_No = this.state.transactionNumber;
     }
-    if (bookingDetail.Patient_Due !== 0) {
-      postData.Zero_Payment = false;
-    }  else {
-      postData.Zero_Payment = true;
-    }
-    postData.Pays_VAT = bookingDetail.Pays_VAT;
-    postData.Doctor_Code = bookingDetail.Doctor_Code;
-    postData.Medical_Aid_No = bookingDetail.Medical_Aid_No;
-    postData.Package = bookingDetail.Pack_Code;
-    postData.Coverage = bookingDetail.Guar_Percent;
-    postData.Sponsor_Paid = bookingDetail.Sponser_Amount;
-    postData.Due_Amount = bookingDetail.Patient_Due;
-    postData.IsValidated = true;
-    postData.Client_Type = bookingDetail.Ref_Name === "PRIVATE" ? "P" : "G";
-
-    if (bookingDetail.IsDue === "true") {
-      // if (
-      //   bookingDetail.Due_Amount !== null &&
-      //   bookingDetail.Due_Amount !== "" &&
-      //   bookingDetail.Due_Amount !== "0" &&
-      //   bookingDetail.Due_Amount !== 0
-      // ) {
+    if (this.props.route.params.bookingDetail.IsDue === 'true') {
       if (
         bookingDetail.Patient_Due !== null &&
         bookingDetail.Patient_Due !== "" &&
@@ -705,20 +683,18 @@ class SampleCollectionSummary extends Component {
         bookingDetail.Patient_Due !== 0
       ) {
         if (this.state.cashSwitchValue || this.state.phonepePaymentValue) {
-          console.log("called order api upi", bookingDetail.Patient_Due);
+          console.log({postData})
           this._callOrderAPI(postData);
         } else {
           Utility.showAlert(
             Constants.ALERT.TITLE.ERROR,
-            "Kindly collect the payment and turn on the cash received or UPI payment received button to proceed"
+            'Kindly collect the payment and turn on the cash received or UPI payment received button to proceed',
           );
         }
       } else {
-        console.log("called order aup", bookingDetail.Patient_Due);
         this._callOrderAPI(postData);
       }
     } else {
-      console.log("called order appi ", bookingDetail.Patient_Due)
       this._callOrderAPI(postData);
     }
   };

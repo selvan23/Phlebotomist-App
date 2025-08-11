@@ -102,11 +102,31 @@ class SchedulesTabBar extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if(prevProps.state.index !== this.props.state.index) {
+      this._getAsyncAndAPICall()
+    }
     this.handleLocationStateChanges(prevState);
   }
 
   componentWillUnmount() {
     this.cleanup();
+  }
+
+  getFilterType = () => {
+    const activeIndex = this.props.state.index
+
+    return activeIndex === TAB_INDICES.PENDING ? 'P' : activeIndex === TAB_INDICES.COMPLETED ? 'C' : 'R';
+  }
+
+  _getAsyncAndAPICall() {
+    let postData = {
+      Collector_Code: this.props.collectorCode,
+      Filter_Type: this.getFilterType(),
+      Schedule_Date: this.props.isCalenderDateSelected
+        ? this.props.pendingDate
+        : moment().utcOffset("+05:30").format("YYYY/MM/DD"),
+    };
+    this.props.getPendingList(postData, (isSuccess) => {});
   }
 
   initializeComponent = () => {
@@ -329,36 +349,8 @@ class SchedulesTabBar extends Component {
     }
   };
 
-  handleTabPress = async (filterType, tabName, stateKey) => {
-    // Prevent multiple rapid taps
-    if (this.state[stateKey]) {
-      return;
-    }
-
-    this.setState({ [stateKey]: true });
-
-    try {
-      const postData = {
-        Collector_Code: this.props.collectorCode,
-        Schedule_Date: this.props.isCalenderDateSelected === true
-          ? this.props.pendingDate
-          : moment().utcOffset('+05:30').format('YYYY/MM/DD'),
-        Filter_Type: filterType,
-      };
-
-      await this.props.getPendingList(postData, (callBack) => {
-        if (callBack) {
-          navigate(tabName);
-        }
-      });
-    } catch (error) {
-      console.warn(`Error handling ${tabName} press:`, error);
-    } finally {
-      // Reset button state after a delay
-      setTimeout(() => {
-        this.setState({ [stateKey]: false });
-      }, 1000);
-    }
+  handleTabPress = async (tabName) => {
+    navigate(tabName)
   };
 
   renderTabButton = (title, count, color, filterType, tabName, stateKey, tabIndex) => {
@@ -370,7 +362,7 @@ class SchedulesTabBar extends Component {
       <TouchableOpacity
         style={styles.subContainer}
         disabled={isDisabled}
-        onPress={() => this.handleTabPress(filterType, tabName, stateKey)}
+        onPress={() => this.handleTabPress(tabName)}
         activeOpacity={0.7}>
         <View style={styles.bodyContainer}>
           <Text style={[styles.tabTitle, { color }]}>

@@ -26,7 +26,7 @@ import Constants from "../../util/Constants";
 import Utility from "../../util/Utility";
 import ButtonBack from "../common/ButtonBack";
 import ButtonNext from "../common/ButtonNext";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -144,7 +144,7 @@ class SampleCollectionDetail extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <KeyboardAwareScrollView style={styles.subContainer}>
+          <KeyboardAwareScrollView enableOnAndroid={true} style={styles.subContainer}>
             {this._renderUserInfo()}
             {this._renderServiceTest()}
             {this._renderNamePhoneView()}

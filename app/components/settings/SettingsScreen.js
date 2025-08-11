@@ -18,7 +18,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Constants from "../../util/Constants";
 import Utility from "../../util/Utility";
 import AsyncStorage from "@react-native-async-storage/async-storage";

@@ -15,7 +15,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Constants from "../../util/Constants";
@@ -25,6 +25,7 @@ import { getCashCollectionList } from "../../actions/CollectionscreenAction";
 import CalenderList from "../common/Calender";
 import moment from "moment";
 import HTML from "react-native-render-html";
+import RiyalPrice from "../common/RiyalPrice";
 
 class CollectionScreen extends Component {
   static propTypes = {
@@ -45,15 +46,7 @@ class CollectionScreen extends Component {
           <Text style={styles.bookingContentText}>{item.Full_Name}</Text>
         </View>
         <View style={[styles.dateAndTimeView, { flex: 1.1 }]}>
-          <HTML
-            baseStyle={{
-              ...{ textAlign: "left" },
-              ...styles.bookingContentText,
-            }}
-            source={{
-              html: this.props.currency + "\n" + item.Amount,
-            }}
-          />
+          <RiyalPrice textStyle={{fontWeight: 'regular'}} dynamicHeight={0.024} amount={item?.Amount} />
         </View>
         <View style={styles.dateAndTimeView}>
           <Text style={styles.bookingContentText}>{item.Payment_Desc}</Text>
@@ -140,15 +133,7 @@ class CollectionScreen extends Component {
           {this._renderFlatListItem()}
           <View style={[styles.totalAmountView, { alignItems: "center" }]}>
             <Text style={styles.totalAmountText}>Total:</Text>
-            <HTML
-              baseStyle={styles.totalAmountText}
-              source={{
-                html:
-                  this.props.currency +
-                  " " +
-                  this.props.arrPaymentDetails[0].Total_Amount,
-              }}
-            />
+            <RiyalPrice amount={this.props.arrPaymentDetails[0].Total_Amount} dynamicHeight={0.026} />
           </View>
         </KeyboardAwareScrollView>
       </View>

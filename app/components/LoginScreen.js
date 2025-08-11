@@ -12,7 +12,7 @@ import {
   ImageBackground,
   Platform,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Constants from "../util/Constants";
 import Utility from "../util/Utility";
 import PropTypes from "prop-types";
@@ -75,7 +75,7 @@ class LoginScreen extends Component {
   _renderLoginMainView = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView enableOnAndroid={true}>
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>
               <Text style={styles.title}>Login </Text>
@@ -135,9 +135,7 @@ class LoginScreen extends Component {
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <Text style={styles.version}>
-                {`Version: ${DeviceInfo.getVersion()}(${DeviceInfo.getBuildNumber()})`}
-              </Text>
+              <Text style={styles.version}>Version: 1.1.0</Text>
               <Text style={styles.version}>Powered by SUKRAA</Text>
             </View>
           </View>

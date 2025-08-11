@@ -19,7 +19,7 @@ import {
 import LoadingScreen from "../common/LoadingScreen";
 import Constants from "../../util/Constants";
 import ScanBarcodeView from "./ScanBarcodeView";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ButtonNext from "../common/ButtonNext";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -204,7 +204,7 @@ class SampleCollectionScreen extends Component {
 
   _renderBodyView = () => {
     return (
-      <KeyboardAwareScrollView style={styles.mainContainer}>
+      <KeyboardAwareScrollView enableOnAndroid={true} style={styles.mainContainer}>
         {this._renderNameAddressView()}
         {/* {this._renderFlatlist()} */}
         {this._renderNavigationButton()}

@@ -14,7 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import PostFeedBack from './postFeedBack';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Utility from '../../util/Utility';
 import Constants from '../../util/Constants';

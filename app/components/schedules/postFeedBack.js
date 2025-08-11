@@ -22,7 +22,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Loading from '../common/LoadingScreen';
 import LoadingScreen from '../common/LoadingScreen';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { nativationPop } from '../../rootNavigation';
 const deviceWidth = Dimensions.get('window').width;
 

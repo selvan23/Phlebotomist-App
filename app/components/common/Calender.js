@@ -14,7 +14,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import moment from "moment";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { CalendarList } from "react-native-calendars";
 import Utility from "../../util/Utility";
 import { getcalenderDate } from "../../actions/CalenderAction";

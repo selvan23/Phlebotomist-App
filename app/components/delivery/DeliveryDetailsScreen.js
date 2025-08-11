@@ -213,6 +213,7 @@ class DeliveryDetailsScreen extends Component {
             ) : (
                 <CheckBox
                   style={styles.checkboxStyle}
+                  tintColors={{ true: Constants.COLOR.THEME_COLOR, false: '#797979' }}
                   value={this.state.isSpecimanCheckBox}
                   onValueChange={() => {
                     if (Platform.OS === 'android') {
@@ -365,8 +366,8 @@ class DeliveryDetailsScreen extends Component {
               <CheckBox
                 disabled={true}
                 value={true}
-                tintColors={{ true: '#eeeeee', false: 'black' }}
-                style={styles.checkboxStyleSubmited}
+                tintColors={{ true: Constants.COLOR.THEME_COLOR, false: '#797979' }}
+                style={styles.checkboxStyle}
                 onValueChange={() => {
                   if (Platform.OS === 'android') {
                     this._onCheckBoxChange(index);
@@ -398,6 +399,7 @@ class DeliveryDetailsScreen extends Component {
           ) : (
               <CheckBox
                 value={item.isCheckBoxStatus}
+                tintColors={{ true: Constants.COLOR.THEME_COLOR, false: '#797979' }}
                 style={styles.checkboxStyle}
                 onValueChange={() => {
                   if (Platform.OS === 'android') {
@@ -532,7 +534,7 @@ function Item({ title }) {
         alignItems: 'flex-end',
       }}>
       <View style={styles.deliverySubList}>
-        <Text style={{ fontSize: 12 }} numberOfLines={2}>
+        <Text style={{ fontSize: 12, color: Constants.COLOR.FONT_COLOR }} numberOfLines={2}>
           {title}
         </Text>
       </View>
@@ -662,15 +664,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginLeft: Platform.OS === 'ios' ? 2 : 0,
   },
-  checkboxStyleSubmited: {
-    height: 5,
-    width: 5,
-    // flex: 0.5,
-    alignSelf: 'flex-start',
-    paddingTop: 20,
-    marginLeft: Platform.OS === 'ios' ? 2 : 0,
-    borderStyle: 'dotted',
-  },
 
   containerStyle: {
     height: 17,
@@ -745,6 +738,6 @@ const styles = StyleSheet.create({
   specimanTextPending: {
     color: 'black',
     fontWeight: 'bold',
-    paddingLeft: Platform.OS === 'ios' ? 20 : 15,
+    // paddingLeft: Platform.OS === 'ios' ? 20 : 15,
   },
 });

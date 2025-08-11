@@ -69,7 +69,7 @@ class PendingDeliveryScreen extends Component {
   componentDidMount() {
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
       this.willFocusSubscription = this.props.navigation.addListener(
-        'willFocus',
+        'focus',
         () => {
           this._getAsyncAndAPICall();
         },

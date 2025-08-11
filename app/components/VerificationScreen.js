@@ -224,9 +224,14 @@ class VerificationScreen extends Component {
             keyboardType="numeric"
             autoCapitalize={'none'}
             returnKeyType={'done'}
-            maxLength={8}
+            maxLength={4}
             underlineColorAndroid="transparent"
-            onChangeText={(otp) => this.setState({otp})}
+            onChangeText={(otp) => {
+              const numericValue = otp.replace(/[^0-9]/g, "");
+              if (numericValue === otp) {
+                this.setState({ otp: numericValue });
+              }
+            }}
             onSubmitEditing={() => {
               this._validateInputs();
             }}

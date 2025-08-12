@@ -190,8 +190,8 @@ module.exports = {
   },
 
   COLOR: {
-    THEME_COLOR: "#F9A929",
-    THEME_COLOR_2: "#F6461A",
+    THEME_COLOR: '#1E3989',
+    THEME_COLOR_2: "#3700B3",
     FONT_COLOR: "#3F3F3F",
     FONT_HINT: "#A19B9B",
     SCREEN_BG: "#F2F2F2",

@@ -398,7 +398,7 @@ class SplashScreen extends Component {
           <View style={styles.imageContainer}>
             <Image
               resizeMode="contain"
-              source={require('../images/Splash_Logo_Phlebotomist.png')}
+              source={require('../images/FlashLogo.jpg')}
               style={styles.image}
             />
           </View>

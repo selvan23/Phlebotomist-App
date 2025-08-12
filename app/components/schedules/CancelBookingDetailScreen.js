@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 0,
     fontSize: Constants.FONT_SIZE.M,
+    color: Constants.COLOR.FONT_COLOR,
   },
   backButtonView: {
     alignSelf: 'flex-start',

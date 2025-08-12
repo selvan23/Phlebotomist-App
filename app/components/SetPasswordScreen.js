@@ -114,7 +114,7 @@ class SetPasswordScreen extends Component {
           <View style={{marginHorizontal: 10}}>
             <Image
               resizeMode="contain"
-              source={require('../images/Phlebotomist_Logo.png')}
+              source={require('../images/Logo.png')}
               style={styles.image}
             />
             <Text style={styles.placeholder}>Enter Password</Text>
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Constants.FONT_SIZE.XXL,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     flex: 1,
   },
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: 'center',
     fontSize: Constants.FONT_SIZE.L,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     backgroundColor: Constants.COLOR.THEME_COLOR,
     borderColor: Constants.COLOR.THEME_COLOR,

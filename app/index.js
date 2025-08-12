@@ -272,6 +272,7 @@ const TabBarItemComponent = (props) => {
                     >
                         <Image
                             resizeMode="contain"
+                            tintColor={isFocused ? Constants.COLOR.THEME_COLOR : Constants.COLOR.FONT_COLOR_DEFAULT}
                             source={isFocused ? activeImage.toString() : image.toString()}
                             style={[
                                 bottomBarStyles.avatar,

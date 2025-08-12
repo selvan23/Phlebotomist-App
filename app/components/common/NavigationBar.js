@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: Constants.COLOR.THEME_COLOR,
     borderBottomWidth: 2,
-    borderBottomColor: "#ECA12C",
+    borderBottomColor: Constants.COLOR.THEME_COLOR,
     // flex: 1,
     // gap: 15,
     // rowGap: 10,

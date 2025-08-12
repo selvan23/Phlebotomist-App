@@ -161,7 +161,7 @@ export default class UserDetails extends Component {
             && <>
               <View style={styles.nameAddressRightAgePhoneView}>
                 <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
-                  Medical Aid: {this.props.arrUserDetails.Ref_Name}
+                  Payer: {this.props.arrUserDetails.Ref_Name}
                 </Text>
               </View>
             </>

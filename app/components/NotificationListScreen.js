@@ -330,8 +330,8 @@ class NotificationListScreen extends Component {
             style={[
               styles.newOldMsgText,
               {
-                backgroundColor: item.IsRead === '0' ? '#ffa500' : '#120F0C',
-                borderColor: item.IsRead === '0' ? '#ffa500' : '#120F0C',
+                backgroundColor: item.IsRead === '0' ? Constants.COLOR.THEME_COLOR : '#120F0C',
+                borderColor: item.IsRead === '0' ? Constants.COLOR.THEME_COLOR : '#120F0C',
               },
             ]}>
             {item.IsRead === '0' ? 'New' : 'Older'}

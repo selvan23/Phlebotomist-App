@@ -133,7 +133,7 @@ class CollectionScreen extends Component {
           {this._renderFlatListItem()}
           <View style={[styles.totalAmountView, { alignItems: "center" }]}>
             <Text style={styles.totalAmountText}>Total:</Text>
-            <RiyalPrice amount={this.props.arrPaymentDetails[0].Total_Amount} dynamicHeight={0.026} />
+            <RiyalPrice amount={this.props.arrPaymentDetails[0].Total_Amount?.toFixed(2)} dynamicHeight={0.026} />
           </View>
         </KeyboardAwareScrollView>
       </View>

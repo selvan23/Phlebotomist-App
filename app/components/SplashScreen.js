@@ -537,8 +537,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: deviceHeight * 0.4,
+    height: deviceHeight * 0.2,
   },
   container: {
     flex: 1,

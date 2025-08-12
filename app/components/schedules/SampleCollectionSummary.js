@@ -253,7 +253,7 @@ class SampleCollectionSummary extends Component {
 
           <Text style={styles.tickTitle}>Collect Payment</Text>
         <View style ={styles.ticAmountVal}>
-          <RiyalPrice amount={(bookingDetail?.Patient_Due)} dynamicHeight={0.05} />
+          <RiyalPrice amount={(bookingDetail?.Patient_Due?.toFixed(2))} dynamicHeight={0.05} />
         </View>
         </View>
       );
@@ -565,7 +565,7 @@ class SampleCollectionSummary extends Component {
     ) {
       return (
         <View style={{ padding: 10 }}>
-          <Text style={{ marginTop: 10, fontSize: Constants.FONT_SIZE.L }}>
+          <Text style={{ marginTop: 10, fontSize: Constants.FONT_SIZE.L, color: Constants.COLOR.FONT_COLOR }}>
             Feedback:
           </Text>
           <Text
@@ -573,6 +573,7 @@ class SampleCollectionSummary extends Component {
               marginTop: 5,
               marginBottom: 30,
               fontSize: Constants.FONT_SIZE.SM,
+              color: Constants.COLOR.FONT_COLOR,
             }}
           >
             {bookingDetail.Post_Review}

@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     textAlign: 'center',
-    backgroundColor: '#FFA500',
+    backgroundColor: Constants.COLOR.THEME_COLOR,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',

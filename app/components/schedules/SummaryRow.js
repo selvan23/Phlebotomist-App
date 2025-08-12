@@ -53,7 +53,7 @@ class SummaryRow extends Component {
     return (
       <View style={styles.rowText}>
         <View style ={styles.rowTextAmt}>
-          <RiyalPrice amount={(this.props.rowData.Service_Amount)} dynamicHeight={0.029} />
+          <RiyalPrice textStyle={{fontWeight: 'regular'}} amount={(this.props.rowData.Service_Amount)} dynamicHeight={0.029} />
         </View>
       </View>
     );

@@ -158,7 +158,7 @@ class SummaryBottom extends Component {
           </View>
         </View>
         <View style={styles.subTotalView}>
-          <Text style={styles.subTotalText}>Medical AID Amount </Text>
+          <Text style={styles.subTotalText}>Insurance Amount </Text>
           <View style={styles.cartItemText}>
             <HTML
               baseStyle={styles.cartItemText}
@@ -169,7 +169,7 @@ class SummaryBottom extends Component {
           </View>
         </View>
         <View style={styles.subTotalView}>
-          <Text style={styles.subTotalText}>Offer (Promo Code %)</Text>
+        <Text style={styles.subTotalText}>{`Offer ${this.props.serviceDetail?.Promo_Code ? `(${this.props.serviceDetail?.Promo_Code})` : ''}`}</Text>
           <View style={styles.cartItemText}>
             <HTML
               baseStyle={styles.cartItemText}
@@ -263,7 +263,7 @@ class SummaryBottom extends Component {
           </View>
         </View>
         <View style={styles.subTotalView}>
-          <Text style={styles.subTotalText}>Medical AID Amount </Text>
+          <Text style={styles.subTotalText}>Insurance Amount </Text>
           <View style={styles.cartItemText}>
             <HTML
               baseStyle={styles.cartItemText}
@@ -274,7 +274,7 @@ class SummaryBottom extends Component {
           </View>
         </View>
         <View style={styles.subTotalView}>
-          <Text style={styles.subTotalText}>Offer (Promo Code %)</Text>
+        <Text style={styles.subTotalText}>{`Offer ${this.props.serviceDetail?.Promo_Code ? `(${this.props.serviceDetail?.Promo_Code})` : ''}`}</Text>
           <View style={styles.cartItemText}>
             <HTML
               baseStyle={styles.cartItemText}

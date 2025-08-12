@@ -45,6 +45,7 @@ import {
 import moment from "moment";
 import { nativationPop, navigate, navigationRef } from "../../rootNavigation";
 import RiyalPrice from "../common/RiyalPrice";
+import { getPendingList } from "../../actions/PendingScreenAction";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -700,15 +701,32 @@ class SampleCollectionSummary extends Component {
     }
   };
 
+  _getAsyncAndAPICall(postData) {
+    let pendingRequest = {
+      Collector_Code: this.props.collectorCode,
+      Filter_Type: "P",
+      Schedule_Date: postData.Booking_Date
+        ? postData.Booking_Date
+        : moment().utcOffset("+05:30").format("YYYY/MM/DD"),
+    };
+    this.props.getPendingList(pendingRequest, (isSuccess) => {});
+  }
+
   _callOrderAPI = (postData) => {
-    console.log("_callOrderAPI   ", postData);
     this.props.invokeUpdateSampleCollection(postData, (isSuccess, message) => {
       if (isSuccess) {
         Alert.alert(
           Constants.ALERT.TITLE.SUCCESS,
           message,
-          // [{ text: 'OK', onPress: () => Actions.homeTabBar() }],
-          [{ text: "OK", onPress: () => navigate("homeTabBar") }],
+          [
+            {
+              text: "OK",
+              onPress: () => {
+                navigate("homeTabBar");
+                this._getAsyncAndAPICall(postData);
+              },
+            },
+          ],
           { cancelable: false }
         );
       }
@@ -742,6 +760,7 @@ const mapDispatchToProps = (dispatch) => {
       invokeUpdateSampleCollection,
       // completed Detail screen Api
       getCompletedDetail,
+      getPendingList
     },
     dispatch
   );

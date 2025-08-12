@@ -161,7 +161,7 @@ export default class UserDetails extends Component {
             && <>
               <View style={styles.nameAddressRightAgePhoneView}>
                 <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
-                  Payer: {this.props.arrUserDetails.Ref_Name}
+                  Payer: {this.props.arrUserDetails.Ref_Name === 'Self' ? 'Private' : this.props.arrUserDetails.Ref_Name}
                 </Text>
               </View>
             </>

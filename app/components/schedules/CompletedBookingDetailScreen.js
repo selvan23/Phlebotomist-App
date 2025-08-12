@@ -345,7 +345,7 @@ class CompletedBookingDetailScreen extends Component {
               ? this.props.bookingDetail.Payment_Full_Desc
               : 'Collected Payment '}
           </Text>
-          <RiyalPrice amount={this.props.bookingDetail.Paid_Amount?.toFixed(2)} dynamicHeight={0.042} />
+          <RiyalPrice amount={this.props?.bookingDetail?.Paid_Amount?.toFixed(2)} dynamicHeight={0.042} />
         </View>
       );
     }
@@ -418,7 +418,7 @@ class CompletedBookingDetailScreen extends Component {
             && <>
               <View style={styles.nameAddressRightAgePhoneView}>
                 <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
-                  Payer: {this.props.bookingDetail.Ref_Name}
+                  Payer: {this.props.bookingDetail.Ref_Name === 'Self' ? 'Private' : this.props.bookingDetail.Ref_Name}
                 </Text>
               </View>
             </>

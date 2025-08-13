@@ -394,3 +394,18 @@ module.exports = {
     ASYNC_COLLECTOR_CODE: "@LISCollector_Code",
   },
 };
+
+export const FONT_FAMILY = {
+  fontFamilyPoppinsRegular: 'Poppins-Regular',
+  fontFamilyPoppinsMedium: 'Poppins-Medium',
+  fontFamilyPoppinsSemiBold: 'Poppins-SemiBold',
+
+  fontFamilyWixRegular: 'WixMadeforText-Regular',
+  fontFamilyWixMedium: 'WixMadeforText-Medium',
+  fontFamilyWixSemiBold: 'WixMadeforText-SemiBold',
+
+  fontFamilyAnekLatinRegular: 'AnekLatin-Regular',
+  fontFamilyAnekLatinMedium: 'AnekLatin-Medium',
+  fontFamilyAnekLatinSemiBold: 'AnekLatin-SemiBold',
+
+};

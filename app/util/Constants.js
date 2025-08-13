@@ -393,19 +393,19 @@ module.exports = {
     ASYNC_USER_IMAGE_URL: "@LISProfile_image",
     ASYNC_COLLECTOR_CODE: "@LISCollector_Code",
   },
-};
 
-export const FONT_FAMILY = {
-  fontFamilyPoppinsRegular: 'Poppins-Regular',
-  fontFamilyPoppinsMedium: 'Poppins-Medium',
-  fontFamilyPoppinsSemiBold: 'Poppins-SemiBold',
-
-  fontFamilyWixRegular: 'WixMadeforText-Regular',
-  fontFamilyWixMedium: 'WixMadeforText-Medium',
-  fontFamilyWixSemiBold: 'WixMadeforText-SemiBold',
-
-  fontFamilyAnekLatinRegular: 'AnekLatin-Regular',
-  fontFamilyAnekLatinMedium: 'AnekLatin-Medium',
-  fontFamilyAnekLatinSemiBold: 'AnekLatin-SemiBold',
-
+  FONT_FAMILY: {
+    FONT_FAMILY_POPPINS_REGULAR: 'Poppins-Regular',
+    FONT_FAMILY_POPPINS_MEDIUM: 'Poppins-Medium',
+    FONT_FAMILY_POPPINS_SEMI_BOLD: 'Poppins-SemiBold',
+  
+    FONT_FAMILY_WIX_REGULAR: 'WixMadeforText-Regular',
+    FONT_FAMILY_WIX_MEDIUM: 'WixMadeforText-Medium',
+    FONT_FAMILY_WIX_SEMI_BOLD: 'WixMadeforText-SemiBold',
+  
+    FONT_FAMILY_ANEK_LATIN_REGULAR: 'AnekLatin-Regular',
+    FONT_FAMILY_ANEK_LATIN_MEDIUM: 'AnekLatin-Medium',
+    FONT_FAMILY_ANEK_LATIN_SEMI_BOLD: 'AnekLatin-SemiBold',
+  
+  }
 };

@@ -128,6 +128,7 @@ class SetPasswordScreen extends Component {
                 console.log({show})
                 this.setState({showPassword: show})}}
               selectedLanguage={'en'}
+              icon={'lock'}
             />
             <Text style={styles.placeholder}>Confirm Password</Text>
             <CustomInput
@@ -140,6 +141,7 @@ class SetPasswordScreen extends Component {
                 console.log({show})
                 this.setState({showConfirmPassword: show})}}
               selectedLanguage={'en'}
+              icon={'lock'}
             />
             <Text style={styles.link}>
               Password should be 8 or more characters with alpha numeric

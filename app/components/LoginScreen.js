@@ -32,6 +32,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DeviceInfo from "react-native-device-info";
 import { navigate, navigationRef, navigationReplace } from "../rootNavigation";
 import CustomInput from "./common/CustomInput";
+import CustomGradientButton from "./common/CustomGradientButton";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -104,6 +105,7 @@ class LoginScreen extends Component {
               value={this.state.userName}
               onChangeText={(userName) => this.setState({ userName })}
               selectedLanguage={'en'}
+              icon={'user'}
             />
             <Text style={styles.placeholder}>Password</Text>
             <CustomInput
@@ -116,6 +118,7 @@ class LoginScreen extends Component {
                 console.log({show})
                 this.setState({showPassword: show})}}
               selectedLanguage={'en'}
+              icon={'lock'}
             />
             <TouchableOpacity
               style={styles.linkView}
@@ -266,7 +269,7 @@ const styles = StyleSheet.create({
   },
   bodyContainerTop: {
     height: deviceHeight / 3,
-    backgroundColor: Constants.COLOR.THEME_COLOR,
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     borderBottomEndRadius: 15,
     borderBottomStartRadius: 15,
   },
@@ -294,10 +297,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Constants.FONT_SIZE.XXL,
-    fontWeight: "bold",
-    color: "white",
+    color: "black",
     textAlign: "center",
     flex: 1,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_BOLD,
   },
   placeholder: {
     marginTop: 10,

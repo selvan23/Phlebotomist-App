@@ -175,6 +175,7 @@ class VerificationScreen extends Component {
               value={this.state.userName}
               onChangeText={(userName) => this.setState({ userName })}
               selectedLanguage={'en'}
+              icon={'user'}
             />
             <Text style={styles.placeholder}>Mobile Number</Text>
             <CustomInput
@@ -183,6 +184,7 @@ class VerificationScreen extends Component {
               onChangeText={(phoneNumber) => this.setState({ phoneNumber })}
               selectedLanguage={'en'}
               keyboardType="number-pad"
+              icon={'phone'}
             />
             {this._renderOtpView()}
             {this._renderButtonView()}

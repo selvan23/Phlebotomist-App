@@ -234,6 +234,7 @@ module.exports = {
     LAB_HEADER_VIEW: "#F3F3F3",
     LAB_SUMMARY_TEXT: "#676767",
     //lab summary
+    PRIMARY_COLOR: '#1E3989',
   },
 
   FONT_SIZE_BAK: {
@@ -398,6 +399,7 @@ module.exports = {
     FONT_FAMILY_POPPINS_REGULAR: 'Poppins-Regular',
     FONT_FAMILY_POPPINS_MEDIUM: 'Poppins-Medium',
     FONT_FAMILY_POPPINS_SEMI_BOLD: 'Poppins-SemiBold',
+    FONT_FAMILY_POPPINS_BOLD: 'Poppins-Bold',
   
     FONT_FAMILY_WIX_REGULAR: 'WixMadeforText-Regular',
     FONT_FAMILY_WIX_MEDIUM: 'WixMadeforText-Medium',
@@ -406,6 +408,7 @@ module.exports = {
     FONT_FAMILY_ANEK_LATIN_REGULAR: 'AnekLatin-Regular',
     FONT_FAMILY_ANEK_LATIN_MEDIUM: 'AnekLatin-Medium',
     FONT_FAMILY_ANEK_LATIN_SEMI_BOLD: 'AnekLatin-SemiBold',
-  
+
+    FONT_FAMILY_POPPINS_LIGHT: 'Poppins-Light',
   }
 };

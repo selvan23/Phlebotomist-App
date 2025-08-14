@@ -11,6 +11,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@ant-design/icons-react-native": "^2.3.2",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/checkbox": "^0.5.16",
     "@react-native-community/geolocation": "^3.1.0",
@@ -40,6 +41,7 @@
     "react-native-gesture-handler": "2.14.0",
     "react-native-image-picker": "^7.1.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "^1.9.0",
     "react-native-onesignal": "^5.0.4",
     "react-native-pager-view": "^6.8.1",
@@ -52,6 +54,9 @@
     "react-native-screens": "3.34.0",
     "react-native-snackbar": "^2.6.2",
     "react-native-spinkit": "^1.5.1",
+    "react-native-svg": "^15.12.1",
+    "react-native-svg-transformer": "^1.5.1",
+    "react-native-svg-uri": "^1.2.3",
     "react-native-switch-toggle": "^2.2.1",
     "react-native-tab-view": "^4.1.2",
     "react-native-webview": "^13.6.4",

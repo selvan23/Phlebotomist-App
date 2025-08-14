@@ -77,6 +77,8 @@
 		<string>Poppins-SemiBoldItalic.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-ThinItalic.ttf</string>
+		<string>antfill.ttf</string>
+		<string>antoutline.ttf</string>
 	</array>
 </dict>
 </plist>

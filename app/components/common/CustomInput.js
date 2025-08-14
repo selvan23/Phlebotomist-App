@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import { IconFill, IconOutline } from "@ant-design/icons-react-native";
+
 import Constants from "../../util/Constants";
 
 const { width: screenWidth } = Dimensions.get("window");
@@ -21,10 +23,12 @@ const CustomInput = ({
   setShowPassword,
   selectedLanguage,
   maxLength,
+  icon
 }) => {
   const isRTL = selectedLanguage === "ar";
   return (
     <View style={styles.inputWrapper}>
+      {icon ? <IconOutline name={showPassword ? `un${icon}` :  icon} color={Constants.COLOR.FONT_HINT} size={22}/> : null}
       <TextInput
         style={[
           styles.input,
@@ -42,15 +46,7 @@ const CustomInput = ({
       />
       {setShowPassword && (
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Image
-            resizeMode="contain"
-            source={
-              showPassword
-                ? require("../../images/EyeView.png")
-                : require("../../images/EyeHidden.png")
-            }
-            style={styles.eyeIconImage}
-          />
+          <IconFill name={showPassword? 'eye' : 'eye-invisible'} color={Constants.COLOR.FONT_HINT} size={22} />
         </TouchableOpacity>
       )}
     </View>

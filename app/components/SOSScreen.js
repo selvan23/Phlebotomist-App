@@ -352,6 +352,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: Constants.FONT_SIZE.XXXL,
     paddingTop: 25,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
 
   centerText: {
@@ -359,6 +360,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     paddingTop: 50,
     marginHorizontal: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
   },
 
   yesButton: {
@@ -391,6 +393,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.L,
     paddingVertical: 10,
     color: '#FFFFFF',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
   },
 
   headerRightImage: {

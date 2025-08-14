@@ -54,6 +54,7 @@ import settingsTabIconActive from './images/bottomTabIcons/settings_1.png';
 import { Screen } from 'react-native-screens';
 import Constants from './util/Constants';
 import Utility from './util/Utility';
+import { IconOutline } from "@ant-design/icons-react-native";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -70,7 +71,6 @@ const bottomBarStyles = StyleSheet.create({
         // width: deviceHeight / 30,
         // height: deviceHeight / 30,
         alignSelf: 'center',
-        padding: 16,
     },
     button: {
         flex: 1,
@@ -83,7 +83,7 @@ const bottomBarStyles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: Constants.FONT_SIZE.S,
-        marginTop: 12,
+        marginTop: 10,
     }
 });
 
@@ -189,6 +189,7 @@ const homeTabArray = [
         // activeImage: './images/bottomTabIcons/bookings_1.png',
         id: 'schedulesTab',
         isShowNavBar: true,
+        icon:  'calendar'
         // isShowLocation: true,
     },
     {
@@ -199,6 +200,7 @@ const homeTabArray = [
         id: 'collectionTab',
         isShowNavBar: true,
         isShowLocation: true,
+        icon:  'dollar'
     },
     {
         name: 'Delivery',
@@ -208,6 +210,7 @@ const homeTabArray = [
         activeImage: deliveryTabIconActive,
         id: 'deliveryTab',
         isShowNavBar: true,
+        icon:  'line-chart'
     },
     {
         name: 'Settings',
@@ -219,6 +222,7 @@ const homeTabArray = [
         id: 'SettingsTab',
         isShowNavBar: true,
         isShowLocation: true,
+        icon:  'setting'
     }
 ];
 
@@ -238,7 +242,7 @@ const TabBarItemComponent = (props) => {
         >
            {
             state.routes.map((route, index) => {
-                const { image, activeImage, name } = homeTabArray.filter((item) => item.id === route.name)[0];
+                const { image, activeImage, name, icon } = homeTabArray.filter((item) => item.id === route.name)[0];
                 const isFocused = state.index === index;
 
                 const onPress = () => {
@@ -270,19 +274,18 @@ const TabBarItemComponent = (props) => {
                         key={index}
                         style={bottomBarStyles.button}
                     >
-                        <Image
-                            resizeMode="contain"
-                            tintColor={isFocused ? Constants.COLOR.THEME_COLOR : Constants.COLOR.FONT_COLOR_DEFAULT}
-                            source={isFocused ? activeImage.toString() : image.toString()}
-                            style={[
-                                bottomBarStyles.avatar,
-                            ]}
+                        <IconOutline 
+                          color={isFocused ? Constants.COLOR.PRIMARY_COLOR : Constants.COLOR.FONT_HINT } 
+                          style={bottomBarStyles.avatar}
+                          size={35} 
+                          name={icon} 
                         />
                         <Text
                             style={[
                                 bottomBarStyles.buttonText,
                                 {
-                                    color: isFocused ? Constants.COLOR.THEME_COLOR : Constants.COLOR.BLACK_COLOR,
+                                    color: isFocused ? Constants.COLOR.PRIMARY_COLOR : Constants.COLOR.FONT_HINT,
+                                    fontFamily: isFocused ? Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD : Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
                                 }
                             ]}
                         >{name}</Text>

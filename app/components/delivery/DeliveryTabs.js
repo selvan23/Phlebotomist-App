@@ -72,7 +72,7 @@ class DeliveryTabs extends Component {
           <View style={styles.bodyContainer}>
             <Text
               style={{
-                color: '#6D7178',
+                color: activeTabIndex === 0 ? Constants.COLOR.PRIMARY_COLOR : '#6D7178',
                 alignSelf: 'center',
                 fontSize: Constants.FONT_SIZE.SM,
                 fontWeight: 'bold',
@@ -101,7 +101,7 @@ class DeliveryTabs extends Component {
           <View style={styles.bodyContainer}>
             <Text
               style={{
-                color: '#6D7178',
+                color: activeTabIndex === 1 ? Constants.COLOR.PRIMARY_COLOR : '#6D7178',
                 alignSelf: 'center',
                 fontSize: Constants.FONT_SIZE.SM,
                 fontWeight: 'bold',
@@ -117,14 +117,14 @@ class DeliveryTabs extends Component {
 
   _displayPendingIndicator = (index) => {
     return index === 0 ? (
-      <View style={[styles.indicator, { backgroundColor: '#6D7178' }]} />
+      <View style={[styles.indicator, { backgroundColor: Constants.COLOR.PRIMARY_COLOR }]} />
     ) : (
         <View style={{ marginTop: 15 }}></View>
       );
   };
   _displayDeliveredIndicator = (index) => {
     return index === 1 ? (
-      <View style={[styles.indicator, { backgroundColor: '#6D7178' }]} />
+      <View style={[styles.indicator, { backgroundColor: Constants.COLOR.PRIMARY_COLOR }]} />
     ) : (
         <View style={{ marginTop: 15 }}></View>
       );
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: '#F3F3F3',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     paddingTop: 15,
   },
   imageBackground: {

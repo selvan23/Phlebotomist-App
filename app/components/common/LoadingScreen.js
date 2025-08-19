@@ -65,6 +65,8 @@ class LoadingScreen extends Component {
           style={{
             paddingTop: this.state.height * (2 / 5),
             alignItems: 'center',
+            backgroundColor:  Constants.COLOR.WHITE_COLOR,
+            flex: 1,
           }}>
           <Spinner
             isVisible={this.props.isLoading}

@@ -21,10 +21,10 @@ import Constants from '../../util/Constants';
 import PropTypes from 'prop-types';
 import { nativationPop } from '../../rootNavigation';
 import moment from 'moment';
+import { IconOutline } from '@ant-design/icons-react-native';
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
   : Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
 
 export default class CancelBookingView extends Component {
   static propTypes = {
@@ -77,10 +77,7 @@ export default class CancelBookingView extends Component {
                       });
                     }, 1000);
                   }}>
-                  <Image
-                    source={require('../../images/close_white.png')}
-                    style={styles.closeImage}
-                  />
+                  <IconOutline style={styles.closeImage} name='close' size={deviceHeight / 30} />
                 </TouchableOpacity>
                 <PostFeedBack
                   cancelBtnClicked={this.state.cancelBtnClicked}
@@ -111,11 +108,8 @@ const styles = StyleSheet.create({
   },
   closeImage: {
     marginTop: Platform.OS === 'ios' ? 20 : 0,
-    width: deviceHeight / 30,
-    height: deviceHeight / 30,
     alignSelf: 'flex-end',
     marginRight: 5,
-    tintColor: 'black',
   },
   modalHeaderText: {
     textAlign: 'left',

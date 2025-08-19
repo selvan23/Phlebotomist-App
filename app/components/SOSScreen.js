@@ -30,6 +30,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateSOSAlert, showSosLoading, hideSosLoading } from '../actions/SosAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IconOutline } from '@ant-design/icons-react-native';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Utility.isiPhoneX()
@@ -128,13 +129,11 @@ class SOSScreen extends Component {
   _renderBodyView = () => {
     return (
       <View style={styles.mainContainer}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.goBack(null)}
-        >
-          <Image
-            style={styles.headerRightImage}
-            resizeMode="contain"
-            source={require('../images/black_cross.png')}
+        <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+          <IconOutline
+            name="close"
+            size={25}
+            style={{ marginTop: 10, marginRight: 15 }}
           />
         </TouchableOpacity>
 
@@ -149,7 +148,8 @@ class SOSScreen extends Component {
           <TouchableOpacity
             disabled={this.state.isYesButtonClicked}
             style={styles.yesButton}
-            onPress={() => this._onPressLocateMe()}>
+            onPress={() => this._onPressLocateMe()}
+          >
             <Text style={styles.buttonText}> Yes</Text>
           </TouchableOpacity>
 
@@ -162,7 +162,8 @@ class SOSScreen extends Component {
               setTimeout(() => {
                 this.setState({ isNoButtonClicked: false });
               }, 2000);
-            }}>
+            }}
+          >
             <Text style={styles.buttonText}> No </Text>
           </TouchableOpacity>
         </View>
@@ -330,14 +331,14 @@ export default connect(
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#eef3fd',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     padding: 10,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
   },
 
   innerContainer: {
-    backgroundColor: '#e1ebf9',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     alignItems: 'center',
     justifyContent: 'flex-start',
     flex: 1,

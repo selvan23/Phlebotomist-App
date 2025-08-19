@@ -19,6 +19,8 @@ import { getNotificationCount } from "../../actions/NotificationAction";
 
 import store from "../../store";
 import { navigate } from "../../rootNavigation";
+import { IconOutline } from "@ant-design/icons-react-native";
+import SosIcon from "../../assets/images/SosIcon";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -40,58 +42,28 @@ class NavigationBar extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    // if (store.getState().deviceState.isNetworkConnectivityAvailable) {
-    //   // this.getNotificationCountAPI();
-    //   if (this.timer === undefined) {
-    //     this.timer = setInterval(
-    //       () => this.getNotificationCountAPI(),
-    //       1000 * 30,
-    //     );
-    //   } else {
-    //     clearInterval(this.timer);
-    //   }
-    // }
-  }
-
-  componentWillUnmount() {
-    // clearInterval(this.timer);
-  }
-
-  async getNotificationCountAPI() {
-    // this.props.getNotificationCount(this.props.userName);
-  }
-
   render() {
     return (
       <View
-        style={{ backgroundColor: Constants.COLOR.BACKGROUND_COLOR_SCREEN }}
+        style={{ backgroundColor: Constants.COLOR.WHITE_COLOR }}
       >
-        {this.props.isShowNavBar == true ? (
+        {this.props.isShowNavBar ? (
           <View style={styles.container}>
             <View style={styles.leftView}>
               <Text style={styles.headingText}>{this.props.title}</Text>
             </View>
-            {this.props.isHideImages == true ? null : (
-              <View style={styles.rightView}>
+            {this.props.isHideImages ? null : (
+              <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
                   onPress={() => {
                     this._navigateSOSScreen();
                   }}
+                  style={styles.iconWrapper}
                 >
-                  <Image
-                    style={[
-                      styles.headerRightImage,
-                      {
-                        width: deviceHeight / 25,
-                        height: deviceHeight / 25,
-                        marginBottom: 8,
-                      },
-                    ]}
-                    source={require("../../images/alarm.png")}
-                  />
+                  <SosIcon width={50} height={50} />
                 </TouchableOpacity>
                 <TouchableOpacity
+                  disabled
                   onPress={() => {
                     // Actions.pdfReport({pdf: this.props.phonepeUrl});
                     navigate("pdfReport", {
@@ -99,43 +71,28 @@ class NavigationBar extends Component {
                     });
                   }}
                 >
-                  <Image
-                    style={[
-                      styles.headerRightImage,
-                      {
-                        width: deviceHeight / 25,
-                        height: deviceHeight / 25,
-                      },
-                    ]}
-                    source={{
-                      uri: this.props.phonepeUrl,
-                    }}
-                  />
+                  <HeaderIcon icon={"qrcode"} width={40} height={40} />
                 </TouchableOpacity>
-
                 <TouchableOpacity
                   onPress={() => {
                     this._navigateNotificationScreen();
                   }}
                 >
-                  <View>
-                    <Image
-                      style={[
-                        styles.headerRightImage,
-                        { width: deviceHeight / 30, height: deviceHeight / 30 },
-                      ]}
-                      source={require("../../images/bellwhite.png")}
-                    />
-                    {this._renderNotificationCount()}
-                  </View>
+                  <HeaderIcon icon={"bell"} width={40} height={40} />
+                  {this.props.count > 0 && (
+                    <View style={styles.badge}>
+                      <Text style={styles.badgeText}>
+                        {this.props.count}
+                      </Text>
+                    </View>
+                  )}
                 </TouchableOpacity>
-
                 <TouchableOpacity
                   onPress={() => {
                     this._navigateProfileScreen();
                   }}
                 >
-                  {this._showProfileIcon()}
+                  <HeaderIcon icon={"user"} width={40} height={40} />
                 </TouchableOpacity>
               </View>
             )}
@@ -145,99 +102,13 @@ class NavigationBar extends Component {
     );
   }
 
-  _renderNotificationCount = () => {
-    if (
-      this.props.count !== undefined &&
-      this.props.count !== null &&
-      this.props.count !== 0 &&
-      this.props.count !== ""
-    ) {
-      return (
-        <View
-          style={{
-            backgroundColor: Constants.COLOR.THEME_COLOR,
-            width: 20,
-            height: 20,
-            borderWidth: 1,
-            borderColor: "white",
-            borderRadius: 15,
-            position: "absolute",
-            left: -15,
-            bottom: 9,
-            marginLeft: 25,
-            justifyContent: "center",
-            alignSelf: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: Constants.FONT_SIZE.XXS,
-              alignItems: "center",
-              textAlign: "center",
-              alignContent: "center",
-              justifyContent: "center",
-              textAlignVertical: "center",
-              color: "white",
-            }}
-          >
-            {this.props.count < 10 ? this.props.count : this.props.count}
-          </Text>
-        </View>
-      );
-    } else {
-      return <View />;
-    }
-  };
-
-  _showProfileIcon = () => {
-    if (this.props.userImageURL !== "") {
-      return (
-        <Image
-          style={[
-            styles.headerRightImage,
-            {
-              width: deviceHeight / 30,
-              height: deviceHeight / 30,
-              borderRadius: deviceHeight / 30,
-              marginEnd: 5,
-            },
-          ]}
-          source={{ uri: this.props.userImageURL }}
-        />
-      );
-    } else {
-      return (
-        <Image
-          style={[
-            styles.headerRightImage,
-            {
-              width: deviceHeight / 35,
-              height: deviceHeight / 35,
-              marginEnd: 5,
-            },
-          ]}
-          source={require("../../images/user_white.png")}
-        />
-      );
-    }
-  };
   _navigateSOSScreen = () => {
-    // console.log('Current Scene', Actions.currentScene);
-    // Actions.SOSScreen();
     navigate("SOSScreen");
   };
   _navigateNotificationScreen = () => {
-    // console.log('Current Scene', Actions.currentScene);
-    // // if (Actions.currentScene === currentScene) {
-    // Actions.notificationListScreen();
-    // // }
     navigate("notificationListScreen");
   };
   _navigateProfileScreen = () => {
-    // console.log('Current Scene', Actions.currentScene);
-    // // if (Actions.currentScene === currentScene) {
-    // Actions.viewProfileScreen();
-    // // }
     navigate("viewProfileScreen");
   };
 }
@@ -259,6 +130,12 @@ const mapStateToProps = (state, props) => {
   };
 };
 
+const HeaderIcon = ({ icon, width, height }) => (
+  <View style={styles.iconWrapper}>
+    <IconOutline color={Constants.COLOR.PRIMARY_COLOR} size={25} name={icon} />
+  </View>
+);
+
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ getNotificationCount }, dispatch);
 };
@@ -270,11 +147,10 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: "center",
     width: "100%",
-    height: Platform.OS === "ios" ? 64 : 54,
     flexDirection: "row",
-    backgroundColor: Constants.COLOR.THEME_COLOR,
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     borderBottomWidth: 2,
-    borderBottomColor: Constants.COLOR.THEME_COLOR,
+    borderBottomColor: Constants.COLOR.WHITE_COLOR,
     // flex: 1,
     // gap: 15,
     // rowGap: 10,
@@ -291,8 +167,9 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   headingText: {
-    color: "#FFFFFF",
+    color: Constants.COLOR.BLACK_COLOR,
     fontSize: Constants.FONT_SIZE.XL,
+    fontFamily: "Poppins-SemiBold",
   },
   headerRightImage: {
     // marginLeft: 25,
@@ -305,5 +182,45 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     paddingHorizontal: 10,
     justifyContent: "center",
+  },
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#EFF2F5",
+    justifyContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 15,
+  },
+  badge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    backgroundColor: "red",
+    borderRadius: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    minWidth: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeCart: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    backgroundColor: "#1e3989",
+    borderRadius: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    minWidth: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    color: Constants.COLOR.WHITE_COLOR,
+    fontSize: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_ANEK_LATIN_SEMI_BOLD,
+    textAlign: "center",
   },
 });

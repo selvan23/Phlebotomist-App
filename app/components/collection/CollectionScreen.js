@@ -63,7 +63,7 @@ class CollectionScreen extends Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#FBFBFB",
+          backgroundColor: Constants.COLOR.WHITE_COLOR,
         }}
       >
         <CalenderList setDate={this._setDate} isFromCollection={true} />
@@ -94,7 +94,7 @@ class CollectionScreen extends Component {
               justifyContent: "center",
             }}
           >
-            <Text style={{ color: "#121212" }}>No Data Found!</Text>
+            <Text style={{ color: "#121212", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
           </View>
         );
       }
@@ -202,12 +202,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingHorizontal: 20,
     color: "black",
-    fontWeight: "bold",
     fontSize: Constants.FONT_SIZE.M,
     alignSelf: "center",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   bookingContentText: {
     color: "black",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   flatListBorder: {
     borderWidth: 0.5,
@@ -221,13 +222,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   flatListBookingText: {
-    fontWeight: "bold",
     textAlign: "center",
     paddingVertical: 10,
     paddingHorizontal: 5,
     flex: 1,
     fontSize: 13,
     color: "black",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   subContainer: {
     flexDirection: "row",

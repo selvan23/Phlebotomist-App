@@ -200,7 +200,7 @@ module.exports = {
     HALF_WHITE: "#fbfbfb",
     BLACK_COLOR: "#000000",
 
-    BACKGROUND_COLOR_SCREEN: "#FAFBFB",
+    BACKGROUND_COLOR_SCREEN: "#FFFFFF",
     FONT_COLOR_DEFAULT: "#797979",
     FONT_LINK_COLOR: "#80C0FE",
     DELIVERY_SHADOW_BG: "#676767",
@@ -235,6 +235,8 @@ module.exports = {
     LAB_SUMMARY_TEXT: "#676767",
     //lab summary
     PRIMARY_COLOR: '#1E3989',
+    SECONDARY_COLOR: '#C8DFFF',
+    LIGHT_BACKGROUND_COLOR: '#EFF2F5'
   },
 
   FONT_SIZE_BAK: {

@@ -109,11 +109,11 @@ class DeliveredScreen extends Component {
         );
       } else {
         return (
-          <View
+          <View style={{  backgroundColor: Constants.COLOR.WHITE_COLOR }}
             >
               <FlatList data={[]} keyExtractor={(item, index) => index.toString()} ListEmptyComponent={()=>(
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height:deviceHeight*.8}}>
-              <Text style={{ color: 'black' }}>No Data Found!</Text>
+              <Text style={{ color: 'black', fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
             </View>
               )} 
                onRefresh={() => this._onRefresh()}

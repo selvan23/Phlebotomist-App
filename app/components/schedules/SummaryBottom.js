@@ -79,7 +79,7 @@ class SummaryBottom extends Component {
 
   _showSubTotalAmount = () => {
     return (
-      <View>
+      <View style={{paddingBottom: 10}}>
         {/* <View style={styles.subTotalView}>
           <Text style={styles.subTotalText}>Total Amount </Text>
           <View style={styles.cartItemText}>

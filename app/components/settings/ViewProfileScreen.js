@@ -32,8 +32,7 @@ import LoadingScreen from "../common/LoadingScreen";
 import Constants from "../../util/Constants";
 import Utility from "../../util/Utility";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import DatePicker from 'react-native-datepicker';
-import DatePicker from "react-native-datepicker";
+import { IconOutline } from "@ant-design/icons-react-native";
 import ButtonBack from "../common/ButtonBack";
 import {
   getProfileDetails,
@@ -564,10 +563,7 @@ class ViewProfileScreen extends Component {
           />
           {this.state.isEditable ? (
             <TouchableOpacity onPress={() => this._onPressRemoveProfile()}>
-              <Image
-                style={{ width: 20, height: 20 }}
-                source={require("../../images/black_cross.png")}
-              />
+              <IconOutline  name="close" />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -605,11 +601,7 @@ class ViewProfileScreen extends Component {
               isEditable ? this._closeAlert() : nativationPop();
             }}
           >
-            <Image
-              style={styles.headerCloseImage}
-              resizeMode="contain"
-              source={require("../../images/black_cross.png")}
-            />
+            <IconOutline size={22}  name="close" />
           </TouchableOpacity>
         </View>
         <View style={styles.divider} />
@@ -682,7 +674,7 @@ class ViewProfileScreen extends Component {
                 }
               />
             </View>
-            <View style={styles.innerbody}>
+            {/* <View style={styles.innerbody}>
               <Text style={styles.bodyheaderText}> Password </Text>
               <TextInput
                 value={"*******"}
@@ -690,7 +682,7 @@ class ViewProfileScreen extends Component {
                 editable={false}
                 onChange={this.handlePassword}
               />
-            </View>
+            </View> */}
             <View style={styles.innerbody}>
               <Text style={styles.bodyheaderText}> Email </Text>
               <TextInput
@@ -722,10 +714,11 @@ class ViewProfileScreen extends Component {
               <Text style={styles.bodyheaderText}> Remarks </Text>
               <View style={{ marginLeft: 4 }}>
                 <HTML
-                  baseStyle={{ color: "black" }}
+                  baseStyle={{ color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}
                   source={{
                     html: this.state.aboutCollector,
                   }}
+                  tagsStyles={tagsStyles}
                 />
               </View>
             </View>
@@ -791,10 +784,18 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewProfileScreen);
 
+const tagsStyles = {
+  p: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+  },
+};
+
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#eef3fd",
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
   },
   ScrollContainer: {
     paddingVertical: 10,
@@ -816,14 +817,16 @@ const styles = StyleSheet.create({
   },
   headerText: {
     flex: 3,
-    color: "#757677",
+    color: Constants.COLOR.PRIMARY_COLOR,
     fontSize: Constants.FONT_SIZE.XXXL,
     marginHorizontal: 5,
+    fomntFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   bodyheaderText: {
     fontSize: Constants.FONT_SIZE.M,
-    color: "#fb5861",
+    color: Constants.COLOR.PRIMARY_COLOR,
     marginRight: 50,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   bodyText: {
     fontSize: Constants.FONT_SIZE.M,
@@ -832,6 +835,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     // marginTop: 2,
     borderBottomColor: "#A9A9A9",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   header: {
     flexDirection: "row",
@@ -855,6 +859,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.S,
     paddingVertical: 10,
     color: "#FFFFFF",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
 
   headerRightImage: {
@@ -881,15 +886,16 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: Constants.FONT_SIZE.L,
-    color: "#757677",
+    color: Constants.COLOR.BLACK_COLOR,
     fontWeight: "bold",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   divider: {
     width: "100%",
     height: 1,
     backgroundColor: "#757677",
   },
-  headerCloseImageView: { padding: 10 },
+  headerCloseImageView: { paddingRight: 10 },
   headerCloseImage: {
     width: 20,
     height: 20,
@@ -903,11 +909,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   editText: {
-    color: "#1E75C0",
+    color: Constants.COLOR.PRIMARY_COLOR,
     textAlign: "right",
     alignContent: "flex-end",
     alignItems: "flex-end",
     alignSelf: "flex-end",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   calenderContainer: {
     flex: 1,

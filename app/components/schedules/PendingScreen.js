@@ -177,9 +177,9 @@ class PendingScreen extends Component {
       } else {
         return (
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: Constants.COLOR.WHITE_COLOR }}
           >
-            <Text style={{ color: "black" }}>No Data Found!</Text>
+            <Text style={{ color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
           </View>
         );
       }
@@ -272,7 +272,7 @@ class PendingScreen extends Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#FBFBFB",
+          backgroundColor: Constants.COLOR.WHITE_COLOR,
         }}
       >
         { console.log("pending props changed", this.props.pendingBookingList) }

@@ -114,7 +114,7 @@ class CalenderList extends Component {
             marginBottom: 50,
             marginHorizontal: 10,
             alignItems: "center",
-            backgroundColor: "white",
+            backgroundColor: Constants.COLOR.WHITE_COLOR,
           }}
         >
           <View style={styles.BorderTextView}>
@@ -131,9 +131,10 @@ class CalenderList extends Component {
             </View>
 
             <TouchableOpacity
+              disabled
               style={{
                 alignItems: "center",
-                backgroundColor: "#FFB6C1",
+                justifyContent: "center",
                 padding: 10,
                 paddingHorizontal: 20,
                 borderRadius: 60,
@@ -205,7 +206,7 @@ class CalenderList extends Component {
           firstDay={1}
           theme={{
             textSectionTitleColor: "black",
-            selectedDayBackgroundColor: "green",
+            selectedDayBackgroundColor: Constants.COLOR.PRIMARY_COLOR,
             selectedDayTextColor: "white",
             todayTextColor: "black",
             dayTextColor: "black",
@@ -281,8 +282,10 @@ class CalenderList extends Component {
           marginTop: 15,
           flexDirection: "row",
           justifyContent: "space-between",
-          backgroundColor: "#FFFFFF",
+          backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR,
           borderRadius: 60,
+          borderWidth: 1,
+          borderColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR,
         }}
       >
         <Text
@@ -290,9 +293,9 @@ class CalenderList extends Component {
             marginLeft: 5,
             paddingLeft: 5,
             alignSelf: "center",
-            backgroundColor: "#FFFFFF",
             overflow: "hidden",
             color: "black",
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
           }}
         >
           {this.props.isFromCollection
@@ -309,12 +312,11 @@ class CalenderList extends Component {
             this.props.getcalenderDate();
           }}
           style={{
-            backgroundColor: "#FFB6C1",
-            padding: 10,
+            backgroundColor: '#EFF2F5',
+            padding: 12,
             alignSelf: "flex-start",
             paddingHorizontal: 20,
             borderRadius: 60,
-            marginRight: 5,
           }}
         >
           <Image
@@ -348,13 +350,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     marginHorizontal: 10,
-    borderWidth: 1,
     borderRadius: 30,
-    borderColor: "lightgray",
-    padding: 5,
-    backgroundColor: "darkgray",
+    backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR,
     flexDirection: "row",
-    height: 50,
   },
   calenderList: {
     borderWidth: 0.5,
@@ -366,16 +364,17 @@ const styles = StyleSheet.create({
   TextStyle: {
     textAlign: "center",
     alignSelf: "center",
-    // color: Constants.COLOR.LAB_CART_ITEM_FONT,
+    color: Constants.COLOR.BLACK_COLOR,
     padding: 10,
     marginLeft: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   calenderIcon: {
     padding: 10,
     width: 20,
     height: 20,
     alignItems: "center",
-    tintColor: "#FA5858",
+    tintColor: Constants.COLOR.PRIMARY_COLOR,
   },
 });
 

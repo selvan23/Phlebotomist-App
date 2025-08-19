@@ -29,7 +29,7 @@ import {
 } from '../actions/NotificationAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { nativationPop, navigationRef } from '../rootNavigation';
-const deviceWidth = Dimensions.get('window').width;
+import { IconOutline } from '@ant-design/icons-react-native';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -92,11 +92,7 @@ class NotificationListScreen extends Component {
                 nativationPop();
               }
             }}>
-            <Image
-              style={styles.headerCloseImage}
-              resizeMode="contain"
-              source={require('../images/black_cross.png')}
-            />
+            <IconOutline name='close' size={25} />
           </TouchableOpacity>
         </View>
         <View style={styles.divider} />
@@ -187,7 +183,7 @@ class NotificationListScreen extends Component {
               this._sectionHeader({section, index})
             }
           />
-          {this.state.showModal === true ? this._renderModalPopUp() : null}
+          {this.state.showModal ? this._renderModalPopUp() : null}
         </KeyboardAwareScrollView>
       </View>
     );
@@ -230,11 +226,7 @@ class NotificationListScreen extends Component {
                 });
               }, 1000);
             }}>
-            <Image
-              style={styles.modalCloseImage}
-              resizeMode="contain"
-              source={require('../images/black_cross.png')}
-            />
+            <IconOutline name='close' size={25} />
           </TouchableOpacity>
         </View>
         <KeyboardAwareScrollView>
@@ -305,6 +297,7 @@ class NotificationListScreen extends Component {
                 textAlign: 'left',
                 padding: 10,
                 color: '#120F0C',
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
               }}
               numberOfLines={1}>
               {item.Time_Diff_Desc}
@@ -319,6 +312,7 @@ class NotificationListScreen extends Component {
                 alignItems: 'flex-end',
                 alignContent: 'flex-end',
                 color: '#0645AD',
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
               }}
               numberOfLines={1}>
               View More
@@ -385,7 +379,7 @@ export default connect(
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#eef3fd',
+    backgroundColor: Constants.COLOR.WHITE,
   },
   ScrollContainer: {
     paddingVertical: 10,
@@ -408,8 +402,8 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: Constants.FONT_SIZE.L,
-    color: '#757677',
-    fontWeight: 'bold',
+    color: Constants.COLOR.BLACK_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   divider: {
     width: '100%',
@@ -438,6 +432,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignContent: 'center',
     color: '#120F0C',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   newOldMsgText: {
     marginTop: 10,
@@ -451,6 +446,7 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'flex-end',
     marginRight: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   sectionItemHeader: {
     flex: 1,
@@ -466,12 +462,14 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     color: '#000000',
     fontWeight: Platform.OS === 'ios' ? null : '900',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   sectionHeaderText: {
     paddingVertical: 10,
     fontSize: Constants.FONT_SIZE.L,
     color: 'black',
     fontWeight: Platform.OS === 'ios' ? null : '900',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   mainModalView: {
     backgroundColor: 'white',
@@ -499,6 +497,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.SM,
     // fontWeight:'bold',
     color: '#313431',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
   },
   modalCloseImage: {
     width: 20,
@@ -515,6 +514,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     fontWeight: '600',
     color: '#313431',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_MEDIUM,
   },
   buttonView: {
     flexDirection: 'row',
@@ -525,5 +525,6 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.BUTTON_BG,
     paddingHorizontal: 8,
     paddingVertical: 16,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
   },
 });

@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
+    backgroundColor: Constants.COLOR.WHITE_COLOR
   },
   textContentStyle: {
     color: Constants.COLOR.FONT_COLOR_DEFAULT,

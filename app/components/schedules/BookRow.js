@@ -19,6 +19,7 @@ import {
 } from "react-native";
 import Constants from "../../util/Constants";
 import Utility from "../../util/Utility";
+import { IconOutline } from "@ant-design/icons-react-native";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import moment from "moment";
 
@@ -53,6 +54,7 @@ class BookRow extends Component {
               color: Constants.COLOR.BOOK_DATE_TIME_TEXT_COLOR,
               paddingHorizontal: 6,
               paddingEnd: 10,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
             }}
           >
             {date}
@@ -104,6 +106,7 @@ class BookRow extends Component {
                   alignSelf: "center",
                   color: "red",
                   fontSize: Constants.FONT_SIZE.S,
+                  fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
                 }}
                 numberOfLines={1}
               >
@@ -115,10 +118,7 @@ class BookRow extends Component {
           <View style={styles.bookingIdMainView}>
             <View style={styles.bookingIdSubViewOne}>
               <View style={styles.rowDirectionView}>
-                <Image
-                  source={require("../../images/booking_id_img.png")}
-                  style={styles.imageStyle}
-                />
+                <IconOutline name="carry-out" size={18} />
                 <Text
                   style={[
                     styles.bookingIdTextStyle,
@@ -148,6 +148,7 @@ class BookRow extends Component {
                         ? Constants.COLOR.PAYMENT_STATUS_ONLINE
                         : Constants.COLOR.CASH_ON_HAND,
                     fontSize: Constants.FONT_SIZE.SM,
+                    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
                   }}
                   numberOfLines={2}
                 >
@@ -166,22 +167,11 @@ class BookRow extends Component {
                         ? Constants.COLOR.PAYMENT_STATUS_ONLINE
                         : Constants.COLOR.CASH_ON_HAND,
                     fontSize: Constants.FONT_SIZE.SM,
+                    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
                   }}
                 />
               )}
-
-              <Image
-                source={require("../../images/next.png")}
-                style={{
-                  width: 16,
-                  height: 16,
-                  alignSelf: "center",
-                  alignContent: "flex-end",
-                  alignItems: "flex-end",
-                  justifyContent: "flex-end",
-                  marginRight: 10,
-                }}
-              />
+              <IconOutline name="right" style={{marginRight: 10}} size={20} />
             </View>
           </View>
 
@@ -316,7 +306,7 @@ const styles = StyleSheet.create({
   },
   subViewContainerOne: {
     flex: 0.8,
-    backgroundColor: Constants.COLOR.BOOK_LEFT_SIDE_BG,
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     borderBottomStartRadius: 25,
     borderTopStartRadius: 25,
     justifyContent: "space-between",
@@ -336,20 +326,22 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     // paddingVertical: 4,
     paddingEnd: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   dateTimeTextStyle: {
     fontSize: Constants.FONT_SIZE.SM,
-    color: Constants.COLOR.BOOK_DATE_TIME_TEXT_COLOR,
+    color: Constants.COLOR.BLACK_COLOR,
     paddingVertical: 6,
     paddingHorizontal: 6,
     paddingEnd: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   addressTextStyle: {
     alignSelf: "flex-start",
     fontSize: Constants.FONT_SIZE.SM,
     padding: 5,
     color: Constants.COLOR.BOOK_ADDRESS_TEXT_COLOR,
-    fontWeight: "bold",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   bookingIdMainView: {
     flexDirection: "row",
@@ -377,11 +369,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: Constants.COLOR.BOOK_ID_TEXT_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
   },
   statusTextStyle: {
     padding: 4,
     color: "black",
     fontSize: Constants.FONT_SIZE.S,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   imageStyle: {
     width: 14,
@@ -418,6 +412,7 @@ const styles = StyleSheet.create({
     padding: 5,
     color: "white",
     fontSize: Constants.FONT_SIZE.XS,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   circleBackground: {
     width: 25,
@@ -427,7 +422,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   timeBackground: {
-    backgroundColor: Constants.COLOR.BOOK_SHADOW_BG,
+    backgroundColor: Constants.COLOR.SECONDARY_COLOR,
     borderBottomStartRadius: 25,
     overflow: "hidden",
     justifyContent: "flex-end",

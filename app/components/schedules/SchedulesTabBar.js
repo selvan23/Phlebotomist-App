@@ -393,7 +393,7 @@ class SchedulesTabBar extends Component {
         {this.renderTabButton(
           'Pending',
           this.props.pendingCount,
-          Constants.COLOR.PENDING_TAB,
+          Constants.COLOR.PRIMARY_COLOR,
           FILTER_TYPES.PENDING,
           'pendingTab',
           'pendingBtnClick',
@@ -403,7 +403,7 @@ class SchedulesTabBar extends Component {
         {this.renderTabButton(
           'Completed',
           this.props.completedCount,
-          Constants.COLOR.COMPLETED_TAB,
+          Constants.COLOR.PRIMARY_COLOR,
           FILTER_TYPES.COMPLETED,
           'completedTab',
           'completedBtnClick',
@@ -413,13 +413,14 @@ class SchedulesTabBar extends Component {
         {this.renderTabButton(
           'Cancelled',
           this.props.cancelledCount,
-          Constants.COLOR.CANCELED_TAB,
+          Constants.COLOR.PRIMARY_COLOR,
           FILTER_TYPES.CANCELLED,
           'cancelledTab',
           'cancelledBtnClick',
           TAB_INDICES.CANCELLED
         )}
       </View>
+
     );
   }
 }
@@ -478,7 +479,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
+    paddingVertical: 10,
   },
   bodyContainer: {
     flexDirection: 'row',
@@ -487,10 +489,12 @@ const styles = StyleSheet.create({
   subContainer: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
   },
   tabTitle: {
     alignSelf: 'center',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   countBadge: {
     alignItems: 'center',

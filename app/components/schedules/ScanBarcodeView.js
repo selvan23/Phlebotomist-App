@@ -28,6 +28,7 @@ import DeviceInfo from "react-native-device-info";
 import Permissions from "react-native-permissions";
 import PropTypes from "prop-types";
 import { navigate, navigationRef } from "../../rootNavigation";
+import { IconOutline } from "@ant-design/icons-react-native";
 
 let scene = "sampleCollectionScreen";
 const deviceHeight = Utility.isiPhoneX()
@@ -143,10 +144,11 @@ export default class ScanBarcodeView extends Component {
                 }
               />
               {data.isVerifiedBarCode || data.IsAlready_Collected ? (
-                <Image
-                  style={styles.barcodeTextVerifyImage}
-                  resizeMode="contain"
-                  source={require("../../images/tick.png")}
+                <IconOutline
+                  style={{ flex: 1, alignSelf: "center" }}
+                  name="check"
+                  size={deviceHeight / 35}
+                  color="#4CAF50"
                 />
               ) : null}
             </View>
@@ -201,37 +203,37 @@ export default class ScanBarcodeView extends Component {
               <Text
                 style={[
                   styles.submitTextStyle,
-                  { color: Constants.COLOR.BUTTON_BG, fontWeight: "bold" },
+                  {
+                    color: Constants.COLOR.PRIMARY_COLOR,
+                    fontFamily:
+                      Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
+                  },
                 ]}
               >
                 Reset Code
               </Text>
             </TouchableOpacity>
           </View>
-  
+
           <View style={styles.barcodeListItemView}>
-            {
-              console.log('scanbarcode flatlist: ', data.Test_List)
-            }
-            {
-              typeof data.Test_List === 'object'
-              && data.Test_List.length > 0
-              && <>
-                <FlatList
-                  extraData={this.state}
-                  data={data.Test_List}
-                  renderItem={({ item }, idx) => (
-                    <Item
-                      key={idx}
-                      title={item.Service_Name}
-                      QrCode={data.isVerifiedBarCode} 
-                    />
-                  )}
-                  keyExtractor={(_, idx) => idx}
-                  listKey={(_, index) => `_key${index.toString()}`}
-                />
-              </>
-            }
+            {typeof data.Test_List === "object" &&
+              data.Test_List.length > 0 && (
+                <>
+                  <FlatList
+                    extraData={this.state}
+                    data={data.Test_List}
+                    renderItem={({ item }, idx) => (
+                      <Item
+                        key={idx}
+                        title={item.Service_Name}
+                        QrCode={data.isVerifiedBarCode}
+                      />
+                    )}
+                    keyExtractor={(_, idx) => idx}
+                    listKey={(_, index) => `_key${index.toString()}`}
+                  />
+                </>
+              )}
           </View>
         </View>
       );
@@ -386,7 +388,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     paddingVertical: 10,
-    backgroundColor: Constants.COLOR.BUTTON_BG,
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     borderRadius: 5,
     paddingHorizontal: 10,
     justifyContent: "center",
@@ -397,6 +399,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.WHITE_COLOR,
     fontSize: Constants.FONT_SIZE.SM,
     fontWeight: "600",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   subContainer: {
     flexDirection: "row",

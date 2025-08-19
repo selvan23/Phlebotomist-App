@@ -143,7 +143,7 @@ class CompletedScreen extends Component {
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <Text style={{ color: "black" }}>No Data Found!</Text>
+            <Text style={{ color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
           </View>
         );
       }
@@ -231,7 +231,7 @@ class CompletedScreen extends Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#FBFBFB",
+          backgroundColor: Constants.COLOR.WHITE_COLOR,
         }}
       >
         <CalenderList setDate={this._setDate} isfromCompleted={"COMPLETED"} />

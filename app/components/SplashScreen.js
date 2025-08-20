@@ -294,6 +294,8 @@ class SplashScreen extends Component {
     if (this.state.isLoggedIn === 'true') {
       // Actions.homeTabBar();
       navigationReplace('homeTabBar');
+
+
       if (this.props.route.params.isFromNotification) {
         // Actions.pendingDetailScreen({
         //   rowData: this.props.route.params.notificationData,
@@ -304,7 +306,8 @@ class SplashScreen extends Component {
       }
     } else {
       // Actions.LoginScreen();
-      navigate('LoginScreen');
+      // navigate('LoginScreen');
+      navigationReplace('LoginScreen');
     }
   };
 

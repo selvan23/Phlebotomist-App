@@ -72,10 +72,11 @@ class DeliveryTabs extends Component {
           <View style={styles.bodyContainer}>
             <Text
               style={{
-                color: activeTabIndex === 0 ? Constants.COLOR.PRIMARY_COLOR : '#6D7178',
-                alignSelf: 'center',
+                color:activeTabIndex === 1 ? '#6D7178' : Constants.COLOR.THEME_COLOR,
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_BOLD,
                 fontSize: Constants.FONT_SIZE.SM,
-                fontWeight: 'bold',
+                alignSelf: 'center',
+                fontWeight: '600',
               }}>
               PENDING DELIVERY
             </Text>
@@ -101,10 +102,11 @@ class DeliveryTabs extends Component {
           <View style={styles.bodyContainer}>
             <Text
               style={{
-                color: activeTabIndex === 1 ? Constants.COLOR.PRIMARY_COLOR : '#6D7178',
-                alignSelf: 'center',
+                color:activeTabIndex === 0 ? '#6D7178' : Constants.COLOR.THEME_COLOR,
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_BOLD,
                 fontSize: Constants.FONT_SIZE.SM,
-                fontWeight: 'bold',
+                alignSelf: 'center',
+                fontWeight: '600',
               }}>
               DELIVERED
             </Text>
@@ -117,14 +119,14 @@ class DeliveryTabs extends Component {
 
   _displayPendingIndicator = (index) => {
     return index === 0 ? (
-      <View style={[styles.indicator, { backgroundColor: Constants.COLOR.PRIMARY_COLOR }]} />
+      <View style={[styles.indicator, { backgroundColor:Constants.COLOR.THEME_COLOR,}]} />
     ) : (
         <View style={{ marginTop: 15 }}></View>
       );
   };
   _displayDeliveredIndicator = (index) => {
     return index === 1 ? (
-      <View style={[styles.indicator, { backgroundColor: Constants.COLOR.PRIMARY_COLOR }]} />
+      <View style={[styles.indicator, { backgroundColor:Constants.COLOR.THEME_COLOR,}]} />
     ) : (
         <View style={{ marginTop: 15 }}></View>
       );

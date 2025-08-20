@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     flexDirection: 'row-reverse',
     alignSelf: 'flex-end',
-    backgroundColor: '#676767',
+    backgroundColor: Constants.COLOR.THEME_COLOR,
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: 'white',
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   nextImage: {
     justifyContent: 'center',

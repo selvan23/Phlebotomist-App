@@ -16,6 +16,8 @@ import {
   Platform,
   AppState,
   PermissionsAndroid,
+  BackHandler,
+  Alert,
 } from 'react-native';
 import Constants from '../../util/Constants';
 import Utility from '../../util/Utility';
@@ -99,6 +101,17 @@ class SchedulesTabBar extends Component {
 
   componentDidMount() {
     this.initializeComponent();
+            this.focusListener = this.props.navigation.addListener('focus', () => {
+      this.backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        this.handleBackPress
+      );
+    });
+
+    // Remove listener on blur
+    this.blurListener = this.props.navigation.addListener('blur', () => {
+      if (this.backHandler) this.backHandler.remove();
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -106,11 +119,31 @@ class SchedulesTabBar extends Component {
       this._getAsyncAndAPICall()
     }
     this.handleLocationStateChanges(prevState);
+
   }
 
   componentWillUnmount() {
     this.cleanup();
+    if (this.focusListener) this.focusListener();
+    if (this.blurListener) this.blurListener();
+    if (this.backHandler) this.backHandler.remove();
   }
+  
+    handleBackPress = () => {
+    Alert.alert(
+      'Hold on!',
+      'Are you sure you want to go back?',
+      [
+        {
+          text: 'No',
+          onPress: () => null,
+          style: 'No',
+        },
+        { text: 'Yes', onPress: () => BackHandler.exitApp() },
+      ]
+    );
+    return true; // prevent default back action
+  };
 
   getFilterType = () => {
     const activeIndex = this.props.state.index

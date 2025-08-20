@@ -36,11 +36,11 @@ class DeliveryRow extends Component {
               paddingHorizontal: 5,
               marginTop: 4,
               justifyContent: 'center',
+
             }}>
-            <View style={{ flex: 2 }}>
-              <Text style={[styles.nameTextStyle]} numberOfLines={3}>
-                {this.props.item.Pt_Name}, {this.props.item.First_Age},{' '}
-                {this.props.item.Gender_Code}
+            <View>
+              <Text style={[styles.nameTextStyle]} numberOfLines={1}>
+              {`${this.props.item.Pt_Name}  ${this.props.item.First_Age } ${this.props.item.Gender_Code }`}
               </Text>
             </View>
             <View style={{ flex: 2, paddingLeft: 20, alignSelf: 'center' }}>
@@ -64,14 +64,14 @@ class DeliveryRow extends Component {
                   alignSelf: 'center',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  tintColor: 'red',
+                  tintColor: Constants.COLOR.THEME_COLOR,
                 }}
                 source={require('../../images/placeholder.png')}
               />
               <Text
                 style={{
                   alignSelf: 'center',
-                  color: 'red',
+                  color: Constants.COLOR.THEME_COLOR,
                   fontSize: Constants.FONT_SIZE.SM,
                   textAlign: 'center',
                 }}
@@ -182,44 +182,54 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     flexDirection: 'row',
     height: Platform.OS === 'android' ? deviceHeight / 5.5 : null,
-    borderColor: '#F1F1F1',
-    borderRadius: 2,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    backgroundColor: '#fbfbfb',
+   
   },
 
   subViewContainerOne: {
-    borderLeftWidth: 1,
-    borderRightWidth: 2,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    borderColor: '#f9aa2a',
-    backgroundColor: '#f9aa2a',
+    borderColor:Constants.COLOR.THEME_COLOR,
+    
+    
 
-    borderBottomColor: '#F1F1F1',
-    borderTopColor: '#F1F1F1',
-    borderRightColor: '#F1F1F1',
   },
 
   subViewContainerTwo: {
     flex: 3,
     justifyContent: 'space-around',
-    borderLeftWidth: 2,
-    borderRightWidth: 1,
-    borderTopWidth: 1,
+    // borderLeftWidth: 2,
+    // borderRightWidth: 1,
+    // borderTopWidth: 1,
     borderBottomWidth: 1,
     borderLeftColor: '#4C4C4C',
     borderBottomColor: '#F1F1F1',
     borderTopColor: '#F1F1F1',
     borderRightColor: '#F1F1F1',
-    backgroundColor: '#fbfbfb',
     paddingHorizontal: 5,
+    backgroundColor:"#e6ecffff"
+ 
+
   },
 
   nameTextStyle: {
     alignSelf: 'flex-start',
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_WIX_REGULAR,
     padding: 5,
-    color: '#898989',
+    color: "#000000",
     fontWeight: 'bold',
+    width: deviceWidth / 2.5,
   },
 
   dateTextStyle: {
@@ -227,14 +237,14 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.SM,
     padding: 5,
     paddingHorizontal: Platform.OS === 'android' ? 5 : 10,
-
-    color: '#898989',
-    fontWeight: 'bold',
+    color:"#000000",
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   pendingMainView: {
     flexDirection: 'row',
-    marginLeft: 10,
+    marginLeft: 5,
     flex: 1,
+    // backgroundColor: '#f9aa2a',
   },
   pendingSubViewOne: {
     flexDirection: 'row',
@@ -244,15 +254,16 @@ const styles = StyleSheet.create({
   pendingSubViewTwo: {
     flexDirection: 'row',
     flex: 7,
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
   },
   pendingdeliverTextStyle: {
     alignSelf: 'flex-start',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     padding: Platform.OS === 'android' ? 5 : 5,
     height: '100%',
     flex: 1,
-    color: '#898989',
+    color: '#000000ff',
   },
   phoneTextStyle: {
     padding: 5,

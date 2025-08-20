@@ -28,6 +28,7 @@ import {
 } from '../actions/ConfigAction';
 import { navigate } from '../rootNavigation';
 import CustomInput from './common/CustomInput';
+import GradientButton from './common/GradientButton';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -97,12 +98,16 @@ class SetPasswordScreen extends Component {
         <KeyboardAwareScrollView enableOnAndroid={true}>
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>
-              <Text style={styles.title}>Set Password </Text>
+              {/* <Text style={styles.title}>Set Password </Text> */}
             </View>
           </View>
           <View style={styles.bodyContainerBottom}></View>
           {this._renderSetPasswordView()}
         </KeyboardAwareScrollView>
+          <View style={{ ustifyContent: "center", alignItems: "center",}}>
+            <Text style={styles.version}>Version: 1.1.0</Text>
+            <Text style={styles.version}>Powered by SUKRAA</Text>
+          </View>
       </SafeAreaView>
     );
   };
@@ -117,7 +122,7 @@ class SetPasswordScreen extends Component {
               source={require('../images/Logo.png')}
               style={styles.image}
             />
-            <Text style={styles.placeholder}>Enter Password</Text>
+              <Text style={styles.title}>Set Password </Text>
             <CustomInput
               placeholder={'Enter the Password'}
               value={this.state.password}
@@ -130,7 +135,6 @@ class SetPasswordScreen extends Component {
               selectedLanguage={'en'}
               icon={'lock'}
             />
-            <Text style={styles.placeholder}>Confirm Password</Text>
             <CustomInput
               placeholder={'Re-enter the Password'}
               value={this.state.confirmPassword}
@@ -146,12 +150,12 @@ class SetPasswordScreen extends Component {
             <Text style={styles.link}>
               Password should be 8 or more characters with alpha numeric
             </Text>
-            <TouchableOpacity
-              onPress={() => {
+                          <GradientButton
+                onPress={() => {
                 this._validateInputs();
-              }}>
-              <Text style={styles.button}>Confirm</Text>
-            </TouchableOpacity>
+              }}
+                title={'Confirm'}
+              />
           </View>
         </View>
       </View>
@@ -262,10 +266,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(SetPasswordScreen);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
   },
   bodyContainerTop: {
     height: deviceHeight / 3,
-    backgroundColor: Constants.COLOR.THEME_COLOR,
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     borderBottomEndRadius: 15,
     borderBottomStartRadius: 15,
   },
@@ -280,11 +285,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     bottom: 20,
-    borderRadius: 10,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 1.0,
-    elevation: 6,
   },
   loginInnerView: {
     paddingLeft: 25,
@@ -297,10 +297,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Constants.FONT_SIZE.XXL,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#00071A',
     textAlign: 'center',
-    flex: 1,
+    // flex: 1,
   },
   placeholder: {
     marginTop: 10,
@@ -308,6 +309,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 10,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     color: '#404040',
     textAlign: 'left',
     fontWeight: 'bold',
@@ -325,6 +327,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: 'black',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -334,6 +337,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: 'center',
     fontSize: Constants.FONT_SIZE.L,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     color: 'white',
     fontWeight: 'bold',
     backgroundColor: Constants.COLOR.THEME_COLOR,
@@ -357,8 +361,16 @@ const styles = StyleSheet.create({
   },
   link: {
     fontSize: Constants.FONT_SIZE.S,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     color: Constants.COLOR.BLACK_COLOR,
     textAlign: 'center',
     marginVertical: 15,
   },
+   version: {
+        fontSize: Constants.FONT_SIZE.S,
+        fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+        color: Constants.COLOR.BLACK_COLOR,
+        textAlign: "center",
+        marginVertical: 5,
+      },
 });

@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "flex-start",
     alignSelf: "center",
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "#ffffffff",
+    marginTop: screenWidth * 0.01,
   },
   inputIcon: {
     width: screenWidth * 0.05,

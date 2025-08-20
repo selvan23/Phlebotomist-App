@@ -38,6 +38,7 @@ const deviceHeight = Utility.isiPhoneX()
 const deviceWidth = Dimensions.get('window').width;
 import moment from 'moment';
 import { nativationPop } from '../../rootNavigation';
+import GradientButton from '../common/GradientButton';
 
 
 class DeliveryDetailsScreen extends Component {
@@ -236,8 +237,10 @@ class DeliveryDetailsScreen extends Component {
               flex: 1,
               paddingTop: 10,
               color: 'black',
-              fontWeight: 'bold',
+              fontWeight: '600',
               paddingRight: 25,
+              fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
+
             }}>
             Tube Type
           </Text>
@@ -246,8 +249,9 @@ class DeliveryDetailsScreen extends Component {
               flex: 1,
               paddingTop: 10,
               color: 'black',
-              fontWeight: 'bold',
+              fontWeight: '600',
               paddingRight: 20,
+              fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
             }}>
             Bar Code
           </Text>
@@ -460,12 +464,22 @@ class DeliveryDetailsScreen extends Component {
   _renderSubmitButtonView = () => {
     if (this.props.route.params.isFromPending) {
       return (
-        <View>
+        <View style={{
+              marginTop: 20,
+              marginBottom: 5,
+              alignSelf: 'flex-end',
+          
+            }}>
+          {/* <GradientButton isSetwith={0.3} isSetheight={0.10} title={"Submit"} onPress={() => {
+              this._onSubmitDetails();
+            }}/> */}
+
           <TouchableOpacity
             style={{
               marginTop: 20,
               marginBottom: 5,
               alignSelf: 'flex-end',
+
             }}
             onPress={() => {
               this._onSubmitDetails();
@@ -534,7 +548,7 @@ function Item({ title }) {
         alignItems: 'flex-end',
       }}>
       <View style={styles.deliverySubList}>
-        <Text style={{ fontSize: 12, color: Constants.COLOR.FONT_COLOR }} numberOfLines={2}>
+        <Text style={{ fontSize: 12, color: Constants.COLOR.FONT_COLOR,fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_ANEK_LATIN_REGULAR }} numberOfLines={2}>
           {title}
         </Text>
       </View>
@@ -598,6 +612,7 @@ const styles = StyleSheet.create({
   deliveryIdText: {
     fontWeight: 'bold',
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     fontSize: Constants.FONT_SIZE.M,
   },
   deliveryViewLink: {
@@ -605,6 +620,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.FONT_LINK_COLOR,
     alignSelf: 'flex-end',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
 
   //delivery Details
@@ -624,7 +640,8 @@ const styles = StyleSheet.create({
   deliverTextStyle: {
     alignSelf: 'flex-start',
     fontSize: Constants.FONT_SIZE.SM,
-    color: '#898989',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+    color: '#4b4b4bff',
   },
   imageStyle: {
     width: 14,
@@ -681,6 +698,7 @@ const styles = StyleSheet.create({
   headerTextStyle: {
     alignSelf: 'flex-start',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     padding: 5,
     color: '#898989',
     fontWeight: 'bold',
@@ -690,15 +708,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: 'center',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     color: '#FFFFFF',
     fontWeight: 'normal',
-    backgroundColor: '#19a87a',
-    borderColor: '#19a87a',
+    backgroundColor:Constants.COLOR.THEME_COLOR,
+    borderColor: Constants.COLOR.THEME_COLOR,
     paddingLeft: 5,
     paddingRight: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    width: deviceHeight * 0.18,
+    width: deviceHeight * 0.15,
     borderRadius: 5,
     borderBottomWidth: 0,
     alignSelf: 'flex-start',
@@ -713,6 +732,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: 'center',
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     color: '#FFFFFF',
     fontWeight: 'normal',
     backgroundColor: '#d4d4d4',
@@ -733,11 +753,13 @@ const styles = StyleSheet.create({
   },
   specimanText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   specimanTextPending: {
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
     // paddingLeft: Platform.OS === 'ios' ? 20 : 15,
   },
 });

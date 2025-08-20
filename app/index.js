@@ -155,6 +155,7 @@ const DeliveryGroupScreen = (props) => {
     return <>
         <TopTab.Navigator
             initialRouteName="pendingDeliveryTab"
+            style={{backgroundColor:"#ffffffff"}}
             {...props}
             tabBar={
                 (props) => <DeliveryTabs
@@ -169,6 +170,7 @@ const DeliveryGroupScreen = (props) => {
             {
                 deliveryTabArry.map((item, index) => (
                     <TopTab.Screen
+                     
                         key={index}
                         name={item.id}
                         component={item.component}

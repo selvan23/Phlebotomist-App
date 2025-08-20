@@ -148,7 +148,7 @@ class DeliveredScreen extends Component {
   }
   renderItem = ({ item }) => {
     return (
-      <View>
+      <View  style={{backgroundColor:"#fff"}}>
         <DeliveryRow
           item={item}
           isFromPending={false}

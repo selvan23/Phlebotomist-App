@@ -102,6 +102,7 @@ class ContactUsScreen extends Component {
             style={{
               color: Constants.COLOR.WHITE_COLOR,
               fontSize: Constants.FONT_SIZE.M,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
             }}>
             Call us
           </Text>
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     color: Constants.COLOR.FONT_HINT,
     paddingVertical: 15,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   contentContainer: {
     flex: 1,

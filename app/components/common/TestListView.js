@@ -144,13 +144,14 @@ export default class TestListView extends Component {
 }
 
 const styles = StyleSheet.create({
-  viewAllItemView: {padding: 5, flex: 1},
+  viewAllItemView: {padding: 5, flex: 1, backgroundColor: Constants.COLOR.WHITE_COLOR},
   viewAllListItemText: {
     paddingHorizontal: 5,
     paddingVertical: 5,
-    backgroundColor: Constants.COLOR.BUTTON_BG,
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     borderRadius: 5,
     color: Constants.COLOR.WHITE_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   testNameView: {
     marginStart: 100,
@@ -162,9 +163,10 @@ const styles = StyleSheet.create({
   testNameText: {
     paddingHorizontal: 5,
     paddingVertical: 5,
-    backgroundColor: Constants.COLOR.BUTTON_BG,
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     borderRadius: 5,
     color: Constants.COLOR.WHITE_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   viewButtonMainView: {
     marginTop: 15,
@@ -181,6 +183,7 @@ const styles = StyleSheet.create({
   viewallText: {
     alignSelf: 'flex-end',
     fontSize: 12,
-    color: 'blue',
+    color: Constants.COLOR.PRIMARY_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
 });

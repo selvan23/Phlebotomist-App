@@ -236,7 +236,8 @@ module.exports = {
     //lab summary
     PRIMARY_COLOR: '#1E3989',
     SECONDARY_COLOR: '#C8DFFF',
-    LIGHT_BACKGROUND_COLOR: '#EFF2F5'
+    LIGHT_BACKGROUND_COLOR: '#EFF2F5',
+    LIGHT_GREY: '#F2F2F2'
   },
 
   FONT_SIZE_BAK: {

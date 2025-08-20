@@ -28,6 +28,7 @@ import { launchCamera } from 'react-native-image-picker';
 // import RNFetchBlob from 'rn-fetch-blob';
 import RNFetchBlob from 'react-native-blob-util';
 import { nativationPop } from '../../rootNavigation';
+import { IconOutline } from '@ant-design/icons-react-native';
 
 
 const options = {
@@ -82,6 +83,7 @@ class UploadPrescription extends Component {
               paddingVertical: 16,
               color: Constants.COLOR.BUTTON_BG,
               fontWeight: '600',
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
             }}>
             Upload Prescription
           </Text>
@@ -98,11 +100,7 @@ class UploadPrescription extends Component {
                 });
               }, 1000);
             }}>
-            <Image
-              style={[styles.closeImageStyle]}
-              source={require('../../images/black_cross.png')}
-              resizeMode="contain"
-            />
+            <IconOutline style={styles.closeImageStyle} name='close' size={deviceHeight / 30} />
           </TouchableOpacity>
         </View>
         {this._renderContentView()}
@@ -125,13 +123,14 @@ class UploadPrescription extends Component {
           alignItems: 'center',
           backgroundColor: Constants.COLOR.UPLOAD_FILES_BG,
         }}>
-        <Image source={require('../../images/cloud_upload.png')} />
+        <IconOutline name='cloud-upload' size={130} color={Constants.COLOR.THEME_COLOR} />
         <Text
           style={{
             fontSize: Constants.FONT_SIZE.XXL,
             fontWeight: '500',
             paddingVertical: 20,
             color: 'black',
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
           }}>
           BROWSE FILES HERE
         </Text>
@@ -141,6 +140,7 @@ class UploadPrescription extends Component {
             fontSize: Constants.FONT_SIZE.M,
             paddingHorizontal: Platform.OS == 'ios' ? 60 : 40,
             color: 'black',
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}>
           Take a picture or Browse files here of browse your device
         </Text>
@@ -160,11 +160,16 @@ class UploadPrescription extends Component {
               textAlign: 'center',
               fontSize: Constants.FONT_SIZE.S,
               color: Constants.COLOR.WHITE_COLOR,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
             }}>
             BROWSE FILES
           </Text>
         </TouchableOpacity>
-        <Text style={{ paddingVertical: 10 }}>or</Text>
+        <Text style={{ 
+          paddingVertical: 10,
+          color: Constants.COLOR.FONT_COLOR,
+          fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+          }}>or</Text>
         <TouchableOpacity
           onPress={() => {
             this._clickPicture();
@@ -182,6 +187,7 @@ class UploadPrescription extends Component {
               textAlign: 'center',
               left: Platform.OS == 'ios' ? 0 : 0,
               paddingHorizontal: 10,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
             }}>
             CLICK A PICTURE
           </Text>
@@ -527,7 +533,7 @@ class UploadPrescription extends Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#eef3fd',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
   },
   closeImageStyle: {
     alignSelf: 'flex-end',

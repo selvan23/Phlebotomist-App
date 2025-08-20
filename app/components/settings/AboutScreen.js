@@ -55,7 +55,7 @@ class AboutScreen extends Component {
     return (
       <View style={{ marginHorizontal: 10 }}>
         <HTML
-        baseStyle={{ color: 'black' }}
+        baseStyle={{ color: 'black', fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}
         source={{
           html: this.props.arrAboutInfo.Client_Description
         }} />
@@ -118,7 +118,7 @@ class AboutScreen extends Component {
         <KeyboardAwareScrollView>
           {this._renderMainLogo()}
           <Text
-            style={{ fontSize: Constants.FONT_SIZE.XXXL, textAlign: 'center', color: 'black' }}>
+            style={{ fontSize: Constants.FONT_SIZE.XXXL, textAlign: 'center', color: 'black', fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>
             {this.props.arrAboutInfo.Client_Name}
           </Text>
           {this._renderContentView()}
@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     fontSize: Constants.FONT_SIZE.SM,
     color: 'black',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   textViewLink: {
     flex: 1,
@@ -262,6 +263,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.L,
     padding: 20,
     color: Constants.COLOR.WHITE_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   imageLogo: {
     alignSelf: 'center',

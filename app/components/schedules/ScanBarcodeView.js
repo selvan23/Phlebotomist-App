@@ -94,15 +94,25 @@ export default class ScanBarcodeView extends Component {
           <View style={styles.viewTubeStyle}>
             {data.Specimen_Desc?.trim() !== "" && (
               <>
-                <Text style={{ color: "#808080" }}>{data.Specimen_Desc}</Text>
+                <Text
+                  style={{
+                    color: Constants.COLOR.FONT_COLOR_DEFAULT,
+                    fontFamily:
+                      Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+                  }}
+                >
+                  {data.Specimen_Desc}
+                </Text>
               </>
             )}
             {data.Container_Desc?.trim() !== "" && (
               <>
                 <Text
                   style={{
-                    color: "#808080",
+                    color: Constants.COLOR.FONT_COLOR_DEFAULT,
                     paddingHorizontal: 5,
+                    fontFamily:
+                      Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
                   }}
                 >
                   -
@@ -113,7 +123,14 @@ export default class ScanBarcodeView extends Component {
                     { backgroundColor: data.Container_Color },
                   ]}
                 />
-                <Text style={{ marginLeft: 4, color: "#808080" }}>
+                <Text
+                  style={{
+                    marginLeft: 4,
+                    color: Constants.COLOR.FONT_COLOR_DEFAULT,
+                    fontFamily:
+                      Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+                  }}
+                >
                   {data.Container_Desc}
                 </Text>
               </>
@@ -148,7 +165,7 @@ export default class ScanBarcodeView extends Component {
                   style={{ flex: 1, alignSelf: "center" }}
                   name="check"
                   size={deviceHeight / 35}
-                  color="#4CAF50"
+                  color={Constants.COLOR.GREEN_COLOR}
                 />
               ) : null}
             </View>
@@ -158,7 +175,6 @@ export default class ScanBarcodeView extends Component {
                   ? data.IsAlready_Collected
                   : data.isVerifiedBarCode
               }
-              style={styles.barcodeScanView}
               onPress={() => {
                 // if (Actions.currentScene === scene) {
                 if (navigationRef.getCurrentRoute().name === scene) {
@@ -166,11 +182,7 @@ export default class ScanBarcodeView extends Component {
                 }
               }}
             >
-              <Image
-                style={styles.barcodeScanImage}
-                resizeMode="contain"
-                source={require("../../images/scan.png")}
-              />
+              <IconOutline name="barcode" size={45} />
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: "row", marginTop: 10 }}>
@@ -239,9 +251,17 @@ export default class ScanBarcodeView extends Component {
       );
     } catch (Error) {
       console.log('render error: ', Error);
-      return <>
-        <Text>Error</Text>
-      </>
+      return (
+        <>
+          <Text
+            style={{
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+            }}
+          >
+            Error
+          </Text>
+        </>
+      );
     }
   }
 
@@ -310,11 +330,14 @@ function Item({ title, QrCode }) {
   return (
     <View style={styles.barcodeListItemContainer}>
       <Text style={styles.barcodeListItemText}>{title}</Text>
-      {QrCode === null || QrCode === false ? <></> : (
-        <Image
-          style={styles.barcodeListItemImage}
-          resizeMode="contain"
-          source={require("../../images/tick.png")}
+      {QrCode === null || QrCode === false ? (
+        <></>
+      ) : (
+        <IconOutline
+          style={{ marginLeft: 5 }}
+          name="check"
+          size={deviceHeight / 58}
+          color={Constants.COLOR.GREEN_COLOR}
         />
       )}
     </View>
@@ -323,25 +346,31 @@ function Item({ title, QrCode }) {
 
 const styles = StyleSheet.create({
   barcodeMainView: {
-    backgroundColor: "#F2F2F2",
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
     paddingVertical: 20,
     paddingHorizontal: 10,
     marginTop: 20,
+    borderRadius: 5,
   },
   barcodeMainTitle: {
     fontSize: Constants.FONT_SIZE.SM,
     fontWeight: "bold",
     marginBottom: 10,
     color: "black",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
-  barcodeTextScanView: { flexDirection: "row" },
+  barcodeTextScanView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   barcodeTextSubmitView: {
     flex: 5,
     flexDirection: "row",
     backgroundColor: Constants.COLOR.WHITE_COLOR,
     borderRadius: 5,
-    padding: 10,
+    padding: 5,
     justifyContent: "center",
+    marginRight: 10,
   },
   barcodeScanView: { flex: 1, alignContent: "center" },
   barcodeScanImage: {
@@ -355,7 +384,8 @@ const styles = StyleSheet.create({
     flex: 10,
     alignSelf: "center",
     fontSize: Constants.FONT_SIZE.M,
-    color: "black",
+    color: Constants.COLOR.BLACK_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   barcodeTextVerifyImage: {
     flex: 1,
@@ -367,7 +397,8 @@ const styles = StyleSheet.create({
   barcodeListItemContainer: { flexDirection: "row", padding: 3 },
   barcodeListItemText: {
     fontSize: Constants.FONT_SIZE.SM,
-    color: "#878789",
+    color: Constants.COLOR.FONT_COLOR_DEFAULT,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   barcodeListItemImage: {
     alignSelf: "center",
@@ -399,7 +430,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.WHITE_COLOR,
     fontSize: Constants.FONT_SIZE.SM,
     fontWeight: "600",
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   subContainer: {
     flexDirection: "row",

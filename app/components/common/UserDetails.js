@@ -12,6 +12,7 @@ import {
 import Constants from '../../util/Constants';
 import Utility from '../../util/Utility';
 import PropTypes from 'prop-types';
+import { IconOutline } from '@ant-design/icons-react-native';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -92,11 +93,7 @@ export default class UserDetails extends Component {
             this._selectPdf();
           }}
           style={styles.bookingIdRightInnerView}>
-          <Image
-            style={styles.bookingIdReportImage}
-            resizeMode="contain"
-            source={require('../../images/pdficon.png')}
-          />
+          <IconOutline name='file-pdf' size={30} color='red' style={styles.bookingIdReportImage} />
           <Text style={styles.bookingIdReportLink}>View Prescription</Text>
         </TouchableOpacity>
       </View>
@@ -134,11 +131,7 @@ export default class UserDetails extends Component {
             <Text style={styles.nameAddressRightAgeText}>
               {this.props.arrUserDetails.Gender_Code}
             </Text>
-            <Image
-              style={styles.nameAddressRightMobileImage}
-              resizeMode="contain"
-              source={require('../../images/mobile.png')}
-            />
+            <IconOutline color={Constants.COLOR.FONT_COLOR_DEFAULT} size={deviceHeight / 40} name='mobile' />
             <Text style={styles.nameAddressRightMobileText}>
               {this.props.arrUserDetails.Mobile_No}
             </Text>
@@ -150,7 +143,7 @@ export default class UserDetails extends Component {
             this.props.arrUserDetails?.Physician !== ''
             && <>
             <View style={styles.nameAddressRightAgePhoneView}>
-              <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
+              <Text style={[styles.nameAddressRightNameAgeText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}>
                 Physician: {this.props.arrUserDetails.Physician}
               </Text>
             </View>
@@ -160,7 +153,7 @@ export default class UserDetails extends Component {
             this.props.arrUserDetails?.Ref_Name !== ''
             && <>
               <View style={styles.nameAddressRightAgePhoneView}>
-                <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
+                <Text style={[styles.nameAddressRightNameAgeText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}>
                   Payer: {this.props.arrUserDetails.Ref_Name === 'Self' ? 'Private' : this.props.arrUserDetails.Ref_Name}
                 </Text>
               </View>
@@ -211,13 +204,13 @@ export default class UserDetails extends Component {
 
 const styles = StyleSheet.create({
   mainView: {marginVertical: 5},
-  bookingIdDateMainView: {flex: 1, flexDirection: 'column'},
-  bookingIdReportSubView: {flex: 1, flexDirection: 'row'},
-  bookingIdLeftView: {flex: 3, alignSelf: 'center'},
+  bookingIdDateMainView: { flexDirection: 'column'},
+  bookingIdReportSubView: { flexDirection: 'row'},
+  bookingIdLeftView: {alignSelf: 'center'},
   bookingIdRightView: {
-    flex: 2,
     flexDirection: 'column',
     alignItems: 'flex-end',
+    marginLeft: 15
   },
   bookingIdRightInnerView: {flexDirection: 'row', alignItems: 'center'},
   bookingIdText: {
@@ -225,25 +218,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: Constants.FONT_SIZE.M,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   bookingIdReportImage: {
-    width: deviceHeight / 20,
-    height: deviceHeight / 20,
     alignSelf: 'flex-start',
   },
   bookingIdReportLink: {
     fontSize: Constants.FONT_SIZE.S,
     marginStart: 5,
     color: Constants.COLOR.FONT_LINK_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
-
-  bookingDateLocationSubView: {flex: 1, flexDirection: 'row', marginTop: 10},
+  bookingDateLocationSubView: {flexDirection: 'row', marginTop: 10},
   bookingDateLeftView: {
-    flex: 5,
     alignSelf: 'center',
   },
   bookingDateRightView: {
-    flex: 2,
     flexDirection: 'column',
     alignItems: 'flex-end',
     alignSelf: 'center',
@@ -254,6 +244,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: Constants.FONT_SIZE.SM,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   bookingDateReportImage: {
     width: deviceHeight / 30,
@@ -264,15 +255,13 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.S,
     marginStart: 5,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
-
   nameAddressView: {flexDirection: 'row', marginTop: 10},
   nameAddressLeftView: {
-    flex: 1,
     justifyContent: 'center',
   },
-  nameAddressRightView: {flex: 3, marginStart: 10},
+  nameAddressRightView: {marginStart: 10},
   profileImageView: {
     justifyContent: 'center',
     alignSelf: 'center',
@@ -291,18 +280,20 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     color: 'black',
     fontSize: Constants.FONT_SIZE.XXL,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   nameAddressRightNameAgeView: {flexDirection: 'row'},
   nameAddressRightNameText: {
     // marginStart: 30,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
-    fontWeight: 'bold',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   nameAddressRightNameAgeText: {
     // marginStart: 30,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressRightAgePhoneView: {flexDirection: 'row', marginTop: 10},
   nameAddressRightAgeImage: {
@@ -314,6 +305,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressRightMobileImage: {
     marginLeft: 10,
@@ -325,6 +317,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressRightAddressView: {flexDirection: 'row', marginTop: 10},
   nameAddressRightAddressImage: {
@@ -336,5 +329,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

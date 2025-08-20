@@ -242,7 +242,7 @@ class SampleCollectionScreen extends Component {
             <Text style={styles.navigationTextStyle}>1</Text>
           </View>
           <Text
-            style={{ color: Constants.COLOR.BUTTON_BG, paddingHorizontal: 10 }}
+            style={{ color: Constants.COLOR.PRIMARY_COLOR, paddingHorizontal: 10, fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}
           >
             -------------
           </Text>
@@ -250,7 +250,7 @@ class SampleCollectionScreen extends Component {
             <Text
               style={[
                 styles.navigationTextStyle,
-                { color: Constants.COLOR.FONT_COLOR_DEFAULT },
+                { color: Constants.COLOR.PRIMARY_COLOR,  fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR },
               ]}
             >
               2
@@ -278,7 +278,7 @@ class SampleCollectionScreen extends Component {
         <View style={styles.nameAddressRightView}>
           <View style={styles.nameAddressRightNameAgeView}>
             <Text
-              style={[styles.nameAddressRightNameText, { fontWeight: "bold" }]}
+              style={[styles.nameAddressRightNameText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}
             >
               {bookingDetail.Pt_Name},{" "}
             </Text>
@@ -307,7 +307,7 @@ class SampleCollectionScreen extends Component {
   };
 
   _renderTestList = ({ item, idx }) => {
-    return <Text key={idx} style={[styles.testListText, { marginTop: 10 }]}>
+    return <Text key={idx} style={[styles.testListText, { marginTop: 5 }]}>
         {item.Service_Name}
       </Text>
     ;
@@ -471,15 +471,18 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     color: "black",
     fontSize: Constants.FONT_SIZE.XXL,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   nameAddressRightNameText: {
     // marginStart: 30,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   testListText: {
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nextButton: {
     alignSelf: "flex-end",
@@ -507,7 +510,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 20,
-    backgroundColor: Constants.COLOR.BUTTON_BG,
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -523,7 +526,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: Constants.COLOR.FONT_COLOR_DEFAULT,
+    borderColor: Constants.COLOR.PRIMARY_COLOR,
     borderWidth: 0.5,
   },
   nameAddressRightNameAgeView: { flexDirection: "row" },
@@ -531,5 +534,6 @@ const styles = StyleSheet.create({
     // marginStart: 30,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

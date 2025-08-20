@@ -45,6 +45,7 @@ import { getPdfReport } from '../../actions/PendingDetailAction';
 import moment from 'moment';
 import { nativationPop, navigate, navigationRef } from '../../rootNavigation';
 import RiyalPrice from '../common/RiyalPrice';
+import { IconFill, IconOutline } from '@ant-design/icons-react-native';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -196,11 +197,13 @@ class CompletedBookingDetailScreen extends Component {
                 }
               });
             }}
-            style={styles.bookingIdRightInnerView}>
-            <Image
+            style={styles.bookingIdRightInnerView}
+          >
+            <IconOutline
+              name="file-pdf"
+              size={30}
+              color="red"
               style={styles.bookingIdReportImage}
-              resizeMode="contain"
-              source={require('../../images/pdficon.png')}
             />
             <Text style={styles.bookingIdReportLink} numberOfLines={2}>
               View Prescription
@@ -296,7 +299,7 @@ class CompletedBookingDetailScreen extends Component {
         <View style={styles.nameAddressRightView}>
           <View style={styles.nameAddressRightNameAgeView}>
             <Text
-              style={[styles.nameAddressRightNameText, { fontWeight: 'bold' }]}>
+              style={[styles.nameAddressRightNameText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}>
               {this.props.bookingDetail.Pt_Name},{' '}
             </Text>
             <Text style={styles.nameAddressRightNameAgeText}>
@@ -328,16 +331,11 @@ class CompletedBookingDetailScreen extends Component {
     ) {
       return (
         <View style={[styles.tickImageContainer, { marginBottom: 20 }]}>
-          <Image
-            resizeMode="contain"
-            source={require('../../images/tickround.png')}
-            style={styles.tickImage}
-          />
-
+          <IconFill name={'check-circle'} size={90} color={Constants.COLOR.GREEN_COLOR} />
           <Text
             style={[
               styles.tickTitle,
-              { color: '#2AAB7E', marginTop: 10, marginBottom: 10 },
+              { color: Constants.COLOR.GREEN_COLOR, marginTop: 10, marginBottom: 10 },
             ]}>
             {this.props.bookingDetail.Payment_Full_Desc !== '' &&
               this.props.bookingDetail.Payment_Full_Desc !== undefined &&
@@ -365,7 +363,7 @@ class CompletedBookingDetailScreen extends Component {
                 fontSize: Constants.FONT_SIZE.M,
                 flex: 1,
                 width: (deviceWidth * 2) / 3,
-                fontWeight: 'bold',
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
               },
             ]}>
             {this.props.bookingDetail.Pt_Name}
@@ -390,6 +388,7 @@ class CompletedBookingDetailScreen extends Component {
             style={{
               color: Constants.COLOR.FONT_COLOR_DEFAULT,
               fontSize: Constants.FONT_SIZE.SM,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
             }}>
             {this.props.bookingDetail.Full_Address}
           </Text>
@@ -400,6 +399,7 @@ class CompletedBookingDetailScreen extends Component {
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.SM,
             paddingVertical: 5,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}>
           {this.props.bookingDetail.Mobile_No}
         </Text>
@@ -407,7 +407,7 @@ class CompletedBookingDetailScreen extends Component {
             this.props.bookingDetail?.Physician !== ''
             && <>
             <View style={styles.nameAddressRightAgePhoneView}>
-              <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
+              <Text style={[styles.nameAddressRightNameAgeText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}>
                 Physician: {this.props.bookingDetail.Physician}
               </Text>
             </View>
@@ -417,7 +417,7 @@ class CompletedBookingDetailScreen extends Component {
             this.props.bookingDetail?.Ref_Name !== ''
             && <>
               <View style={styles.nameAddressRightAgePhoneView}>
-                <Text style={[styles.nameAddressRightNameAgeText, { fontWeight: 'bold' }]}>
+                <Text style={[styles.nameAddressRightNameAgeText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}>
                   Payer: {this.props.bookingDetail.Ref_Name === 'Self' ? 'Private' : this.props.bookingDetail.Ref_Name}
                 </Text>
               </View>
@@ -449,6 +449,7 @@ class CompletedBookingDetailScreen extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.S,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}>
           {this.props.bookingDetail.Booking_Type === 'H' ? 'HOME' : 'WALK IN'}
         </Text>
@@ -456,6 +457,7 @@ class CompletedBookingDetailScreen extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.S,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}>
           {moment(this.props.bookingDetail.Visit_Date, 'YYYY/MM/DD').format(
             'DD/MM/YYYY',
@@ -465,6 +467,7 @@ class CompletedBookingDetailScreen extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.S,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}>
           {this.props.bookingDetail.Visit_Time}
         </Text>
@@ -579,7 +582,7 @@ class CompletedBookingDetailScreen extends Component {
               marginTop: 10,
               fontSize: Constants.FONT_SIZE.L,
               color: Constants.COLOR.FONT_COLOR_DEFAULT ,
-              fontWeight: 'bold',
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
             }}>
             Feedback:
           </Text>
@@ -589,6 +592,7 @@ class CompletedBookingDetailScreen extends Component {
               marginTop: 5,
               marginBottom: 30,
               fontSize: Constants.FONT_SIZE.SM,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
             }}>
             {this.props.bookingDetail.Post_Review}
           </Text>
@@ -675,11 +679,7 @@ class CompletedBookingDetailScreen extends Component {
             }
           }}>
           <View style={styles.homeView}>
-            <Image
-              style={[styles.homeImage]}
-              source={require('../../images/homeWhite.png')}
-              resizeMode="contain"
-            />
+            <IconOutline name='home' color={Constants.COLOR.WHITE_COLOR} size={deviceHeight/40} />
             <Text style={styles.homeText}>Home</Text>
           </View>
         </TouchableOpacity>
@@ -773,11 +773,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   bookingIdReportLink: {
-    marginStart: 10,
     alignSelf: 'center',
     textAlign: 'center',
     color: Constants.COLOR.FONT_LINK_COLOR,
     fontSize: Constants.FONT_SIZE.S,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressView: { flexDirection: 'row', marginTop: 20 },
   nameAddressLeftView: {
@@ -804,6 +804,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     color: 'black',
     fontSize: Constants.FONT_SIZE.XXL,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   bookingDateReportImage: {
     width: deviceHeight / 30,
@@ -825,6 +826,7 @@ const styles = StyleSheet.create({
   testListText: {
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressRightAgePhoneView: { flexDirection: 'row', marginTop: 10 },
   nameAddressRightAgeImage: {
@@ -872,7 +874,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.S,
     marginStart: 5,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   backButton: {
     paddingVertical: 7,
@@ -889,6 +891,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: Constants.COLOR.WHITE_COLOR,
     paddingVertical: 10,
+    marginTop: 15,
+    borderRadius: 5
   },
   tickImageContainer: {
     marginTop: 10,
@@ -901,7 +905,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
   },
-  tickTitle: { marginTop: 10, fontSize: Constants.FONT_SIZE.M },
+  tickTitle: { marginTop: 10, fontSize: Constants.FONT_SIZE.M, fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR },
   ticAmountVal: {
     marginTop: 20,
     marginBottom: 20,
@@ -929,6 +933,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.WHITE_COLOR,
     paddingHorizontal: 8,
     alignSelf: 'center',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   subView: {
     flex: 1,
@@ -938,6 +943,7 @@ const styles = StyleSheet.create({
   addressMainView: {
     backgroundColor: '#F5F5F5',
     padding: 10,
+    borderRadius: 5
   },
   fullAddressView: {
     flexDirection: 'column',
@@ -947,5 +953,6 @@ const styles = StyleSheet.create({
   nameAddressRightNameAgeText: {
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

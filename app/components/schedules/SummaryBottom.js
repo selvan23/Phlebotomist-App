@@ -326,6 +326,8 @@ class SummaryBottom extends Component {
 const styles = StyleSheet.create({
   totalView: {
     backgroundColor: Constants.COLOR.LAB_TOTAL_VIEW,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5
   },
   subTotalText: {
     flex: 2,
@@ -337,13 +339,7 @@ const styles = StyleSheet.create({
     alignContent: 'flex-end',
     alignItems: 'flex-end',
     marginRight: 5,
-    // flex: 1,
-    // color: Constants.COLOR.LAB_SUB_TOTAL_FONT,
-    // fontSize: Constants.FONT_SIZE.M,
-    // alignSelf: 'flex-end',
-    // textAlign: 'right',
-    // alignContent: 'flex-end',
-    // alignItems: 'flex-end',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   subTotalView: {
     flexDirection: 'row',

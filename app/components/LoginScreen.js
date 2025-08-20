@@ -29,10 +29,8 @@ import {
   setLoginConformation,
 } from "../actions/ConfigAction";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import DeviceInfo from "react-native-device-info";
 import { navigate, navigationRef, navigationReplace } from "../rootNavigation";
 import CustomInput from "./common/CustomInput";
-import CustomGradientButton from "./common/CustomGradientButton";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE

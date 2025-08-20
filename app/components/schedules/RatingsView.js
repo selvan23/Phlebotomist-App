@@ -71,9 +71,10 @@ export default class RatingsView extends Component {
 const styles = StyleSheet.create({
   mainView: {marginTop: 15},
   innerView: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
     paddingVertical: 20,
     paddingHorizontal: 5,
+    borderRadius: 5
   },
   titleText: {
     textAlign: 'center',
@@ -81,6 +82,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     marginBottom: 10,
     marginTop: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   ratingStyle: {},
   profileImage: {

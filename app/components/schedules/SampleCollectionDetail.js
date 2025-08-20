@@ -46,6 +46,7 @@ import PropTypes from "prop-types";
 import SummaryRow from "../schedules/SummaryRow";
 import SummaryBottom from "./SummaryBottom";
 import { nativationPop, navigate } from "../../rootNavigation";
+import { IconOutline } from "@ant-design/icons-react-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -314,11 +315,7 @@ class SampleCollectionDetail extends Component {
               }, 1000);
             }}
           >
-            <Image
-              style={styles.uploadImage}
-              resizeMode="contain"
-              source={require("../../images/up_arrow.png")}
-            />
+            <IconOutline name="arrow-up" size={deviceHeight / 30} color={Constants.COLOR.THEME_COLOR} />
             <Text style={styles.uploadLabel}>Upload Prescription</Text>
           </TouchableOpacity>
         ) : (
@@ -380,17 +377,12 @@ class SampleCollectionDetail extends Component {
       );
     } else {
       return (
-        <Image
-          style={{
-            width: 50,
-            height: 50,
-            alignContent: "flex-end",
-            alignSelf: "flex-end",
-            marginRight: 10,
-          }}
-          source={require("../../images/pdficon.png")}
-          resizeMode="contain"
-        />
+        <IconOutline
+              name="file-pdf"
+              size={50}
+              color="red"
+              style={styles.bookingIdReportImage}
+            />
       );
     }
   };
@@ -415,16 +407,14 @@ class SampleCollectionDetail extends Component {
     ) {
       return (
         <View style={{ marginTop: 16 }}>
-          {console.log(
-            "bookingdetails, ",
-            JSON.stringify(this.props.route.params.bookingDetail)
-          )}
+          <View style={{borderTopLeftRadius: 5, borderTopRightRadius: 5, overflow: 'hidden', backgroundColor: Constants.COLOR.LIGHT_GREY}}>
           <FlatList
             style={{ marginTop: 8 }}
             data={this.props.route.params.bookingDetail.Service_Detail}
             renderItem={this._renderSummaryRow}
             keyExtractor={this._keyExtractor}
           />
+          </View>
           {this.props.route.params.bookingDetail.Sample_Collection_Charge !==
             undefined &&
           this.props.route.params.bookingDetail.Sample_Collection_Charge !==
@@ -523,15 +513,11 @@ class SampleCollectionDetail extends Component {
   _renderResendImg = () => {
     if (this.props.isOTPResentLoading) {
       return (
-        <ActivityIndicator color="#0000ff" style={styles.locationIconImg} />
+        <ActivityIndicator color={Constants.COLOR.THEME_COLOR} style={styles.locationIconImg} />
       );
     } else {
       return (
-        <Image
-          style={styles.locationIconImg}
-          resizeMode="contain"
-          source={require("../../images/refresh.png")}
-        />
+        <IconOutline name="sync" style={{alignItems: 'center', justifyContent: 'center'}} color={Constants.COLOR.BLACK_COLOR} size={25} />
       );
     }
   };
@@ -598,7 +584,7 @@ class SampleCollectionDetail extends Component {
     if (this.props.isOTPSubmitLoading) {
       return (
         <ActivityIndicator
-          color="#0000ff"
+          color={Constants.COLOR.THEME_COLOR}
           style={[styles.verificationResendText, { marginLeft: 10 }]}
         />
       );
@@ -652,7 +638,7 @@ class SampleCollectionDetail extends Component {
     return (
       <View style={styles.locationMain}>
         <View style={styles.locationTitleMain}>
-          <Text style={styles.locationTitle}>Update Location </Text>
+          <Text style={styles.locationTitle}>Update Location</Text>
         </View>
 
         <View style={styles.locationContentMain}>
@@ -688,7 +674,7 @@ class SampleCollectionDetail extends Component {
     if (this.props.isLocationLoading) {
       return (
         <ActivityIndicator
-          color="#0000ff"
+          color={Constants.COLOR.PRIMARY_COLOR}
           style={[styles.verificationResendText, { marginLeft: 10 }]}
         />
       );
@@ -1067,27 +1053,32 @@ const styles = StyleSheet.create({
   },
   verificationResendText: {
     margin: 10,
-    color: "#1B79CD",
+    color: Constants.COLOR.THEME_COLOR,
     textAlign: "center",
-    fontSize: Constants.FONT_SIZE.SM,
+    fontSize: Constants.FONT_SIZE.M,
   },
   locationMain: { flex: 1, flexDirection: "column", marginTop: 20 },
   locationTitleMain: { flex: 1, flexDirection: "row" },
-  locationContentMain: { flex: 1, flexDirection: "row", marginTop: 10 },
+  locationContentMain: { 
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 10 
+  },
   locationTitle: {
     paddingVertical: 5,
-    paddingHorizontal: 15,
     borderRadius: 5,
-    backgroundColor: "#4C4C4C",
-    color: Constants.COLOR.WHITE_COLOR,
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
+    color: Constants.COLOR.THEME_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
   locationTextImageMain: {
     flex: 4,
     borderRadius: 5,
-    backgroundColor: "#F8F5F5",
-    paddingVertical: 10,
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
+    paddingVertical: 5,
     paddingHorizontal: 15,
     flexDirection: "row",
+    alignItems: 'center'
   },
   locationUpdateClick: {
     flex: 2,
@@ -1097,24 +1088,27 @@ const styles = StyleSheet.create({
   locationText: {
     flex: 8,
     color: "black",
-    fontSize: Constants.FONT_SIZE.SM,
+    fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   locationTextEdit: {
     flex: 8,
     color: "black",
-    fontSize: Constants.FONT_SIZE.SM,
+    fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   locationIconImg: {
     flex: 1,
-    width: deviceHeight / 40,
-    height: deviceHeight / 40,
+    width: deviceHeight / 35,
+    height: deviceHeight / 35,
   },
 
   locationUpdateText: {
     margin: 10,
-    color: "#1B79CD",
+    color: Constants.COLOR.THEME_COLOR,
     textAlign: "left",
-    fontSize: Constants.FONT_SIZE.SM,
+    fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_ANEK_LATIN_REGULAR
   },
 
   navigationButtonsMain: {
@@ -1147,13 +1141,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignSelf: "center",
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
 
   contactMainView: {
     flex: 1,
     marginTop: 15,
     flexDirection: "row",
-    backgroundColor: "#DDDBDB",
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
     // width: deviceWidth / 2.957,
     borderRadius: 7,
     alignItems: "center",
@@ -1170,6 +1165,7 @@ const styles = StyleSheet.create({
     flex: 3,
     fontSize: Constants.FONT_SIZE.SM,
     color: Constants.COLOR.FONT_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 
   contactArrowView: {
@@ -1208,6 +1204,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: Constants.FONT_SIZE.SM,
     color: Constants.COLOR.FONT_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   testView: {
     paddingHorizontal: 0,

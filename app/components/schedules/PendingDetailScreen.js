@@ -159,7 +159,7 @@ class PendingDetailScreen extends Component {
     return (
       <View style={styles.noDataMainView}>
         <View style={styles.noDataSubView}>
-          <Text style={{ padding: 20, color: "black" }}>No Data Found!</Text>
+          <Text style={{ padding: 20, color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -179,16 +179,14 @@ class PendingDetailScreen extends Component {
 
   _renderBodyView = () => {
     return (
-      <KeyboardAwareScrollView>
-        <View style={styles.subView}>
+        <ScrollView style={styles.subView}>
           {this._renderUserDetails()}
           {this._renderServiceTest()}
           {this._renderPaymentStatus()}
           {this._renderMapView()}
           {this._renderBookingView()}
           {this._renderBackButton()}
-        </View>
-      </KeyboardAwareScrollView>
+        </ScrollView>
     );
   };
 
@@ -562,11 +560,10 @@ const styles = StyleSheet.create({
   mainView: { marginHorizontal: 0 },
   subView: {
     flex: 1,
-    marginVertical: 10,
     backgroundColor: Constants.COLOR.WHITE_COLOR,
   },
   map: {
-    height: 200,
+    height: 300,
   },
   testView: {
     paddingHorizontal: 5,
@@ -613,6 +610,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.WHITE_COLOR,
     marginHorizontal: 5,
     paddingHorizontal: 20,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
 
   cancelBookingBtn: {
@@ -624,6 +622,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 7,
     marginVertical: 10,
+    height: 40,
   },
   denyBookingBtn: {
     borderRadius: 4,
@@ -633,21 +632,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 7,
     marginVertical: 10,
+    height: 40,
   },
   denyBookingText: {
     fontSize: 12,
     color: Constants.COLOR.BOOK_PENDING_BG,
     marginHorizontal: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   cancelBookingText: {
     fontSize: 12,
     color: "red",
     marginHorizontal: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   sampleCollectionText: {
     fontSize: 12,
     color: "green",
     marginHorizontal: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   sampleCollectionBtn: {
     borderRadius: 4,
@@ -657,33 +660,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 7,
     marginVertical: 10,
+    height: 40,
   },
   cancelDenyBookingView: {
     flexDirection: "row",
-    marginHorizontal: 5,
+    marginHorizontal: 10
   },
   mapDirectionImage: {
     width: 18,
     height: 18,
     alignSelf: "center",
-    tintColor: "blue",
+    tintColor: Constants.COLOR.THEME_COLOR,
   },
   getDirectionBtn: {
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: "blue",
+    borderColor: Constants.COLOR.THEME_COLOR,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    marginHorizontal: 20,
-    alignSelf: "flex-end",
+    marginHorizontal: 10,
+    alignSelf: "flex-start",
     padding: 5,
     marginTop: 10,
   },
   getDirectionText: {
     fontSize: 12,
-    color: "blue",
+    color: Constants.COLOR.THEME_COLOR,
     marginHorizontal: 10,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   noDataMainView: {
     flex: 1,
@@ -720,5 +725,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 5,
     paddingVertical: 2,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
 });

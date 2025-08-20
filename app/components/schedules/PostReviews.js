@@ -56,7 +56,7 @@ class PostReviews extends Component {
             <Text style={[
               styles.submitView,
               !this.props.btnDisabled ? {
-                backgroundColor: Constants.COLOR.BUTTON_BG,
+                backgroundColor: Constants.COLOR.PRIMARY_COLOR,
               }: {}
             ]}>Post</Text>
           </TouchableOpacity>
@@ -68,14 +68,16 @@ class PostReviews extends Component {
 
 const styles = StyleSheet.create({
   mainView: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
     marginBottom: 10,
     paddingVertical: 20,
     paddingHorizontal: 10,
+    borderRadius: 5
   },
   headingText: {
-    color: 'black',
+    color: Constants.COLOR.BLACK_COLOR,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   commentMainView: {
     flexDirection: 'row',
@@ -92,10 +94,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: deviceHeight / 8,
     textAlignVertical: 'top',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   submitView: {
     fontSize: Constants.FONT_SIZE.SM,
     backgroundColor: '#DDDBDB',
+    color: Constants.COLOR.WHITE_COLOR,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,

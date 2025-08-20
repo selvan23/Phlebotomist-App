@@ -33,6 +33,7 @@ import {
   navigationReset,
   navigationSetParams,
 } from "../../rootNavigation";
+import { IconOutline } from "@ant-design/icons-react-native";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -124,19 +125,11 @@ class SettingsScreen extends Component {
                   { backgroundColor: "#1E564A" },
                 ]}
               >
-                <Image
-                  style={[styles.avatar, {}]}
-                  resizeMode="contain"
-                  source={require("../../images/user1.png")}
-                />
+                <IconOutline size={deviceHeight/30} name="user" color={Constants.COLOR.WHITE_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>View Profile</Text>
-              <Image
-                style={[styles.avatar]}
-                resizeMode="contain"
-                source={require("../../images/rightArrow.png")}
-              />
-            </View>
+              <IconOutline name="right" size={deviceHeight/30} />
+                </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.subContainer}
@@ -155,18 +148,10 @@ class SettingsScreen extends Component {
                   { backgroundColor: "#172073" },
                 ]}
               >
-                <Image
-                  style={[styles.avatar, {}]}
-                  resizeMode="contain"
-                  source={require("../../images/info.png")}
-                />
+                <IconOutline size={deviceHeight/30} name="info" color={Constants.COLOR.WHITE_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>About Us</Text>
-              <Image
-                style={[styles.avatar]}
-                resizeMode="contain"
-                source={require("../../images/rightArrow.png")}
-              />
+              <IconOutline name="right" size={deviceHeight/30} />
             </View>
           </TouchableOpacity>
 
@@ -187,18 +172,10 @@ class SettingsScreen extends Component {
                   { backgroundColor: "#EF9724" },
                 ]}
               >
-                <Image
-                  style={[styles.avatar, {}]}
-                  resizeMode="contain"
-                  source={require("../../images/phone1.png")}
-                />
+                <IconOutline size={deviceHeight/30} name="phone" color={Constants.COLOR.WHITE_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>Contact Us</Text>
-              <Image
-                style={[styles.avatar]}
-                resizeMode="contain"
-                source={require("../../images/rightArrow.png")}
-              />
+              <IconOutline name="right" size={deviceHeight/30} />
             </View>
           </TouchableOpacity>
 
@@ -213,19 +190,11 @@ class SettingsScreen extends Component {
                   { backgroundColor: "#E92E40" },
                 ]}
               >
-                <Image
-                  style={[styles.avatar, {}]}
-                  resizeMode="contain"
-                  source={require("../../images/sign-out.png")}
-                />
+                <IconOutline size={deviceHeight/30} name="logout" color={Constants.COLOR.WHITE_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>Logout</Text>
-              <Image
-                style={[styles.avatar]}
-                resizeMode="contain"
-                source={require("../../images/rightArrow.png")}
-              />
-            </View>
+                <IconOutline name="right" size={deviceHeight/30} />
+              </View>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
       </View>
@@ -282,5 +251,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: Constants.FONT_SIZE.L,
     color: "black",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

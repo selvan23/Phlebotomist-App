@@ -63,7 +63,6 @@ class NavigationBar extends Component {
                   <SosIcon width={50} height={50} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  disabled
                   onPress={() => {
                     // Actions.pdfReport({pdf: this.props.phonepeUrl});
                     navigate("pdfReport", {

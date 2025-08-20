@@ -20,31 +20,9 @@ class SummaryRow extends Component {
           </Text>
           {this._renderAmount()}
         </View>
-        {/* {this._renderNoHouseWarning()} */}
       </View>
     );
   }
-  _renderNoHouseWarning = () => {
-    if (
-      this.props.isFromSummary !== undefined &&
-      this.props.isFromSummary === true
-    ) {
-      if (
-        this.props.rowData.hasOwnProperty("No_House_Visit") &&
-        this.props.rowData.No_House_Visit === "Y"
-      ) {
-        return (
-          <Text style={styles.rowTextAlertMessage}>
-            {this.props.rowData.No_House_Visit_Message}
-          </Text>
-        );
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  };
   _renderAmount = () => {
     console.log(
       "render amount : ",
@@ -72,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
   },
   rowText: {
     fontSize: Constants.FONT_SIZE.SM,
@@ -80,7 +58,8 @@ const styles = StyleSheet.create({
     // paddingTop: 6,
     paddingHorizontal: 16,
     // color: '#121212',
-    color: "black",
+    color: Constants.COLOR.BLACK_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   rowTextAmt: {
     fontSize: Constants.FONT_SIZE.SM,

@@ -46,6 +46,7 @@ import moment from "moment";
 import { nativationPop, navigate, navigationRef } from "../../rootNavigation";
 import RiyalPrice from "../common/RiyalPrice";
 import { getPendingList } from "../../actions/PendingScreenAction";
+import { IconFill, IconOutline } from "@ant-design/icons-react-native";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -152,10 +153,11 @@ class SampleCollectionSummary extends Component {
             }}
             style={styles.bookingIdRightInnerView}
           >
-            <Image
+            <IconOutline
+              name="file-pdf"
+              size={deviceHeight / 15}
+              color="red"
               style={styles.bookingIdReportImage}
-              resizeMode="contain"
-              source={require("../../images/pdficon.png")}
             />
             <Text style={styles.bookingIdReportLink}>View Prescription</Text>
           </TouchableOpacity>
@@ -196,7 +198,7 @@ class SampleCollectionSummary extends Component {
         <View style={styles.nameAddressRightView}>
           <View style={styles.nameAddressRightNameAgeView}>
             <Text
-              style={[styles.nameAddressRightNameText, { fontWeight: "bold" }]}
+              style={[styles.nameAddressRightNameText, { fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD }]}
             >
               {bookingDetail.Pt_Name},{" "}
             </Text>
@@ -221,7 +223,7 @@ class SampleCollectionSummary extends Component {
             <Text style={styles.navigationTextStyle}>1</Text>
           </View>
           <Text
-            style={{ color: Constants.COLOR.BUTTON_BG, paddingHorizontal: 10 }}
+            style={{ color: Constants.COLOR.PRIMARY_COLOR, paddingHorizontal: 10, fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}
           >
             -------------
           </Text>
@@ -235,7 +237,7 @@ class SampleCollectionSummary extends Component {
 
   _renderTestList = ({ item }) => {
     return (
-      <Text style={[styles.testListText, { marginTop: 10 }]}>
+      <Text style={[styles.testListText, { marginTop: 5 }]}>
         {item.Service_Name?.trim() !== "" ? item.Service_Name : "Loading..."}
       </Text>
     );
@@ -246,11 +248,7 @@ class SampleCollectionSummary extends Component {
     if (bookingDetail.Due_Amount !== null && bookingDetail.Due_Amount !== "") {
       return (
         <View style={styles.tickImageContainer}>
-          <Image
-            resizeMode="contain"
-            source={require("../../images/tickround.png")}
-            style={styles.tickImage}
-          />
+          <IconFill name="check-circle" size={90} color={Constants.COLOR.GREEN_COLOR} />
 
           <Text style={styles.tickTitle}>Collect Payment</Text>
         <View style ={styles.ticAmountVal}>
@@ -336,7 +334,14 @@ class SampleCollectionSummary extends Component {
   _renderAddressView = () => {
     const bookingDetail = this.props.route.params.bookingDetail;
     return (
-      <View style={{ backgroundColor: "#F5F5F5", padding: 10, marginTop: 10 }}>
+      <View
+        style={{
+          backgroundColor: Constants.COLOR.LIGHT_GREY,
+          padding: 10,
+          marginTop: 10,
+          borderRadius: 5
+        }}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -349,7 +354,7 @@ class SampleCollectionSummary extends Component {
                 fontSize: Constants.FONT_SIZE.M,
                 flex: 1,
                 width: (deviceWidth * 2) / 3,
-                fontWeight: "bold",
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
               },
             ]}
           >
@@ -380,6 +385,7 @@ class SampleCollectionSummary extends Component {
             style={{
               color: Constants.COLOR.FONT_COLOR_DEFAULT,
               fontSize: Constants.FONT_SIZE.SM,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
             }}
           >
             {bookingDetail.Full_Address}
@@ -391,6 +397,7 @@ class SampleCollectionSummary extends Component {
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.SM,
             paddingVertical: 5,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
           }}
         >
           {bookingDetail.Mobile_No}
@@ -407,6 +414,7 @@ class SampleCollectionSummary extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.SM,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}
         >
           Landmark: {bookingDetail.Pt_Landmark}
@@ -439,6 +447,7 @@ class SampleCollectionSummary extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.S,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}
         >
           {bookingDetail.Booking_Type === "H" ? "HOME" : "WALK IN"}
@@ -447,6 +456,7 @@ class SampleCollectionSummary extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.S,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}
         >
           {moment(bookingDetail.Visit_Date, "YYYY/MM/DD").format("DD/MM/YYYY")}
@@ -456,6 +466,7 @@ class SampleCollectionSummary extends Component {
           style={{
             color: Constants.COLOR.FONT_COLOR_DEFAULT,
             fontSize: Constants.FONT_SIZE.S,
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
           }}
         >
           {bookingDetail.Visit_Time}
@@ -472,7 +483,7 @@ class SampleCollectionSummary extends Component {
       bookingDetail.Service_Detail.length > 0
     ) {
       return (
-        <View style={{ marginTop: 16 }}>
+        <View style={{ marginTop: 16, backgroundColor: Constants.COLOR.LIGHT_GREY, borderRadius: 5 }}>
           <FlatList
             style={{ marginTop: 8 }}
             data={bookingDetail.Service_Detail}
@@ -566,7 +577,14 @@ class SampleCollectionSummary extends Component {
     ) {
       return (
         <View style={{ padding: 10 }}>
-          <Text style={{ marginTop: 10, fontSize: Constants.FONT_SIZE.L, color: Constants.COLOR.FONT_COLOR }}>
+          <Text
+            style={{
+              marginTop: 10,
+              fontSize: Constants.FONT_SIZE.L,
+              color: Constants.COLOR.FONT_COLOR,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+            }}
+          >
             Feedback:
           </Text>
           <Text
@@ -575,6 +593,7 @@ class SampleCollectionSummary extends Component {
               marginBottom: 30,
               fontSize: Constants.FONT_SIZE.SM,
               color: Constants.COLOR.FONT_COLOR,
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
             }}
           >
             {bookingDetail.Post_Review}
@@ -812,6 +831,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.FONT_LINK_COLOR,
     alignSelf: "flex-end",
     fontSize: Constants.FONT_SIZE.S,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressView: { flexDirection: "row", marginTop: 0 },
   nameAddressLeftView: {
@@ -838,6 +858,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     color: "black",
     fontSize: Constants.FONT_SIZE.XXL,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   locationView: {
     flex: 1,
@@ -849,6 +870,8 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.COLOR.WHITE_COLOR,
     // backgroundColor: 'green',
     paddingVertical: 10,
+    marginTop: 15,
+    borderRadius: 5
   },
   nameAddressRightNameText: {
     // marginStart: 30,
@@ -858,6 +881,7 @@ const styles = StyleSheet.create({
   testListText: {
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   nameAddressRightAgePhoneView: { flexDirection: "row", marginTop: 10 },
   nameAddressRightAgeImage: {
@@ -897,6 +921,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     alignSelf: "center",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   SwitchToggleContainer: {
     marginTop: 16,
@@ -925,15 +950,16 @@ const styles = StyleSheet.create({
   tickTitle: {
     marginTop: 20,
     fontSize: Constants.FONT_SIZE.M,
-    color: "#41B892",
+    color: Constants.COLOR.GREEN_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   ticAmountVal: {
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 10,
     fontSize: Constants.FONT_SIZE.XXXL,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    color: "black",
+    color: Constants.COLOR.BLACK_COLOR,
   },
   homeImage: {
     width: deviceHeight / 35,
@@ -972,7 +998,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 20,
-    backgroundColor: Constants.COLOR.BUTTON_BG,
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -997,6 +1023,7 @@ const styles = StyleSheet.create({
     // marginStart: 30,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   bookingDateReportImage: {
     width: deviceHeight / 35,
@@ -1007,7 +1034,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.S,
     marginStart: 5,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   bookingDateRightInnerView: { flexDirection: "row", alignItems: "center" },
   inputs: {
@@ -1018,9 +1045,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 20,
     paddingLeft: 10,
-    color: "black",
+    color: Constants.COLOR.BLACK_COLOR,
     fontSize: Constants.FONT_SIZE.SM,
     flexDirection: "row",
     alignItems: "center",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

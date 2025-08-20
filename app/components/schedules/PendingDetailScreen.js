@@ -683,6 +683,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     padding: 5,
     marginTop: 10,
+    height: 40,
   },
   getDirectionText: {
     fontSize: 12,

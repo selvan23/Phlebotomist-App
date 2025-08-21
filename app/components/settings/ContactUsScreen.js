@@ -87,7 +87,7 @@ class ContactUsScreen extends Component {
     return (
       <View style={styles.contentContainer}>
         <View style={styles.phoneImageStyleView}>
-          <View style={{padding: 20, borderRadius: 60, backgroundColor: Constants.COLOR.LIGHT_GREY, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{padding: 20, borderRadius: 60, backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR, alignItems: 'center', justifyContent: 'center'}}>
           <IconOutline color={Constants.COLOR.PRIMARY_COLOR} size={60} name='customer-service' />
           </View>
         </View>
@@ -157,10 +157,10 @@ const styles = StyleSheet.create({
   message: {
     paddingHorizontal: 25,
     textAlign: 'center',
-    fontSize: Constants.FONT_SIZE.L,
+    fontSize: Constants.FONT_SIZE.M,
     color: Constants.COLOR.FONT_HINT,
     paddingVertical: 15,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   contentContainer: {
     flex: 1,

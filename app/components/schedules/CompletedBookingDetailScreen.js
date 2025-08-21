@@ -46,6 +46,7 @@ import moment from 'moment';
 import { nativationPop, navigate, navigationRef } from '../../rootNavigation';
 import RiyalPrice from '../common/RiyalPrice';
 import { IconFill, IconOutline } from '@ant-design/icons-react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -672,15 +673,24 @@ class CompletedBookingDetailScreen extends Component {
           style={styles.backButton}
           onPress={() => {
             // Actions.currentScene === currentScene;
-            if (navigationRef.getCurrentRoute().name === currentScene)
-            {
+            if (navigationRef.getCurrentRoute().name === currentScene) {
               this._callHome();
             }
-          }}>
-          <View style={styles.homeView}>
+          }}
+        >
+          <LinearGradient
+            colors={["#1E3989", "#9B71AA", "#87C699"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.homeView}
+          >
             <IconOutline name='home' color={Constants.COLOR.WHITE_COLOR} size={deviceHeight/40} />
             <Text style={styles.homeText}>Home</Text>
-          </View>
+          </LinearGradient>
+          {/* <View style={styles.homeView}>
+            <IconOutline name='home' color={Constants.COLOR.WHITE_COLOR} size={deviceHeight/40} />
+            <Text style={styles.homeText}>Home</Text>
+          </View> */}
         </TouchableOpacity>
       </View>
     );

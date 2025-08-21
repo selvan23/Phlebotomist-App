@@ -221,18 +221,18 @@ const styles = StyleSheet.create({
   modalHeaderText: {
     textAlign: 'left',
     fontSize: Constants.FONT_SIZE.XXL,
-    fontWeight: 'bold',
     marginBottom: 10,
     color: '#696969',
     marginHorizontal: 0,
     marginLeft: 5,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   headingText: {
     marginTop: 10,
     marginLeft: 5,
     color: 'black',
     fontSize: Constants.FONT_SIZE.L,
-    fontWeight: 'bold',
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   commentMainView: {
     flexDirection: 'row',
@@ -242,13 +242,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   commentTextView: {
-    backgroundColor: '#D4D2D2',
+    backgroundColor: Constants.COLOR.LIGHT_GREY,
     flex: 0.999,
     padding: 10,
     fontSize: Constants.FONT_SIZE.M,
     borderRadius: 10,
     height: deviceHeight / 4,
-    color:"black"
+    color:"black",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   yesBtnView: {
     marginTop: 20,
@@ -261,9 +262,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     color: 'white',
-    fontWeight: 'bold',
-    backgroundColor: '#6AA0DD',
-    borderColor: '#6AA0DD',
+    // fontWeight: 'bold',
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
+    borderColor: Constants.COLOR.PRIMARY_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   noBtnView: {
     marginTop: 20,
@@ -275,9 +277,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     overflow: 'hidden',
-    color: 'white',
+    color: Constants.COLOR.PRIMARY_COLOR,
     fontWeight: 'bold',
-    backgroundColor: '#FA8072',
-    borderColor: '#FA8072',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
+    borderColor: Constants.COLOR.PRIMARY_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
 });

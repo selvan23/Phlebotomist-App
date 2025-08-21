@@ -43,9 +43,9 @@ export default class UserDetails extends Component {
             <Text style={styles.bookingIdText}>
               BOOKING ID: {this.props.arrUserDetails.Booking_No}
             </Text>
-            <View style={{paddingVertical: 2, paddingHorizontal: 5, borderWidth: 1, borderRadius: 5, borderColor: Constants.COLOR.GREEN_COLOR, backgroundColor: '#F0FFF0'}}>
+            {this.props.isShowCashStatus ? <View style={{paddingVertical: 2, paddingHorizontal: 5, borderWidth: 1, borderRadius: 5, borderColor: Constants.COLOR.GREEN_COLOR, backgroundColor: '#F0FFF0'}}>
               <Text style={{color: Constants.COLOR.GREEN_COLOR, fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD, fontSize: Constants.FONT_SIZE.S}}>{this.props.arrUserDetails.Payment_Full_Desc}</Text>
-            </View>
+            </View> : null}
           </View>
 
           {this._renderViewPrescription()}

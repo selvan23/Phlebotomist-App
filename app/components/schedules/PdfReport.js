@@ -97,6 +97,7 @@ export default class PdfReport extends Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: Constants.COLOR.WHITE_COLOR
   },
   subContainer: {
     flex: 1,

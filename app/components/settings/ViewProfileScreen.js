@@ -47,6 +47,7 @@ import HTML from "react-native-render-html";
 import moment from "moment";
 import { nativationPop, navigate } from "../../rootNavigation";
 import CustomDatePicker from "../common/CustomDatePicker";
+import LinearGradient from "react-native-linear-gradient";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -601,7 +602,7 @@ class ViewProfileScreen extends Component {
               isEditable ? this._closeAlert() : nativationPop();
             }}
           >
-            <IconOutline size={22}  name="close" />
+            <IconOutline size={22} name="close" />
           </TouchableOpacity>
         </View>
         <View style={styles.divider} />
@@ -706,7 +707,12 @@ class ViewProfileScreen extends Component {
             <View style={styles.innerbody}>
               <Text style={styles.bodyheaderText}> D.O.B </Text>
               {/* <Text style={styles.bodyText}>19/05/1999</Text> */}
-              <TouchableOpacity disabled={!isEditable} onPress={()=>{this.setState({showDatePicker: !showDatePicker})}}>
+              <TouchableOpacity
+                disabled={!isEditable}
+                onPress={() => {
+                  this.setState({ showDatePicker: !showDatePicker });
+                }}
+              >
                 <Text style={styles.bodyText}>{dob}</Text>
               </TouchableOpacity>
             </View>
@@ -714,7 +720,11 @@ class ViewProfileScreen extends Component {
               <Text style={styles.bodyheaderText}> Remarks </Text>
               <View style={{ marginLeft: 4 }}>
                 <HTML
-                  baseStyle={{ color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}
+                  baseStyle={{
+                    color: "black",
+                    fontFamily:
+                      Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+                  }}
                   source={{
                     html: this.state.aboutCollector,
                   }}
@@ -729,28 +739,30 @@ class ViewProfileScreen extends Component {
                 ? this._validateInputs()
                 : this._navigateDashboardScreen();
             }}
-            style={styles.button}
           >
-            <Text style={styles.buttonText}>
-              {this.state.isEditable === true ? (
-                <Text> Update </Text>
-              ) : (
-                <Text> Home </Text>
-              )}
-            </Text>
+            <LinearGradient
+              colors={["#1E3989", "#9B71AA", "#87C699"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>
+                {this.state.isEditable === true ? "Update" : "Home"}
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
         <CustomDatePicker
-            dob={dob}
-            setDob={date => {
-              this.setState({dob: date});
-            }}
-            visible={showDatePicker}
-            setVisible={visible => {
-              this.setState({showDatePicker: visible});
-            }}
-            isDateInverted={false}
-          />
+          dob={dob}
+          setDob={(date) => {
+            this.setState({ dob: date });
+          }}
+          visible={showDatePicker}
+          setVisible={(visible) => {
+            this.setState({ showDatePicker: visible });
+          }}
+          isDateInverted={false}
+        />
       </View>
     );
   };
@@ -843,21 +855,15 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   button: {
-    backgroundColor: "#040619",
-    alignItems: "center",
-    borderRadius: 25,
-    width: deviceWidth / 3.9,
-    marginTop: 15,
-    alignSelf: "center",
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    shadowOpacity: 1.0,
-    elevation: 6,
-    shadowRadius: 15,
-    marginBottom: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 40,
+    borderRadius: 5,
+    paddingVertical: 10
   },
   buttonText: {
-    fontSize: Constants.FONT_SIZE.S,
-    paddingVertical: 10,
+    fontSize: Constants.FONT_SIZE.L,
     color: "#FFFFFF",
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },

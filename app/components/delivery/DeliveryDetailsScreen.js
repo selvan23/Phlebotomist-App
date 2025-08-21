@@ -37,8 +37,7 @@ const deviceHeight = Utility.isiPhoneX()
 
 const deviceWidth = Dimensions.get('window').width;
 import moment from 'moment';
-import { nativationPop } from '../../rootNavigation';
-import GradientButton from '../common/GradientButton';
+import { IconOutline } from '@ant-design/icons-react-native';
 
 
 class DeliveryDetailsScreen extends Component {
@@ -106,14 +105,6 @@ class DeliveryDetailsScreen extends Component {
             {this._renderSubmitButtonView()}
           </View>
         </KeyboardAwareScrollView>
-        <TouchableOpacity
-          style={{ Index: 1, position: 'absolute', bottom: 10, left: 12 }}
-          onPress={() => {
-            // Actions.pop();
-            nativationPop();
-          }}>
-          <ButtonBack />
-        </TouchableOpacity>
       </View>
     );
   };
@@ -125,6 +116,7 @@ class DeliveryDetailsScreen extends Component {
           <UserDetail
             arrUserDetails={this.props.deliveryData}
             isShowPDF={false}
+            isShowCashStatus={false}
           />
         </View>
       );
@@ -337,16 +329,10 @@ class DeliveryDetailsScreen extends Component {
               this._onPressUploadDownload(index);
             }}>
             {item.isShowTestList === false ? (
-              <Image
-                source={require('../../images/download.png')}
-                style={styles.downImageStyle}
-              />
+              <IconOutline name={'down-circle'} size={22} />
             ) : (
-                <Image
-                  source={require('../../images/upload.png')}
-                  style={styles.downImageStyle}
-                />
-              )}
+                <IconOutline name={'up-circle'} size={22} />
+            )}
           </TouchableOpacity>
         </View>
         {this._showTestListView(item)}
@@ -470,10 +456,6 @@ class DeliveryDetailsScreen extends Component {
               alignSelf: 'flex-end',
           
             }}>
-          {/* <GradientButton isSetwith={0.3} isSetheight={0.10} title={"Submit"} onPress={() => {
-              this._onSubmitDetails();
-            }}/> */}
-
           <TouchableOpacity
             style={{
               marginTop: 20,

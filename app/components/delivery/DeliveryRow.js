@@ -204,29 +204,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     backgroundColor: "#fbfbfb",
+    borderRadius: 5
   },
 
   subViewContainerOne: {
-    borderLeftWidth: 3,
-    borderRightWidth: 3,
+    borderRightWidth: 5,
     borderTopWidth: 0,
     borderBottomWidth: 0,
     borderColor: Constants.COLOR.THEME_COLOR,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5
   },
 
   subViewContainerTwo: {
     flex: 3,
     justifyContent: "space-around",
-    // borderLeftWidth: 2,
-    // borderRightWidth: 1,
-    // borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderLeftColor: "#4C4C4C",
-    borderBottomColor: "#F1F1F1",
-    borderTopColor: "#F1F1F1",
-    borderRightColor: "#F1F1F1",
     paddingHorizontal: 5,
-    backgroundColor: "#e6ecffff",
+    backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR,
+    borderRadius: 5
   },
 
   nameTextStyle: {

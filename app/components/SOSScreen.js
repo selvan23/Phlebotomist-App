@@ -31,6 +31,7 @@ import PropTypes from 'prop-types';
 import { updateSOSAlert, showSosLoading, hideSosLoading } from '../actions/SosAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IconOutline } from '@ant-design/icons-react-native';
+import SosIcon from '../assets/images/SosIcon';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Utility.isiPhoneX()
@@ -138,8 +139,8 @@ class SOSScreen extends Component {
         </TouchableOpacity>
 
         <View style={styles.innerContainer}>
+          <SosIcon width={100} height={100} />
           <Text style={styles.startText}> SOS ALERT </Text>
-
           <Text style={styles.centerText}>
             Are you sure you want to send an emergency alert message to our
             Customer Service?
@@ -164,7 +165,7 @@ class SOSScreen extends Component {
               }, 2000);
             }}
           >
-            <Text style={styles.buttonText}> No </Text>
+            <Text style={[styles.buttonText, {color: Constants.COLOR.PRIMARY_COLOR}]}> No </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -352,7 +353,6 @@ const styles = StyleSheet.create({
   startText: {
     color: 'black',
     fontSize: Constants.FONT_SIZE.XXXL,
-    paddingTop: 25,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
 
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
 
   yesButton: {
-    backgroundColor: '#58afff',
+    backgroundColor: Constants.COLOR.PRIMARY_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   },
 
   noButton: {
-    backgroundColor: '#fc464f',
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
@@ -388,13 +388,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 1.0,
     elevation: 6,
     shadowRadius: 15,
+    borderWidth: 2,
+    borderColor: Constants.COLOR.PRIMARY_COLOR
   },
 
   buttonText: {
     fontSize: Constants.FONT_SIZE.L,
     paddingVertical: 10,
     color: '#FFFFFF',
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
   },
 
   headerRightImage: {

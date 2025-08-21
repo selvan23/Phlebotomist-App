@@ -161,7 +161,7 @@ class PendingDetailScreen extends Component {
         <View style={styles.noDataSubView}>
           <Text style={{ padding: 20, color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             // if (Actions.currentScene === currentScene) {
             if (navigationRef.getCurrentRoute().name === currentScene) {
@@ -172,7 +172,7 @@ class PendingDetailScreen extends Component {
           style={styles.backBtn}
         >
           <ButtonBack />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };
@@ -264,6 +264,7 @@ class PendingDetailScreen extends Component {
           pdfReport={this.props.pdfReport}
           callPdf={this._callPdf}
           isShowPDF={true}
+          isShowCashStatus={true}
         />
       </View>
     );
@@ -504,6 +505,7 @@ class PendingDetailScreen extends Component {
     return (
       <TouchableOpacity
         style={styles.backButtonView}
+        disabled
         onPress={() => {
           // if (Actions.currentScene === currentScene) {
           if (navigationRef.getCurrentRoute().name === currentScene) {
@@ -512,7 +514,7 @@ class PendingDetailScreen extends Component {
           }
         }}
       >
-        <ButtonBack />
+        {/* <ButtonBack /> */}
       </TouchableOpacity>
     );
   };

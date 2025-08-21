@@ -72,7 +72,7 @@ class LoadingScreen extends Component {
             isVisible={this.props.isLoading}
             size={40}
             type={'Wave'}
-            color={Constants.COLOR.THEME_COLOR}
+            color={Constants.COLOR.PRIMARY_COLOR}
           />
           <Text
             style={{
@@ -80,7 +80,7 @@ class LoadingScreen extends Component {
               marginTop: deviceHeight / 40,
               fontSize: Constants.FONT_SIZE.L,
               // fontFamily: 'Dosis-SemiBold',
-              color: Constants.COLOR.THEME_COLOR,
+              color: Constants.COLOR.PRIMARY_COLOR,
             }}>
             Loading...
           </Text>
@@ -135,7 +135,7 @@ class LoadingScreen extends Component {
                 textAlign: 'center',
                 fontSize: deviceHeight / 40,
                 // fontFamily: 'Dosis-SemiBold',
-                color: Constants.COLOR.THEME_COLOR,
+                color: Constants.COLOR.PRIMARY_COLOR,
               }}>
               Tap to Reload
             </Text>

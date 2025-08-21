@@ -29,7 +29,8 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getContactDetails} from '../../actions/ContactAction';
-import { nativationPop } from '../../rootNavigation';
+import { IconOutline } from '@ant-design/icons-react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -86,10 +87,9 @@ class ContactUsScreen extends Component {
     return (
       <View style={styles.contentContainer}>
         <View style={styles.phoneImageStyleView}>
-          <Image
-            style={styles.phoneImageStyle}
-            source={require('../../images/phone-call.png')}
-          />
+          <View style={{padding: 20, borderRadius: 60, backgroundColor: Constants.COLOR.LIGHT_GREY, alignItems: 'center', justifyContent: 'center'}}>
+          <IconOutline color={Constants.COLOR.PRIMARY_COLOR} size={60} name='customer-service' />
+          </View>
         </View>
         {this._showDescription()}
 
@@ -98,14 +98,14 @@ class ContactUsScreen extends Component {
           onPress={() => {
             this.dialCall();
           }}>
-          <Text
-            style={{
-              color: Constants.COLOR.WHITE_COLOR,
-              fontSize: Constants.FONT_SIZE.M,
-              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
-            }}>
-            Call us
-          </Text>
+            <LinearGradient
+            colors={["#1E3989", "#9B71AA", "#87C699"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <Text style={styles.gradientButtonText}>Call us</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     );
@@ -117,23 +117,6 @@ class ContactUsScreen extends Component {
       return (
         <View style={styles.container}>
           {this._renderContentView()}
-          <TouchableOpacity
-            style={styles.backButton}
-            disabled={this.state.btnBackDisabled}
-            onPress={() => {
-              this.setState({
-                btnBackDisabled: true,
-              });
-              // Actions.pop();
-              nativationPop();
-              setTimeout(() => {
-                this.setState({
-                  btnBackDisabled: false,
-                });
-              }, 1000);
-            }}>
-            <ButtonBack />
-          </TouchableOpacity>
         </View>
       );
     }
@@ -174,10 +157,10 @@ const styles = StyleSheet.create({
   message: {
     paddingHorizontal: 25,
     textAlign: 'center',
-    fontSize: Constants.FONT_SIZE.M,
+    fontSize: Constants.FONT_SIZE.L,
     color: Constants.COLOR.FONT_HINT,
     paddingVertical: 15,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   contentContainer: {
     flex: 1,
@@ -195,17 +178,25 @@ const styles = StyleSheet.create({
     height: 80,
   },
   callUsButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: Constants.COLOR.CALL_US_BG_COLOR,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 200,
+    marginTop: 20
   },
   backButton: {
     zIndex: 1,
     position: 'absolute',
     bottom: 20,
     left: 15,
+  },
+  gradientButton: {
+    borderRadius: 10,
+    justifyContent: 'center',
+    width: '100%',
+    height: 45,
+    alignItems:'center',
+    paddingHorizontal: 15
+  },
+  gradientButtonText: {
+    color: Constants.COLOR.WHITE_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
 });

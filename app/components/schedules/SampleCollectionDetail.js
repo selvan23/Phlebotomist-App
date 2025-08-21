@@ -165,6 +165,7 @@ class SampleCollectionDetail extends Component {
         <UserDetails
           arrUserDetails={this.props.route.params.bookingDetail}
           isShowPDF={false}
+          isShowCashStatus={true}
         />
       </View>
     );
@@ -933,7 +934,7 @@ class SampleCollectionDetail extends Component {
   _renderButtonsView = () => {
     return (
       <View style={styles.navigationButtonsMain}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           disabled={this.state.btnBackDisabled}
           onPress={() => {
             this.setState({
@@ -949,7 +950,7 @@ class SampleCollectionDetail extends Component {
           }}
         >
           <ButtonBack />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           disabled={this.state.btnNextDisabled}
@@ -1112,7 +1113,7 @@ const styles = StyleSheet.create({
 
   navigationButtonsMain: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: 'flex-end',
     marginTop: 20,
     marginBottom: 40,
     marginHorizontal: 0,

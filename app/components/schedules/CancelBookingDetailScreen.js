@@ -117,7 +117,7 @@ class cancelBookingDetail extends Component {
           {this._renderServiceTest()}
           {this._renderBookingCancel()}
           {this._postFeedBack()}
-          {this._renderBackButton()}
+          {/* {this._renderBackButton()} */}
         </KeyboardAwareScrollView>
       </View>
     );
@@ -128,6 +128,7 @@ class cancelBookingDetail extends Component {
         <UserDetails
           arrUserDetails={this.props.cancelBookingDetail}
           isShowPDF={false}
+          isShowCashStatus={true}
         />
       </View>
     );

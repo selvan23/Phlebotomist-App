@@ -47,6 +47,7 @@ import { nativationPop, navigate, navigationRef } from "../../rootNavigation";
 import RiyalPrice from "../common/RiyalPrice";
 import { getPendingList } from "../../actions/PendingScreenAction";
 import { IconFill, IconOutline } from "@ant-design/icons-react-native";
+import LinearGradient from "react-native-linear-gradient";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -673,9 +674,14 @@ class SampleCollectionSummary extends Component {
             }
           }}
         >
-          <View style={styles.homeView}>
+          <LinearGradient
+            colors={["#1E3989", "#9B71AA", "#87C699"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.homeView}
+          >
             <Text style={styles.homeText}>{"Finish"}</Text>
-          </View>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     );
@@ -969,19 +975,19 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   homeView: {
-    flexDirection: "row",
-    backgroundColor: "#3cb371",
     borderRadius: 10,
     justifyContent: "center",
-    alignSelf: "center",
+    alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 15,
+    width: '100%'
   },
   homeText: {
     fontSize: Constants.FONT_SIZE.M,
     color: Constants.COLOR.WHITE_COLOR,
     paddingHorizontal: 8,
     alignSelf: "center",
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 
   navigationViewMainContainer: {

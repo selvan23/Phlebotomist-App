@@ -36,6 +36,7 @@ class NavigationBar extends Component {
     isNotificationListLoading: PropTypes.bool,
     count: PropTypes.string,
     getNotificationCount: PropTypes.func,
+    showOnBackNavigation: PropTypes.bool
   };
 
   constructor(props) {
@@ -43,15 +44,27 @@ class NavigationBar extends Component {
   }
 
   render() {
+    const {showOnBackNavigation} = this.props
     return (
-      <View
-        style={{ backgroundColor: Constants.COLOR.WHITE_COLOR }}
-      >
+      <View style={{ backgroundColor: Constants.COLOR.WHITE_COLOR }}>
         {this.props.isShowNavBar ? (
           <View style={styles.container}>
-            <View style={styles.leftView}>
+            <TouchableOpacity
+              disabled={!showOnBackNavigation}
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}
+              style={styles.leftView}
+            >
+              {showOnBackNavigation ? (
+                <IconOutline
+                  style={{ marginBottom: 2 }}
+                  name="arrow-left"
+                  size={22}
+                />
+              ) : null}
               <Text style={styles.headingText}>{this.props.title}</Text>
-            </View>
+            </TouchableOpacity>
             {this.props.isHideImages ? null : (
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
@@ -80,9 +93,7 @@ class NavigationBar extends Component {
                   <HeaderIcon icon={"bell"} width={40} height={40} />
                   {this.props.count > 0 && (
                     <View style={styles.badge}>
-                      <Text style={styles.badgeText}>
-                        {this.props.count}
-                      </Text>
+                      <Text style={styles.badgeText}>{this.props.count}</Text>
                     </View>
                   )}
                 </TouchableOpacity>
@@ -157,6 +168,8 @@ const styles = StyleSheet.create({
 
   leftView: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   rightView: {
     // flex: 1,
@@ -169,6 +182,7 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.BLACK_COLOR,
     fontSize: Constants.FONT_SIZE.XL,
     fontFamily: "Poppins-SemiBold",
+    marginLeft: 5
   },
   headerRightImage: {
     // marginLeft: 25,

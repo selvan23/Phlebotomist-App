@@ -30,6 +30,8 @@ import HTML from 'react-native-render-html';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../common/LoadingScreen';
 import { nativationPop } from '../../rootNavigation';
+import LinearGradient from 'react-native-linear-gradient';
+
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
   : Dimensions.get('window').height;
@@ -53,22 +55,40 @@ class AboutScreen extends Component {
 
   _renderContentView() {
     return (
-      <View style={{ marginHorizontal: 10 }}>
-        <HTML
-        baseStyle={{ color: 'black', fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}
-        source={{
-          html: this.props.arrAboutInfo.Client_Description
-        }} />
-        <Text style={[styles.textView, { marginTop: 5 }]}>
-          {this.props.arrAboutInfo.Client_Location}
-        </Text>
-        <Text style={styles.textView}>
-          {this.props.arrAboutInfo.Client_Email_Id}
-        </Text>
-        <TouchableOpacity onPress={() => this.__callWebUrl()}>
-          <Text style={[styles.textViewLink]}>
-            {this.props.arrAboutInfo.Client_Web_Address}
+      <View
+        style={{
+          marginHorizontal: 10,
+          marginTop: 10,
+          flex: 1,
+          justifyContent: "space-between",
+        }}
+      >
+        <View>
+          <HTML
+            baseStyle={{
+              color: "black",
+              fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+            }}
+            source={{
+              html: this.props.arrAboutInfo.Client_Description,
+            }}
+          />
+          <Text style={[styles.textView, { marginTop: 5 }]}>
+            {this.props.arrAboutInfo.Client_Location}
           </Text>
+          <Text style={styles.textView}>
+            {this.props.arrAboutInfo.Client_Email_Id}
+          </Text>
+        </View>
+        <TouchableOpacity activeOpacity={0.2} onPress={() => this.__callWebUrl()}>
+          <LinearGradient
+            colors={["#1E3989", "#9B71AA", "#87C699"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <Text style={styles.gradientButtonText}>{this.props.arrAboutInfo.Client_Web_Address}</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     );
@@ -107,7 +127,7 @@ class AboutScreen extends Component {
             });
           }, 1000);
         }}>
-        <ButtonBack />
+        {/* <ButtonBack /> */}
       </TouchableOpacity>
     );
   };
@@ -115,14 +135,19 @@ class AboutScreen extends Component {
   _renderScreens = () => {
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView>
-          {this._renderMainLogo()}
-          <Text
-            style={{ fontSize: Constants.FONT_SIZE.XXXL, textAlign: 'center', color: 'black', fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>
-            {this.props.arrAboutInfo.Client_Name}
-          </Text>
-          {this._renderContentView()}
-        </KeyboardAwareScrollView>
+        {this._renderMainLogo()}
+        <Text
+          style={{
+            fontSize: Constants.FONT_SIZE.XL,
+            textAlign: "center",
+            color: "black",
+            fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
+            marginTop: 10,
+          }}
+        >
+          {this.props.arrAboutInfo.Client_Name}
+        </Text>
+        {this._renderContentView()}
         <View style={styles.backButtonView}>{this._renderButton()}</View>
       </View>
     );
@@ -159,7 +184,8 @@ class AboutScreen extends Component {
         return this._renderScreens();
       } else {
         return (
-          <View style={styles.container}>
+          <View style={[styles.container, {justifyContent: 'space-between'}]}>
+            <View>
             <Text style={[styles.textContentStyle, { top: 20 }]}>
               The application allows the Patient to confirm the bookings for
               various tests and complete an Online payment.
@@ -171,31 +197,16 @@ class AboutScreen extends Component {
               Tests, reach the Patient’s location and collect the samples in a
               safe and sound environment.
             </Text>
-            <TouchableOpacity style={styles.emailContainer}>
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  color: Constants.COLOR.WHITE_COLOR,
-                }}>
-                W W W . s u k r a a l i s . c o m
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.backButton}
-              disabled={this.state.btnBackDisabled}
-              onPress={() => {
-                this.setState({
-                  btnBackDisabled: true,
-                });
-                // Actions.pop();
-                nativationPop();
-                setTimeout(() => {
-                  this.setState({
-                    btnBackDisabled: false,
-                  });
-                }, 1000);
-              }}>
-              <ButtonBack />
+            </View>
+            <TouchableOpacity style={{marginBottom: 50}}>
+              <LinearGradient
+            colors={["#1E3989", "#9B71AA", "#87C699"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <Text style={styles.gradientButtonText}>W W W . s u k r a a l i s . c o m</Text>
+          </LinearGradient>
             </TouchableOpacity>
           </View>
         );
@@ -227,17 +238,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(AboutScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // height: '100%',
     paddingHorizontal: 15,
-    backgroundColor: Constants.COLOR.WHITE_COLOR
+    backgroundColor: Constants.COLOR.WHITE_COLOR,
+    // alignItems: 'center',
+    // justifyContent: 'center'
   },
   textContentStyle: {
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.M,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   emailContainer: {
     top: 100,
     paddingVertical: 10,
     backgroundColor: Constants.COLOR.THEME_COLOR,
+    marginBottom: 140
   },
   backButton: {
     position: 'absolute',
@@ -251,7 +267,6 @@ const styles = StyleSheet.create({
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
   textViewLink: {
-    flex: 1,
     width: '100%',
     textAlign: 'center',
     backgroundColor: Constants.COLOR.THEME_COLOR,
@@ -270,10 +285,22 @@ const styles = StyleSheet.create({
     width: deviceHeight * (5 / 15),
     // height: deviceHeight * (3 / 20),
     height: deviceHeight * (1 / 5),
+    marginVertical: 20
   },
   backButtonView: {
     alignSelf: 'flex-start',
     marginVertical: 20,
     marginLeft: 10,
+  },
+  gradientButton: {
+    borderRadius: 10,
+    justifyContent: 'center',
+    width: '100%',
+    height: 45,
+    alignItems:'center'
+  },
+  gradientButtonText: {
+    color: Constants.COLOR.WHITE_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

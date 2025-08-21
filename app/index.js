@@ -212,7 +212,7 @@ const homeTabArray = [
         activeImage: deliveryTabIconActive,
         id: 'deliveryTab',
         isShowNavBar: true,
-        icon:  'line-chart'
+        icon: 'thunderbolt'
     },
     {
         name: 'Settings',
@@ -331,6 +331,7 @@ const HomeTabBarNestedRoutes = (props) => <>
                             isShowNavBar={item.isShowNavBar}
                             isShowLocation={item.isShowLocation}
                             title={item.name}
+                            showOnBackNavigation={false}
                         />,
                     }}
                 />
@@ -409,6 +410,7 @@ const Main = () => {
                                     isShowNavBar={true}
                                     isShowLocation={false}
                                     title={'About Us'}
+                                    showOnBackNavigation={true}
                                 />
                             }}
                         />
@@ -460,6 +462,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Contact Us"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -473,6 +476,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Deliver Samples"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -487,6 +491,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Bookings"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -500,6 +505,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Bookings"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -513,6 +519,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Bookings"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -526,6 +533,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Bookings"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -540,6 +548,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Sample Collections"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />
@@ -553,6 +562,7 @@ const Main = () => {
                                 hideNavBar={false}
                                 isShowNavBar={true}
                                 title="Sample Collections"
+                                showOnBackNavigation={true}
                             />
                         }}
                     />

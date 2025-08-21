@@ -43,6 +43,9 @@ export default class UserDetails extends Component {
             <Text style={styles.bookingIdText}>
               BOOKING ID: {this.props.arrUserDetails.Booking_No}
             </Text>
+            <View style={{paddingVertical: 2, paddingHorizontal: 5, borderWidth: 1, borderRadius: 5, borderColor: Constants.COLOR.GREEN_COLOR, backgroundColor: '#F0FFF0'}}>
+              <Text style={{color: Constants.COLOR.GREEN_COLOR, fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD, fontSize: Constants.FONT_SIZE.S}}>{this.props.arrUserDetails.Payment_Full_Desc}</Text>
+            </View>
           </View>
 
           {this._renderViewPrescription()}
@@ -58,12 +61,9 @@ export default class UserDetails extends Component {
           <View style={styles.bookingDateRightView}>
             <TouchableOpacity
               onPress={() => {}}
-              style={styles.bookingDateRightInnerView}>
-              <Image
-                style={styles.bookingDateReportImage}
-                resizeMode="contain"
-                source={require('../../images/placeholder.png')}
-              />
+              style={styles.bookingDateRightInnerView}
+            >
+              <IconOutline name="environment" size={deviceHeight / 35} />
               <Text style={styles.bookingDateReportLink}>
                 {this.props.arrUserDetails.Branch_Name}
               </Text>
@@ -123,11 +123,7 @@ export default class UserDetails extends Component {
             </Text>
           </View>
           <View style={styles.nameAddressRightAgePhoneView}>
-            <Image
-              style={styles.nameAddressRightAgeImage}
-              resizeMode="contain"
-              source={require('../../images/gender.png')}
-            />
+            <IconOutline name={`${this.props.arrUserDetails.Gender_Code === 'M' ? 'man' : 'woman'}`} size={deviceHeight/45} color={Constants.COLOR.FONT_COLOR_DEFAULT} />
             <Text style={styles.nameAddressRightAgeText}>
               {this.props.arrUserDetails.Gender_Code}
             </Text>
@@ -171,11 +167,7 @@ export default class UserDetails extends Component {
     ) {
       return (
         <View style={styles.nameAddressRightAddressView}>
-          <Image
-            style={styles.nameAddressRightAddressImage}
-            resizeMode="contain"
-            source={require('../../images/location.png')}
-          />
+          <IconOutline  name="environment"  color={Constants.COLOR.FONT_COLOR_DEFAULT} size={deviceHeight / 40} />
           <View>
             <Text style={styles.nameAddressRightAddressText}>
               {this.props.arrUserDetails.Full_Address}
@@ -206,7 +198,7 @@ const styles = StyleSheet.create({
   mainView: {marginVertical: 5},
   bookingIdDateMainView: { flexDirection: 'column'},
   bookingIdReportSubView: { flexDirection: 'row'},
-  bookingIdLeftView: {alignSelf: 'center'},
+  bookingIdLeftView: {alignItems: 'center', flexDirection: 'row', width: '100%', justifyContent: 'space-between'},
   bookingIdRightView: {
     flexDirection: 'column',
     alignItems: 'flex-end',
@@ -218,7 +210,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: Constants.FONT_SIZE.M,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   bookingIdReportImage: {
     alignSelf: 'flex-start',
@@ -237,6 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-end',
     alignSelf: 'center',
+    marginLeft: 10
   },
   bookingDateRightInnerView: {flexDirection: 'row', alignItems: 'center'},
   bookingDateText: {
@@ -285,13 +278,13 @@ const styles = StyleSheet.create({
   nameAddressRightNameAgeView: {flexDirection: 'row'},
   nameAddressRightNameText: {
     // marginStart: 30,
-    color: Constants.COLOR.FONT_COLOR_DEFAULT,
+    color: Constants.COLOR.BLACK_COLOR,
     fontSize: Constants.FONT_SIZE.M,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
   },
   nameAddressRightNameAgeText: {
     // marginStart: 30,
-    color: Constants.COLOR.FONT_COLOR_DEFAULT,
+    color: Constants.COLOR.BLACK_COLOR,
     fontSize: Constants.FONT_SIZE.M,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },

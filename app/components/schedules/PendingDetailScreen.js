@@ -182,7 +182,7 @@ class PendingDetailScreen extends Component {
         <ScrollView style={styles.subView}>
           {this._renderUserDetails()}
           {this._renderServiceTest()}
-          {this._renderPaymentStatus()}
+          {/* {this._renderPaymentStatus()} */}
           {this._renderMapView()}
           {this._renderBookingView()}
           {this._renderBackButton()}

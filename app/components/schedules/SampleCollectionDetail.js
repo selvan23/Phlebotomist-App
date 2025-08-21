@@ -686,15 +686,14 @@ class SampleCollectionDetail extends Component {
   _renderLocationImg = () => {
     if (this.state.isGPSLoading) {
       return (
-        <ActivityIndicator color="#0000ff" style={styles.locationIconImg} />
+        <ActivityIndicator color={Constants.COLOR.THEME_COLOR} style={styles.locationIconImg} />
       );
     } else {
       return (
-        <Image
-          style={styles.locationIconImg}
-          resizeMode="contain"
-          source={require("../../images/location.png")}
-        />
+        <IconOutline style={{marginHorizontal: 5,
+          alignSelf: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',}} name="environment"  color={Constants.COLOR.BLACK_COLOR} size={deviceHeight / 40} />
       );
     }
   };

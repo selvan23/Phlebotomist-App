@@ -172,7 +172,7 @@ class SettingsScreen extends Component {
                   { backgroundColor: "#EF9724" },
                 ]}
               >
-                <IconOutline size={deviceHeight/30} name="phone" color={Constants.COLOR.WHITE_COLOR} />
+                <IconOutline size={deviceHeight/30} name="customer-service" color={Constants.COLOR.WHITE_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>Contact Us</Text>
               <IconOutline name="right" size={deviceHeight/30} />

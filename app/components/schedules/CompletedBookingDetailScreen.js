@@ -372,11 +372,10 @@ class CompletedBookingDetailScreen extends Component {
             <TouchableOpacity
               onPress={() => { }}
               style={styles.bookingDateRightInnerView}>
-              <Image
-                style={styles.bookingDateReportImage}
-                resizeMode="contain"
-                source={require('../../images/placeholder.png')}
-              />
+              <IconOutline
+                  name="environment"  
+                  color={Constants.COLOR.BLACK_COLOR} 
+                  size={deviceHeight / 40} />
               <Text style={[styles.bookingDateReportLink, { marginStart: 0 }]}>
                 {this.props.bookingDetail.Branch_Name}
               </Text>

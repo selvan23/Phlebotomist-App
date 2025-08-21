@@ -29,6 +29,7 @@ import {
 import { navigate } from '../rootNavigation';
 import CustomInput from './common/CustomInput';
 import GradientButton from './common/GradientButton';
+import MaskBackground from './common/MaskBackground';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -96,6 +97,7 @@ class SetPasswordScreen extends Component {
     return (
       <SafeAreaView style={styles.mainContainer}>
         <KeyboardAwareScrollView enableOnAndroid={true}>
+          <MaskBackground />
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>
               {/* <Text style={styles.title}>Set Password </Text> */}
@@ -104,10 +106,10 @@ class SetPasswordScreen extends Component {
           <View style={styles.bodyContainerBottom}></View>
           {this._renderSetPasswordView()}
         </KeyboardAwareScrollView>
-          <View style={{ ustifyContent: "center", alignItems: "center",}}>
-            <Text style={styles.version}>Version: 1.1.0</Text>
-            <Text style={styles.version}>Powered by SUKRAA</Text>
-          </View>
+        <View style={{ ustifyContent: "center", alignItems: "center" }}>
+          <Text style={styles.version}>Version: 1.1.0</Text>
+          <Text style={styles.version}>Powered by SUKRAA</Text>
+        </View>
       </SafeAreaView>
     );
   };
@@ -116,7 +118,7 @@ class SetPasswordScreen extends Component {
     return (
       <View style={styles.loginContainer}>
         <View style={styles.loginInnerView}>
-          <View style={{marginHorizontal: 10}}>
+          <View style={{marginHorizontal: 10, marginTop: 60}}>
             <Image
               resizeMode="contain"
               source={require('../images/Logo.png')}

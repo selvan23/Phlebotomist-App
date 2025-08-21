@@ -28,7 +28,7 @@ const CustomInput = ({
   const isRTL = selectedLanguage === "ar";
   return (
     <View style={styles.inputWrapper}>
-      {icon ? <IconOutline name={showPassword ? `un${icon}` :  icon} color={Constants.COLOR.FONT_HINT} size={22}/> : null}
+      {icon ? <IconOutline name={showPassword ? `un${icon}` :  icon} color={Constants.COLOR.FONT_HINT} size={20}/> : null}
       <TextInput
         style={[
           styles.input,
@@ -46,7 +46,7 @@ const CustomInput = ({
       />
       {setShowPassword && (
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <IconFill name={showPassword? 'eye' : 'eye-invisible'} color={Constants.COLOR.FONT_HINT} size={22} />
+          <IconFill name={showPassword? 'eye' : 'eye-invisible'} color={Constants.COLOR.FONT_HINT} size={20} />
         </TouchableOpacity>
       )}
     </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: screenWidth * 0.03,
     marginBottom: screenWidth * 0.02,
     width: "100%",
-    height: 50,
+    height: 45,
     justifyContent: "flex-start",
     alignSelf: "center",
     backgroundColor: "#ffffffff",

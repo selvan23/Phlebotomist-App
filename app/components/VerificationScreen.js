@@ -132,7 +132,7 @@ class VerificationScreen extends Component {
   _renderVerificationMainViewAndroid = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView enableOnAndroid={true}>
+        <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={150}>
           <MaskBackground />
           <View
             style={[
@@ -178,7 +178,7 @@ class VerificationScreen extends Component {
     return (
       <View style={styles.loginContainer}>
         <View style={styles.loginInnerView}>
-          <View style={{ marginHorizontal: 10 }}>
+          <View style={{ marginHorizontal: 10, marginTop: 40 }}>
             <Image
               resizeMode="contain"
               source={require("../images/Logo.png")}
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   title: {
-    fontSize: Constants.FONT_SIZE.XXXL,
+    fontSize: Constants.FONT_SIZE.XL,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     fontWeight: "600",
     color: "#00071A",

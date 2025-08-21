@@ -91,15 +91,7 @@ class BookRow extends Component {
                 alignSelf: "center",
               }}
             >
-              <Image
-                style={{
-                  width: deviceHeight / 45,
-                  height: deviceHeight / 45,
-                  marginHorizontal: 3,
-                  tintColor: "red",
-                }}
-                source={require("../../images/placeholder.png")}
-              />
+              <IconOutline name="environment" color="red" size={deviceHeight / 50} />
               <Text
                 style={{
                   marginRight: 5,

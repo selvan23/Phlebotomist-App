@@ -31,7 +31,9 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate, navigationRef, navigationReplace } from "../rootNavigation";
 import CustomInput from "./common/CustomInput";
-
+import GradientButton from "./common/GradientButton";
+import MaskBackground from "./common/MaskBackground";
+ 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
   : Dimensions.get("window").height;
@@ -48,11 +50,9 @@ class LoginScreen extends Component {
     isLoginLoading: PropTypes.bool,
     deviceInfoData: PropTypes.object,
     oneSignalId: PropTypes.string,
-
     loginOnSubmit: PropTypes.func,
     setProfileUploadSize: PropTypes.func,
     setUploadSize: PropTypes.func,
-
     setProfileImage: PropTypes.func,
     setUserName: PropTypes.func,
     setCollectorCode: PropTypes.func,
@@ -74,15 +74,18 @@ class LoginScreen extends Component {
   _renderLoginMainView = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView enableOnAndroid={true}>
-          <View style={styles.bodyContainerTop}>
-            <View style={styles.titleView}>
-              <Text style={styles.title}>Login </Text>
-            </View>
-          </View>
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          extraScrollHeight={150}
+          >
+        <MaskBackground/>
           <View style={styles.bodyContainerBottom}></View>
           {this._renderLoginView()}
         </KeyboardAwareScrollView>
+            <View>
+              <Text style={styles.version}>Version: 1.1.0</Text>
+              <Text style={styles.version}>Powered by SUKRAA</Text>
+            </View>
       </SafeAreaView>
     );
   };
@@ -91,13 +94,13 @@ class LoginScreen extends Component {
     return (
       <View style={styles.loginContainer}>
         <View style={styles.loginInnerView}>
-          <View style={{ marginHorizontal: 10 }}>
+          <View style={{ marginHorizontal: 10, alignItems:'center', justifyContent:'center',marginTop: 100 }}>
             <Image
               resizeMode="contain"
               source={require("../images/Logo.png")}
               style={styles.image}
             />
-            <Text style={styles.placeholder}>Username</Text>
+            <Text style={styles.title}>Login </Text>
             <CustomInput
               placeholder={'Enter the Username'}
               value={this.state.userName}
@@ -105,7 +108,6 @@ class LoginScreen extends Component {
               selectedLanguage={'en'}
               icon={'user'}
             />
-            <Text style={styles.placeholder}>Password</Text>
             <CustomInput
               placeholder={'Enter the Password'}
               value={this.state.password}
@@ -125,20 +127,13 @@ class LoginScreen extends Component {
               }}
             >
               <Text style={styles.link}>Forgot Password ?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
+            </TouchableOpacity>     
+              <GradientButton
+                onPress={() => {
                 this._validateInputs();
               }}
-            >
-              <Text style={styles.button}>Login</Text>
-            </TouchableOpacity>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text style={styles.version}>Version: 1.1.0</Text>
-              <Text style={styles.version}>Powered by SUKRAA</Text>
-            </View>
+                title={'LogIn'}
+              />
           </View>
         </View>
       </View>
@@ -264,6 +259,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: Constants.COLOR.WHITE_COLOR
   },
   bodyContainerTop: {
     height: deviceHeight / 3,
@@ -282,11 +278,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     bottom: 20,
-    borderRadius: 10,
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 1.0,
-    elevation: 6,
   },
   loginInnerView: {
     paddingLeft: 25,
@@ -295,9 +286,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Constants.FONT_SIZE.XXL,
-    color: "black",
+    color: "#00071A",
     textAlign: "center",
-    flex: 1,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_BOLD,
   },
   placeholder: {
@@ -306,25 +296,10 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginBottom: 10,
     fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     color: "#404040",
     textAlign: "left",
     fontWeight: "bold",
-  },
-  inputs: {
-    height: 50,
-    marginLeft: 0,
-    marginRight: 0,
-    borderBottomColor: "#e0e0e0",
-    backgroundColor: "#e0e0e0",
-    borderRadius: 25,
-    overflow: "hidden",
-    borderBottomWidth: 1,
-    marginBottom: 20,
-    paddingLeft: 10,
-    color: "black",
-    fontSize: Constants.FONT_SIZE.SM,
-    flexDirection: "row",
-    alignItems: "center",
   },
   button: {
     marginTop: 10,
@@ -332,6 +307,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: "center",
     fontSize: Constants.FONT_SIZE.L,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     color: "white",
     fontWeight: "bold",
     backgroundColor: Constants.COLOR.THEME_COLOR,
@@ -355,12 +331,17 @@ const styles = StyleSheet.create({
   },
   linkView: {
     alignItems: "flex-end",
+    width: '100%'
   },
   link: {
     fontSize: Constants.FONT_SIZE.SM,
     color: Constants.COLOR.BLACK_COLOR,
     textAlign: "right",
     marginVertical: 10,
+    fontSize: Constants.FONT_SIZE.SM,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+    color: '#2376F9',
+    fontWeight: "600",
   },
   linkRegister: {
     fontSize: Constants.FONT_SIZE.SM,
@@ -378,6 +359,7 @@ const styles = StyleSheet.create({
   version: {
     fontSize: Constants.FONT_SIZE.S,
     color: Constants.COLOR.BLACK_COLOR,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
     textAlign: "center",
     marginVertical: 5,
   },

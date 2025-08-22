@@ -17,6 +17,7 @@ let initialState = {
   isLocationEnable: true,// Check Location Enable or Not
   isLoggedIn: false, //User Login Check
   locationAlert:'Kindly enable location'
+  ,customAlert: null // { title, message }
 
 };
 
@@ -50,6 +51,10 @@ export const deviceState = (state = initialState, action) => {
     locationAlert
   } = action;
   switch (type) {
+    case Constants.ACTIONS.SHOW_CUSTOM_ALERT:
+      return { ...state, customAlert: action.payload };
+    case Constants.ACTIONS.HIDE_CUSTOM_ALERT:
+      return { ...state, customAlert: null };
     case NETWORK_STATUS_CHANGED:
       return { ...state, isNetworkConnectivityAvailable };
     case GPS_LOCATION_CHANGE:

@@ -26,15 +26,21 @@ export const verifyOTPSubmit = (userName, phoneNumber, otp) => {
             navigate('SetPasswordScreen');
           } else {
             if (response.Message[0].Message != null) {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                response.Message[0].Message,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: response.Message[0].Message,
+                },
+              });
             } else {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                Constants.VALIDATION_MSG.OTP_VERIFY_FAILED,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: Constants.VALIDATION_MSG.OTP_VERIFY_FAILED,
+                },
+              });
             }
           }
         })
@@ -58,22 +64,31 @@ export const verifyOTPResend = (phoneNumber, userName, isResent, callback) => {
       .then((response) => {
         dispatch(hideOTPResendLoading());
         if (response.Code === 200) {
-          Utility.showAlert(
-            Constants.ALERT.TITLE.SUCCESS,
-            'OTP sent successfully',
-          );
+          dispatch({
+            type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+            payload: {
+              title: Constants.ALERT.TITLE.SUCCESS,
+              message: 'OTP sent successfully',
+            },
+          });
           callback(true, response.Message[0].OTP_Message);
         } else {
           if (response.Message[0].Message != null) {
-            Utility.showAlert(
-              Constants.ALERT.TITLE.ERROR,
-              response.Message[0].Message,
-            );
+            dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.ERROR,
+                message: response.Message[0].Message,
+              },
+            });
           } else {
-            Utility.showAlert(
-              Constants.ALERT.TITLE.ERROR,
-              Constants.VALIDATION_MSG.OTP_RESEND_FAILED,
-            );
+            dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.ERROR,
+                message: Constants.VALIDATION_MSG.OTP_RESEND_FAILED,
+              },
+            });
           }
         }
       })

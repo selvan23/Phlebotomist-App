@@ -13,6 +13,7 @@ import {
   Platform,
   BackHandler,
 } from "react-native";
+import CustomAlert from "./common/CustomAlert";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Constants, { ACTIONS } from "../util/Constants";
 import Utility from "../util/Utility";
@@ -38,6 +39,7 @@ const deviceHeight = Utility.isiPhoneX()
   : Dimensions.get("window").height;
 
 class VerificationScreen extends Component {
+  // ...existing code...
   static propTypes = {
     isVerificationLoading: PropTypes.bool,
     verifyOTPSubmit: PropTypes.func,
@@ -57,7 +59,17 @@ class VerificationScreen extends Component {
   }
 
   render() {
-    return this._renderScreens();
+    return (
+      <>
+        {this._renderScreens()}
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+        />
+      </>
+    );
   }
 
   _renderScreens = () => {
@@ -311,40 +323,49 @@ class VerificationScreen extends Component {
   };
 
   _validateInputs() {
-    let a = this.state.userName.trim().length < 3;
-    let b = this.state.userName.trim().length > 15;
-    if (this.state.userName.trim().length < 3) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.USER_NAME_ERROR
-      );
-    } else if (this.state.userName.trim().length > 20) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.USER_NAME_ERROR
-      );
-    } else if (this.state.phoneNumber.trim().length < 8) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_MOBILE_NO
-      );
-    } else if (this.state.phoneNumber.trim().length > 15) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_MOBILE_NO
-      );
-    } else if (
-      this.state.isOTPGenerated === true
-        ? this.state.otp.trim().length < 3
-        : false
-    ) {
-      // } else if (this.state.otp.trim().length < 3 || !this.state.isOTPGenerated) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_OTP
-      );
+    const { userName, phoneNumber, otp, isOTPGenerated } = this.state;
+    if (userName.trim().length < 3) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.USER_NAME_ERROR,
+        },
+      });
+    } else if (userName.trim().length > 20) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.USER_NAME_ERROR,
+        },
+      });
+    } else if (phoneNumber.trim().length < 8) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_MOBILE_NO,
+        },
+      });
+    } else if (phoneNumber.trim().length > 15) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_MOBILE_NO,
+        },
+      });
+    } else if (isOTPGenerated === true ? otp.trim().length < 3 : false) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_OTP,
+        },
+      });
     } else {
-      this.state.isOTPGenerated === true
+      isOTPGenerated === true
         ? this._submitButtonClick()
         : this._resendOTP({ isResent: false });
     }
@@ -401,21 +422,26 @@ class VerificationScreen extends Component {
 const mapStateToProps = (state, props) => {
   const {
     verificationState: { isVerificationLoading },
+    deviceState: { customAlert },
   } = state;
 
   return {
     isVerificationLoading,
+    customAlert,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      verifyOTPSubmit,
-      verifyOTPResend,
-    },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        verifyOTPSubmit,
+        verifyOTPResend,
+      },
+      dispatch
+    ),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VerificationScreen);

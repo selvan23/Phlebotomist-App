@@ -33,6 +33,8 @@ import { navigate, navigationRef, navigationReplace } from "../rootNavigation";
 import CustomInput from "./common/CustomInput";
 import GradientButton from "./common/GradientButton";
 import MaskBackground from "./common/MaskBackground";
+// import ConfirmGradientButton from "./common/ConfirmGradientButton";
+import CustomAlert from "./common/CustomAlert";
  
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -74,18 +76,24 @@ class LoginScreen extends Component {
   _renderLoginMainView = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView
-          enableOnAndroid={true}
-          extraScrollHeight={150}
-          >
-        <MaskBackground/>
+        <KeyboardAwareScrollView 
+        enableOnAndroid={true} 
+        extraScrollHeight={150}>
+          <MaskBackground 
+          />
           <View style={styles.bodyContainerBottom}></View>
           {this._renderLoginView()}
         </KeyboardAwareScrollView>
-            <View>
-              <Text style={styles.version}>Version: 1.1.0</Text>
-              <Text style={styles.version}>Powered by SUKRAA</Text>
-            </View>
+        <View>
+          <Text style={styles.version}>Version: 1.1.0</Text>
+          <Text style={styles.version}>Powered by SUKRAA</Text>
+        </View>
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+        />
       </SafeAreaView>
     );
   };
@@ -145,16 +153,23 @@ class LoginScreen extends Component {
   };
 
   _validateInputs() {
-    if (this.state.userName.trim().length < 1) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.LOGIN_VALIDATION
-      );
-    } else if (this.state.password.trim().length < 1) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.LOGIN_VALIDATION
-      );
+    const { userName, password } = this.state;
+    if (userName.trim().length < 1) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.LOGIN_VALIDATION,
+        },
+      });
+    } else if (password.trim().length < 1) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.LOGIN_VALIDATION,
+        },
+      });
     } else {
       this._submitClick();
     }
@@ -224,7 +239,7 @@ class LoginScreen extends Component {
 const mapStateToProps = (state, props) => {
   const {
     loginState: { isLoginLoading },
-    deviceState: { isNetworkConnectivityAvailable },
+    deviceState: { isNetworkConnectivityAvailable, customAlert },
     configState: { deviceInfoData },
     splashState: { oneSignalId },
   } = state;
@@ -234,24 +249,28 @@ const mapStateToProps = (state, props) => {
     isNetworkConnectivityAvailable,
     deviceInfoData,
     oneSignalId,
+    customAlert,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      loginOnSubmit,
-      setProfileUploadSize,
-      setUploadSize,
-      setProfileImage,
-      setUserName,
-      setCollectorCode,
-      setLoginConformation,
-      // setFirmName,
-      // setFirmNo,
-    },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        loginOnSubmit,
+        setProfileUploadSize,
+        setUploadSize,
+        setProfileImage,
+        setUserName,
+        setCollectorCode,
+        setLoginConformation,
+        // setFirmName,
+        // setFirmNo,
+      },
+      dispatch
+    ),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
@@ -285,7 +304,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   title: {
-    fontSize: Constants.FONT_SIZE.XXL,
+    fontSize: Constants.FONT_SIZE.XL,
     color: "#00071A",
     textAlign: "center",
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_BOLD,

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Constants from '../util/Constants';
+import CustomAlert from './common/CustomAlert';
 import Utility from '../util/Utility';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
@@ -36,6 +37,7 @@ const deviceHeight = Utility.isiPhoneX()
   : Dimensions.get('window').height;
 
 class SetPasswordScreen extends Component {
+  // ...existing code...
   constructor(props) {
     super(props);
     this.state = {password: '', confirmPassword: '', otp: '', userName: '', showPassword: false, showConfirmPassword: false};
@@ -83,7 +85,17 @@ class SetPasswordScreen extends Component {
   };
 
   render() {
-    return this._renderScreens();
+    return (
+      <>
+        {this._renderScreens()}
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+        />
+      </>
+    );
   }
 
   _renderScreens = () => {
@@ -170,20 +182,26 @@ class SetPasswordScreen extends Component {
 
   _validateInputs() {
     if (!this._isValidPassword(this.state.confirmPassword)) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.VALID_PASSWORD,
-      );
-    } else if (
-      this.state.password.trim() !== this.state.confirmPassword.trim()
-    ) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.MATCH_PASSWORD,
-      );
-    } else {
-      this._submitClick();
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.VALID_PASSWORD,
+        },
+      });
+      return; // Prevent API call
     }
+    if (this.state.password.trim() !== this.state.confirmPassword.trim()) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.MATCH_PASSWORD,
+        },
+      });
+      return; // Prevent API call
+    }
+    this._submitClick();
   }
 
   _submitClick() {
@@ -242,25 +260,30 @@ const mapStateToProps = (state, props) => {
     setPasswordState: {isSetPasswordLoading},
     configState: {deviceInfoData},
     splashState: {oneSignalId},
+    deviceState: { customAlert },
   } = state;
 
   return {
     isSetPasswordLoading,
     deviceInfoData,
     oneSignalId,
+    customAlert,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      submitPassword,
-      setProfileImage,
-      setUserName,
-      setCollectorCode,
-    },
+  return {
     dispatch,
-  );
+    ...bindActionCreators(
+      {
+        submitPassword,
+        setProfileImage,
+        setUserName,
+        setCollectorCode,
+      },
+      dispatch
+    ),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetPasswordScreen);
@@ -298,7 +321,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   title: {
-    fontSize: Constants.FONT_SIZE.XXL,
+    fontSize: Constants.FONT_SIZE.XL,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     fontWeight: 'bold',
     color: '#00071A',

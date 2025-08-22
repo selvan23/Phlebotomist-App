@@ -10,6 +10,7 @@ import _ from 'lodash';
 import Constants from '../util/Constants';
 import HttpBaseClient from '../util/HttpBaseClient';
 import Utility from '../util/Utility';
+import CustomAlert from '../components/common/CustomAlert';
 import {handleError} from './NetworkAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OneSignal from 'react-native-onesignal';
@@ -28,10 +29,14 @@ export const loginOnSubmit = (dicLoginInfo, callback) => {
             // OneSignal.setExternalUserId(dicLoginInfo.username);
           } else {
             dispatch(hideLoginLoading());
-            Utility.showAlert(
-              Constants.ALERT.TITLE.INFO,
-              Constants.VALIDATION_MSG.INPUT_VALIDATION_ERROR,
-            );
+              // Dispatch global custom alert action
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.INFO,
+                  message: Constants.VALIDATION_MSG.INPUT_VALIDATION_ERROR,
+                },
+              });
           }
         })
         .catch((error) => {

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left',
     color:Constants.COLOR.THEME_COLOR,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_ANEK_LATIN_SEMI_BOLD,
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
     fontSize: Constants.FONT_SIZE.XXL,
   },
   message: {

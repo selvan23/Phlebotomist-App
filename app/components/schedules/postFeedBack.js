@@ -24,6 +24,7 @@ import Loading from '../common/LoadingScreen';
 import LoadingScreen from '../common/LoadingScreen';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { nativationPop } from '../../rootNavigation';
+import CustomAlert from '../common/CustomAlert';
 const deviceWidth = Dimensions.get('window').width;
 
 const deviceHeight = Utility.isiPhoneX()
@@ -60,10 +61,13 @@ class PostFeedBack extends Component {
   _renderPostMessage = () => {
     if (this.props.cancelBtnClicked) {
       if (this.state.textInput.trim() === '') {
-        Utility.showAlert(
-          Constants.ALERT.TITLE.ERROR,
-          Constants.VALIDATION_MSG.ADD_POST_MESSAGE,
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.ERROR,
+            message: Constants.VALIDATION_MSG.ADD_POST_MESSAGE,
+          },
+        });
       } else {
         let dictInfo = {
           Action_Type: 'X',
@@ -81,10 +85,13 @@ class PostFeedBack extends Component {
       }
     } else {
       if (this.state.textInput.trim() === '') {
-        Utility.showAlert(
-          Constants.ALERT.TITLE.ERROR,
-          Constants.VALIDATION_MSG.ADD_POST_MESSAGE,
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.ERROR,
+            message: Constants.VALIDATION_MSG.ADD_POST_MESSAGE,
+          },
+        });
       } else {
         let dictInfo = {
           Action_Type: 'D',
@@ -104,12 +111,13 @@ class PostFeedBack extends Component {
   };
 
   _successHandler = (message) => {
-    Alert.alert(
-      'Success',
-      message,
-      [{text: 'OK', onPress: () => this._closePreviousScreenAlso()}],
-      {cancelable: false},
-    );
+    this.props.dispatch({
+      type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+      payload: {
+        title: 'Success',
+        message: message,
+      },
+    });
   };
 
   _renderYesBtnView = () => {
@@ -182,6 +190,14 @@ class PostFeedBack extends Component {
           {this._renderYesBtnView()}
           {this._renderNoBtnView()}
         </View>
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => {
+            this.props.customAlert?.title === 'Success' ? this._closePreviousScreenAlso() : null
+            this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}}
+        />
       </KeyboardAwareScrollView>
     );
   };
@@ -191,22 +207,27 @@ const mapStateToProps = (state, props) => {
   const {
     denyCancelBookingPendingState: ispostMessageLoading,
     configState: collectorCode,
+    deviceState: { customAlert },
   } = state;
 
   return {
     ispostMessageLoading,
     collectorCode,
+    customAlert
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      DenyBookingPostMessage,
-      cancelBookingPostMessage,
-    },
+  return {
     dispatch,
-  );
+    ...bindActionCreators(
+      {
+        DenyBookingPostMessage,
+        cancelBookingPostMessage,
+      },
+      dispatch,
+    )
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostFeedBack);

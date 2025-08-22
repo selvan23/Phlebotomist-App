@@ -91,12 +91,12 @@ class BookRow extends Component {
                 alignSelf: "center",
               }}
             >
-              <IconOutline name="environment" color="red" size={deviceHeight / 50} />
+              <IconOutline name="environment" color={Constants.COLOR.PRIMARY_COLOR} size={deviceHeight / 50} />
               <Text
                 style={{
                   marginRight: 5,
                   alignSelf: "center",
-                  color: "red",
+                  color: Constants.COLOR.PRIMARY_COLOR,
                   fontSize: Constants.FONT_SIZE.S,
                   fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_LIGHT,
                 }}

@@ -122,14 +122,14 @@ class SettingsScreen extends Component {
               <View
                 style={[
                   styles.profileImageView,
-                  { backgroundColor: "#1E564A" },
+                  { backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR },
                 ]}
               >
-                <IconOutline size={deviceHeight/30} name="user" color={Constants.COLOR.WHITE_COLOR} />
+                <IconOutline size={deviceHeight/30} name="user" color={Constants.COLOR.PRIMARY_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>View Profile</Text>
-              <IconOutline name="right" size={deviceHeight/30} />
-                </View>
+              <IconOutline name="right" size={deviceHeight/30} color={Constants.COLOR.BLACK_COLOR} />
+              </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.subContainer}
@@ -145,14 +145,14 @@ class SettingsScreen extends Component {
               <View
                 style={[
                   styles.profileImageView,
-                  { backgroundColor: "#172073" },
+                  { backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR },
                 ]}
               >
-                <IconOutline size={deviceHeight/30} name="info" color={Constants.COLOR.WHITE_COLOR} />
+                <IconOutline size={deviceHeight/30} name="info" color={Constants.COLOR.PRIMARY_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>About Us</Text>
-              <IconOutline name="right" size={deviceHeight/30} />
-            </View>
+              <IconOutline name="right" size={deviceHeight/30} color={Constants.COLOR.BLACK_COLOR} />
+              </View>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -169,14 +169,14 @@ class SettingsScreen extends Component {
               <View
                 style={[
                   styles.profileImageView,
-                  { backgroundColor: "#EF9724" },
+                  { backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR },
                 ]}
               >
-                <IconOutline size={deviceHeight/30} name="customer-service" color={Constants.COLOR.WHITE_COLOR} />
+                <IconOutline size={deviceHeight/30} name="customer-service" color={Constants.COLOR.PRIMARY_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>Contact Us</Text>
-              <IconOutline name="right" size={deviceHeight/30} />
-            </View>
+              <IconOutline name="right" size={deviceHeight/30} color={Constants.COLOR.BLACK_COLOR} />
+              </View>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -187,13 +187,13 @@ class SettingsScreen extends Component {
               <View
                 style={[
                   styles.profileImageView,
-                  { backgroundColor: "#E92E40" },
+                  { backgroundColor: Constants.COLOR.LIGHT_BACKGROUND_COLOR },
                 ]}
               >
-                <IconOutline size={deviceHeight/30} name="logout" color={Constants.COLOR.WHITE_COLOR} />
+                <IconOutline size={deviceHeight/30} name="logout" color={Constants.COLOR.PRIMARY_COLOR} />
               </View>
               <Text style={[styles.textStyle]}>Logout</Text>
-                <IconOutline name="right" size={deviceHeight/30} />
+                <IconOutline name="right" size={deviceHeight/30} color={Constants.COLOR.BLACK_COLOR} />
               </View>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     fontSize: Constants.FONT_SIZE.L,
-    color: "black",
+    color: Constants.COLOR.BLACK_COLOR,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
 });

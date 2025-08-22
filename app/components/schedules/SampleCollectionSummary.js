@@ -48,6 +48,7 @@ import RiyalPrice from "../common/RiyalPrice";
 import { getPendingList } from "../../actions/PendingScreenAction";
 import { IconFill, IconOutline } from "@ant-design/icons-react-native";
 import LinearGradient from "react-native-linear-gradient";
+import CustomAlert from "../common/CustomAlert";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -181,6 +182,21 @@ class SampleCollectionSummary extends Component {
         {this._renderRatingsView()}
         {this._renderPostReviewsView()}
         {this._renderNavigationView()}
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => {
+            if (this.props.customAlert?.message?.includes("Sample No")) {
+              navigate("homeTabBar");
+              this._getAsyncAndAPICall(postData);
+            }
+              this.props.dispatch({
+                type: Constants.ACTIONS.HIDE_CUSTOM_ALERT
+              });
+            
+          }}
+        />
       </KeyboardAwareScrollView>
     );
   };
@@ -558,10 +574,13 @@ class SampleCollectionSummary extends Component {
                   }
                 );
               } else {
-                Utility.showAlert(
-                  Constants.ALERT.TITLE.FAILED,
-                  Constants.VALIDATION_MSG.NO_INTERNET
-                );
+                this.props.dispatch({
+                  type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                  payload: {
+                    title: Constants.ALERT.TITLE.FAILED,
+                    message: Constants.VALIDATION_MSG.NO_INTERNET
+                  },
+                });
               }
             }}
           />
@@ -626,10 +645,13 @@ class SampleCollectionSummary extends Component {
                     }
                   });
                 } else {
-                  Utility.showAlert(
-                    Constants.ALERT.TITLE.FAILED,
-                    Constants.VALIDATION_MSG.NO_INTERNET
-                  );
+                  this.props.dispatch({
+                    type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                    payload: {
+                      title: Constants.ALERT.TITLE.FAILED,
+                      message: Constants.VALIDATION_MSG.NO_INTERNET
+                    },
+                  });
                 }
               }
             }}
@@ -713,10 +735,13 @@ class SampleCollectionSummary extends Component {
           console.log({postData})
           this._callOrderAPI(postData);
         } else {
-          Utility.showAlert(
-            Constants.ALERT.TITLE.ERROR,
-            'Kindly collect the payment and turn on the cash received or UPI payment received button to proceed',
-          );
+          this.props.dispatch({
+            type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+            payload: {
+              title: Constants.ALERT.TITLE.ERROR,
+              message: 'Kindly collect the payment and turn on the cash received or UPI payment received button to proceed',
+            },
+          });
         }
       } else {
         this._callOrderAPI(postData);
@@ -740,20 +765,13 @@ class SampleCollectionSummary extends Component {
   _callOrderAPI = (postData) => {
     this.props.invokeUpdateSampleCollection(postData, (isSuccess, message) => {
       if (isSuccess) {
-        Alert.alert(
-          Constants.ALERT.TITLE.SUCCESS,
-          message,
-          [
-            {
-              text: "OK",
-              onPress: () => {
-                navigate("homeTabBar");
-                this._getAsyncAndAPICall(postData);
-              },
-            },
-          ],
-          { cancelable: false }
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.SUCCESS,
+            message: message
+          },
+        });
       }
     });
   };
@@ -764,7 +782,7 @@ const mapStateToProps = (state, props) => {
     configState: { collectorCode, currency },
     sampleCollectionSummaryState: { isSampleCollectionSummaryLoading },
     cancelBookingDetailState: { isCompletedDetailLoading, bookingDetail },
-    deviceState: { isNetworkConnectivityAvailable },
+    deviceState: { isNetworkConnectivityAvailable, customAlert },
   } = state;
   return {
     currency,
@@ -772,23 +790,27 @@ const mapStateToProps = (state, props) => {
     isSampleCollectionSummaryLoading,
     isNetworkConnectivityAvailable,
     isCompletedDetailLoading,
+    customAlert
     // bookingDetail
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getSubmitRating,
-      getSubmitReview,
-      getSubmitOrderData,
-      invokeUpdateSampleCollection,
-      // completed Detail screen Api
-      getCompletedDetail,
-      getPendingList
-    },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        getSubmitRating,
+        getSubmitReview,
+        getSubmitOrderData,
+        invokeUpdateSampleCollection,
+        // completed Detail screen Api
+        getCompletedDetail,
+        getPendingList
+      },
+      dispatch
+    )
+  };
 };
 
 export default connect(

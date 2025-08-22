@@ -34,6 +34,7 @@ import {
   navigationSetParams,
 } from "../../rootNavigation";
 import { IconOutline } from "@ant-design/icons-react-native";
+import CustomAlert from "../common/CustomAlert";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -81,24 +82,13 @@ class SettingsScreen extends Component {
 
   logoutButtonClicked() {
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
-      Alert.alert(
-        Constants.ALERT.TITLE.INFO,
-        Constants.ALERT.MESSAGE.LOGOUT_MESSAGE,
-        [
-          {
-            text: Constants.ALERT.BTN.YES,
-            onPress: () => {
-              // navigationSetParams({
-              //   action: "logout",
-              // });
-              this.props.clearAllStates();
-              clearAppData();
-            },
-          },
-          { text: Constants.ALERT.BTN.NO, onPress: () => {} },
-        ],
-        { cancelable: false }
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: 'Logout',
+          message: Constants.ALERT.MESSAGE.LOGOUT_MESSAGE,
+        },
+      });
     } else {
       this.internetAlert(Constants.VALIDATION_MSG.NO_INTERNET);
     }
@@ -197,24 +187,46 @@ class SettingsScreen extends Component {
               </View>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => {
+            // this.props.customAlert?.title === 'Success' ? this._closePreviousScreenAlso() : null
+            this.props.clearAllStates();
+            clearAppData();
+            this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}}
+          onCancel={() => {
+            this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })
+          }}
+          showOption={true}
+        />
       </View>
     );
   }
 }
 
 const mapStateToProps = (state, props) => {
-  const {} = state;
+  const {
+    deviceState: { customAlert },
 
-  return {};
+  } = state;
+
+  return {
+    customAlert
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      clearAllStates,
-    },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        clearAllStates,
+      },
+      dispatch
+    )
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);

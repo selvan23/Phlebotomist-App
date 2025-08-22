@@ -47,6 +47,7 @@ import SummaryRow from "../schedules/SummaryRow";
 import SummaryBottom from "./SummaryBottom";
 import { nativationPop, navigate } from "../../rootNavigation";
 import { IconOutline } from "@ant-design/icons-react-native";
+import CustomAlert from "../common/CustomAlert";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -145,7 +146,10 @@ class SampleCollectionDetail extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <KeyboardAwareScrollView enableOnAndroid={true} style={styles.subContainer}>
+          <KeyboardAwareScrollView
+            enableOnAndroid={true}
+            style={styles.subContainer}
+          >
             {this._renderUserInfo()}
             {this._renderServiceTest()}
             {this._renderNamePhoneView()}
@@ -155,6 +159,16 @@ class SampleCollectionDetail extends Component {
             {this._renderUpdateLocationView()}
             {this._renderButtonsView()}
           </KeyboardAwareScrollView>
+          <CustomAlert
+            visible={!!this.props.customAlert}
+            title={this.props.customAlert?.title}
+            message={this.props.customAlert?.message}
+            onClose={() => {
+              this.props.dispatch({
+                type: Constants.ACTIONS.HIDE_CUSTOM_ALERT,
+              });
+            }}
+          />
         </View>
       );
     }
@@ -542,10 +556,13 @@ class SampleCollectionDetail extends Component {
         }
       });
     } else {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        "Kindly enter the verification code"
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: "Kindly enter the verification code",
+        },
+      });
     }
   };
 
@@ -718,10 +735,13 @@ class SampleCollectionDetail extends Component {
         this.setState({ isGPSSubmit: true });
       });
     } else {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        "Kindly update the location"
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: "Kindly update the location",
+        },
+      })
     }
   };
 
@@ -750,10 +770,13 @@ class SampleCollectionDetail extends Component {
       if (this.state.isOTPSubmit === true) {
         return this._uploadApiValidation();
       } else {
-        Utility.showAlert(
-          Constants.ALERT.TITLE.ERROR,
-          "Kindly validate the verification code to proceed"
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.ERROR,
+            message: "Kindly validate the verification code to proceed",
+          },
+        })  
       }
     } else {
       return this._uploadApiValidation();
@@ -847,10 +870,13 @@ class SampleCollectionDetail extends Component {
               bookingDetail: this.props.route.params.bookingDetail,
             });
           } else {
-            Utility.showAlert(
-              Constants.ALERT.TITLE.ERROR,
-              Constants.VALIDATION_MSG.BAR_CODE_EMPTY
-            );
+            this.props.dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.ERROR,
+                message: Constants.VALIDATION_MSG.BAR_CODE_EMPTY,
+              },
+            })
           }
           // Alert.alert(
           //   Constants.ALERT.TITLE.SUCCESS,
@@ -896,10 +922,13 @@ class SampleCollectionDetail extends Component {
           bookingDetail: this.props.route.params.bookingDetail,
         });
       } else {
-        Utility.showAlert(
-          Constants.ALERT.TITLE.ERROR,
-          Constants.VALIDATION_MSG.BAR_CODE_EMPTY
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.ERROR,
+            message: Constants.VALIDATION_MSG.BAR_CODE_EMPTY,
+          },
+        })
       }
     }
   };
@@ -986,6 +1015,7 @@ const mapStateToProps = (state, props) => {
       isOTPSubmitLoading,
       isDeliveryDetailScreenLoading,
     },
+    deviceState: { customAlert }
   } = state;
   return {
     collectorOTPMandatory,
@@ -997,19 +1027,23 @@ const mapStateToProps = (state, props) => {
     isOTPResentLoading,
     isOTPSubmitLoading,
     isDeliveryDetailScreenLoading,
+    customAlert
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      invokeUploadPrescription,
-      uploadLocation,
-      OTPBookingResend,
-      OTPBookingSubmit,
-    },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        invokeUploadPrescription,
+        uploadLocation,
+        OTPBookingResend,
+        OTPBookingSubmit,
+      },
+      dispatch
+    )
+  };
 };
 
 export default connect(

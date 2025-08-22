@@ -22,22 +22,31 @@ export const invokeCheckBarCode = (dicBarCodeInfo, callback) => {
           if (response.Code === Constants.HTTP_CODE.SUCCESS) {
             dispatch(hideSampleCollectionLoading());
             callback(true);
-            Utility.showAlert(
-              Constants.ALERT.TITLE.SUCCESS,
-              response.Message[0].Message,
-            );
+            dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.SUCCESS,
+                message: response.Message[0].Message,
+              },
+            });
           } else {
             dispatch(hideSampleCollectionLoading());
             if (response.Message[0].Message != null) {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                response.Message[0].Message,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: response.Message[0].Message,
+                },
+              });
             } else {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                Constants.VALIDATION_MSG.REQ_FAILED,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: response.Message[0].Message,
+                },
+              });
             }
           }
         })

@@ -421,7 +421,7 @@ class PendingDetailScreen extends Component {
 
   _renderBookingView = () => {
     return (
-      <ScrollView horizontal={true} style={styles.cancelDenyBookingView}>
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={styles.cancelDenyBookingView}>
         <TouchableOpacity
           onPress={() => {
             // if (Actions.currentScene === currentScene) {

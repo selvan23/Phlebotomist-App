@@ -30,6 +30,7 @@ import {
 } from "../../actions/SampleCollectionAction";
 import PropTypes from "prop-types";
 import { navigate } from "../../rootNavigation";
+import CustomAlert from "../common/CustomAlert";
 
 let updateBarCode = [];
 
@@ -73,10 +74,13 @@ class SampleCollectionScreen extends Component {
       nextProps.timeStamp !== undefined
     ) {
       if (nextProps.QR_Code_Value.includes("errorCode")) {
-        Utility.showAlert(
-          Constants.ALERT.TITLE.FAILED,
-          Constants.VALIDATION_MSG.QR_SCAN_FAILED
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.FAILED,
+            message: Constants.VALIDATION_MSG.QR_SCAN_FAILED
+          },
+        });
         return {
           time: nextProps.timeStamp,
         };
@@ -125,10 +129,13 @@ class SampleCollectionScreen extends Component {
     if (filtered.length > 0) {
       this._sampleCollectionUpdate(filtered);
     } else {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_SAMPLE_COLLECTION_UPDATE
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_SAMPLE_COLLECTION_UPDATE
+        },
+      });
     }
   };
 
@@ -210,6 +217,16 @@ class SampleCollectionScreen extends Component {
         {this._renderNavigationButton()}
         {this._renderBarcodeScanView()}
         {this._renderNextButton()}
+        <CustomAlert
+            visible={!!this.props.customAlert}
+            title={this.props.customAlert?.title}
+            message={this.props.customAlert?.message}
+            onClose={() => {
+              this.props.dispatch({
+                type: Constants.ACTIONS.HIDE_CUSTOM_ALERT,
+              });
+            }}
+          />
       </KeyboardAwareScrollView>
     );
   };
@@ -372,16 +389,22 @@ class SampleCollectionScreen extends Component {
           }
         });
       } else {
-        Utility.showAlert(
-          Constants.ALERT.TITLE.ERROR,
-          Constants.VALIDATION_MSG.DUPLICATE_BARCODE
-        );
+        this.props.dispatch({
+          type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+          payload: {
+            title: Constants.ALERT.TITLE.ERROR,
+            message: Constants.VALIDATION_MSG.DUPLICATE_BARCODE,
+          },
+        });
       }
     } else {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_BARCODE
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_BARCODE
+        },
+      });
     }
   };
 
@@ -419,18 +442,23 @@ const mapStateToProps = (state, props) => {
   const {
     configState: { collectorCode },
     sampleCollectionState: { isSubmitBarCodeLoading },
+    deviceState: { customAlert }
   } = state;
   return {
     isSubmitBarCodeLoading,
     collectorCode,
+    customAlert
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    { invokeCheckBarCode, invokeUpdateSampleCollection },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      { invokeCheckBarCode, invokeUpdateSampleCollection },
+      dispatch
+    )
+  };
 };
 
 export default connect(

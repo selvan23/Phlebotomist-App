@@ -32,6 +32,7 @@ import { updateSOSAlert, showSosLoading, hideSosLoading } from '../actions/SosAc
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IconOutline } from '@ant-design/icons-react-native';
 import SosIcon from '../assets/images/SosIcon';
+import CustomAlert from './common/CustomAlert';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Utility.isiPhoneX()
@@ -167,6 +168,12 @@ class SOSScreen extends Component {
           >
             <Text style={[styles.buttonText, {color: Constants.COLOR.PRIMARY_COLOR}]}> No </Text>
           </TouchableOpacity>
+          <CustomAlert
+            visible={!!this.props.customAlert}
+            title={this.props.customAlert?.title}
+            message={this.props.customAlert?.message}
+            onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+          />
         </View>
       </View>
     );
@@ -305,7 +312,7 @@ const mapStateToProps = (state, props) => {
   const {
     sosState: { isSosLoading },
     configState: { collectorCode },
-    deviceState: { isLocationEnable, locationAlert}
+    deviceState: { isLocationEnable, locationAlert, customAlert }
 
   } = state;
 
@@ -313,15 +320,19 @@ const mapStateToProps = (state, props) => {
     isSosLoading,
     collectorCode,
     isLocationEnable,
-    locationAlert
+    locationAlert,
+    customAlert
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    { updateSOSAlert, showSosLoading, hideSosLoading },
+  return {
     dispatch,
-  );
+    ...bindActionCreators(
+      { updateSOSAlert, showSosLoading, hideSosLoading },
+      dispatch,
+    )
+  };
 };
 
 export default connect(

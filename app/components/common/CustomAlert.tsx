@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Modal,
   View,
@@ -10,15 +9,17 @@ import {
 import Constants from "../../util/Constants";
 import Utility from "../../util/Utility";
 import LinearGradient from "react-native-linear-gradient";
-import { IconOutline } from "@ant-design/icons-react-native";
 
-interface CustomAlertProps {
+export interface CustomAlertProps {
   visible: boolean;
   title: string;
   message: string;
   onClose: () => void;
-  showOption: boolean;
-  onCancel: () => void;
+  buttons?: Array<{
+    text: string;
+    onPress: () => void;
+    style?: string;
+  }>;
 }
 
 const deviceHeight = Utility.isiPhoneX()
@@ -30,68 +31,45 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
   title,
   message,
   onClose,
-  showOption,
-  onCancel,
+  buttons,
 }) => {
   return (
     <Modal transparent visible={visible} animationType="fade">
       <View style={styles.overlay}>
         <View style={styles.alertBox}>
-          {showOption ? (
-            <IconOutline
-              name="logout"
-              color={Constants.COLOR.PRIMARY_COLOR}
-              size={50}
-              style={{ marginBottom: 10 }}
-            />
-          ) : null}
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.message}>{message}</Text>
-          {showOption ? (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <TouchableOpacity style={{ width: "45%" }} onPress={onCancel}>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            {Array.isArray(buttons) && buttons.length > 0 ? (
+              buttons.map((btn, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  onPress={btn.onPress}
+                  style={{ marginHorizontal: 5 }}
+                >
+                  <LinearGradient
+                    colors={["#1E3989", "#9B71AA", "#87C699"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.gradientButton}
+                  >
+                    <Text style={styles.modalButtonText}>{btn.text}</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              ))
+            ) : (
+              <TouchableOpacity onPress={onClose}>
                 <LinearGradient
                   colors={["#1E3989", "#9B71AA", "#87C699"]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  style={styles.splitGradientButton}
+                  style={styles.gradientButton}
                 >
-                  <Text style={styles.modalButtonText}>
-                    {Constants.ALERT.BTN.NO}
-                  </Text>
+                  <Text style={styles.modalButtonText}>{"Ok"}</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity style={{ width: "45%" }} onPress={onClose}>
-                <LinearGradient
-                  colors={["#1E3989", "#9B71AA", "#87C699"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={styles.splitGradientButton}
-                >
-                  <Text style={styles.modalButtonText}>
-                    {Constants.ALERT.BTN.YES}
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <TouchableOpacity onPress={()=>{onClose()}}>
-              <LinearGradient
-                colors={["#1E3989", "#9B71AA", "#87C699"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.gradientButton}
-              >
-                <Text style={styles.modalButtonText}>{"Ok"}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          )}
+            )}
+          </View>
         </View>
       </View>
     </Modal>
@@ -141,12 +119,6 @@ const styles = StyleSheet.create({
   },
   gradientButton: {
     width: deviceHeight * 0.1,
-    height: deviceHeight * 0.05,
-    borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  splitGradientButton: {
     height: deviceHeight * 0.05,
     borderRadius: 15,
     alignItems: "center",

@@ -16,22 +16,31 @@ export const updateSOSAlert = (postData, callback) => {
       ).then(response => {
           dispatch(hideSosLoading());
           if (response.Code === Constants.HTTP_CODE.SUCCESS) {
-            Utility.showAlert(
-              Constants.ALERT.TITLE.SUCCESS,
-              response.Message[0].Message,
-            );
+            dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.SUCCESS,
+                message: response.Message[0].Message,
+              },
+            });
             callback(true, response.Message[0])
           } else {
             if (response.Message[0].Message != null) {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                response.Message[0].Message,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: response.Message[0].Message,
+                },
+              });
             } else {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                Constants.VALIDATION_MSG.NO_DATA_FOUND,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: Constants.VALIDATION_MSG.NO_DATA_FOUND,
+                },
+              });
             }
           }
         })

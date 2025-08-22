@@ -191,15 +191,26 @@ class SettingsScreen extends Component {
           visible={!!this.props.customAlert}
           title={this.props.customAlert?.title}
           message={this.props.customAlert?.message}
-          onClose={() => {
-            // this.props.customAlert?.title === 'Success' ? this._closePreviousScreenAlso() : null
-            this.props.clearAllStates();
-            clearAppData();
-            this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}}
-          onCancel={() => {
-            this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })
-          }}
-          showOption={true}
+          buttons={[
+            {
+              text: Constants.ALERT.BTN.NO,
+              onPress: () => {
+                this.props.dispatch({
+                  type: Constants.ACTIONS.HIDE_CUSTOM_ALERT,
+                });
+              },
+            },
+            {
+              text: Constants.ALERT.BTN.YES,
+              onPress: () => {
+                this.props.clearAllStates();
+                clearAppData();
+                this.props.dispatch({
+                  type: Constants.ACTIONS.HIDE_CUSTOM_ALERT,
+                });
+              },
+            },
+          ]}
         />
       </View>
     );

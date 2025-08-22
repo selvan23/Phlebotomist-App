@@ -87,7 +87,10 @@ class DeliveryDetailsScreen extends Component {
           visible={!!this.props.customAlert}
           title={this.props.customAlert?.title}
           message={this.props.customAlert?.message}
-          onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+          onClose={() => {
+            this.props.navigation.goBack()
+            this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })
+          }}
         />
       </>
     );

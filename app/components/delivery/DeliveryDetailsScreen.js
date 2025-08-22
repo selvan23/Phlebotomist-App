@@ -18,6 +18,7 @@ import {
   Platform,
 } from 'react-native';
 import Utility from '../../util/Utility';
+import CustomAlert from '../common/CustomAlert';
 import Constants from '../../util/Constants';
 import ButtonBack from '../common/ButtonBack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -79,7 +80,17 @@ class DeliveryDetailsScreen extends Component {
   }
 
   render() {
-    return this._renderScreens();
+    return (
+      <>
+        {this._renderScreens()}
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+        />
+      </>
+    );
   }
 
   _renderScreens = () => {
@@ -497,10 +508,13 @@ class DeliveryDetailsScreen extends Component {
     if (filtered.length > 0) {
       this._sampleDeliveryUpdate(filtered);
     } else {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_DELIVERY_ITEM,
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_DELIVERY_ITEM,
+        },
+      });
     }
   };
 
@@ -542,23 +556,28 @@ const mapStateToProps = (state, props) => {
   const {
     deliveryDetailScreenState: { isDeliveryDetailScreenLoading, deliveryData },
     configState: { collectorCode },
+    deviceState: { customAlert },
   } = state;
 
   return {
     isDeliveryDetailScreenLoading,
     deliveryData,
     collectorCode,
+    customAlert,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getDeliveryDetails,
-      updateDeliveryDetails,
-    },
+  return {
     dispatch,
-  );
+    ...bindActionCreators(
+      {
+        getDeliveryDetails,
+        updateDeliveryDetails,
+      },
+      dispatch
+    ),
+  };
 };
 
 export default connect(

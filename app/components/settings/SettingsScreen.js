@@ -35,6 +35,7 @@ import {
 } from "../../rootNavigation";
 import { IconOutline } from "@ant-design/icons-react-native";
 import CustomAlert from "../common/CustomAlert";
+import CustomeAlertLogout from "../common/CustomeAlertLogout";
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -83,7 +84,7 @@ class SettingsScreen extends Component {
   logoutButtonClicked() {
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
       this.props.dispatch({
-        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        type: Constants.ACTIONS.SHOW_LOG_OUT_CUSTOM_ALERT,
         payload: {
           title: 'Logout',
           message: Constants.ALERT.MESSAGE.LOGOUT_MESSAGE,
@@ -187,16 +188,16 @@ class SettingsScreen extends Component {
               </View>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
-        <CustomAlert
-          visible={!!this.props.customAlert}
-          title={this.props.customAlert?.title}
-          message={this.props.customAlert?.message}
+        <CustomeAlertLogout
+          visible={!!this.props.customLogAlert}
+          title={this.props.customLogAlert?.title}
+          message={this.props.customLogAlert?.message}
           buttons={[
             {
               text: Constants.ALERT.BTN.NO,
               onPress: () => {
                 this.props.dispatch({
-                  type: Constants.ACTIONS.HIDE_CUSTOM_ALERT,
+                  type: Constants.ACTIONS.HIDE_LOG_OUT_CUSTOM_ALERT,
                 });
               },
             },
@@ -206,7 +207,7 @@ class SettingsScreen extends Component {
                 this.props.clearAllStates();
                 clearAppData();
                 this.props.dispatch({
-                  type: Constants.ACTIONS.HIDE_CUSTOM_ALERT,
+                  type: Constants.ACTIONS.HIDE_LOG_OUT_CUSTOM_ALERT,
                 });
               },
             },
@@ -219,12 +220,12 @@ class SettingsScreen extends Component {
 
 const mapStateToProps = (state, props) => {
   const {
-    deviceState: { customAlert },
+    deviceState: { customLogAlert },
 
   } = state;
 
   return {
-    customAlert
+    customLogAlert
   };
 };
 

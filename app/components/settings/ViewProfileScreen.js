@@ -31,6 +31,7 @@ import PropTypes from "prop-types";
 import LoadingScreen from "../common/LoadingScreen";
 import Constants from "../../util/Constants";
 import Utility from "../../util/Utility";
+import CustomAlert from "../common/CustomAlert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IconOutline } from "@ant-design/icons-react-native";
 import ButtonBack from "../common/ButtonBack";
@@ -65,6 +66,7 @@ const options = {
   },
 };
 class ViewProfileScreen extends Component {
+  // ...existing code...
   static propTypes = {
     isProfileLoading: PropTypes.bool,
     getProfileDetails: PropTypes.func,
@@ -138,13 +140,16 @@ class ViewProfileScreen extends Component {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        {this._renderScreens()}
-      </View>
+      <>
+        <View style={{ flex: 1 }}>{this._renderScreens()}</View>
+        <CustomAlert
+          visible={!!this.props.customAlert}
+          title={this.props.customAlert?.title}
+          message={this.props.customAlert?.message}
+          buttons={this.props.customAlert?.buttons}
+          onClose={() => this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })}
+        />
+      </>
     );
   }
 
@@ -160,52 +165,6 @@ class ViewProfileScreen extends Component {
     return <LoadingScreen />;
   };
 
-  handlePassword = (text) => {
-    Alert.alert(
-      "Password Change",
-      "Do You Want To Change Password",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => {
-            this._navigateVerificationScreen;
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
-  };
-
-  _closeAlert = () => {
-    Alert.alert(
-      "Info",
-      "Do You Want To Discard Changes?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {},
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => {
-            // Actions.pop();
-            nativationPop();
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
-  };
 
   _navigateVerificationScreen = () => {
     // Actions.VerificationScreen({
@@ -218,30 +177,43 @@ class ViewProfileScreen extends Component {
 
   _validateInputs = () => {
     if (this.state.name.trim().length < 1) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_NAME
-      );
-    } else if (
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_NAME,
+        },
+      });
+      return;
+    }
+    if (
       this.state.dob === undefined ||
       this.state.dob === null ||
       this.state.dob.trim().length < 1
     ) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_DOB
-      );
-    } else if (
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_DOB,
+        },
+      });
+      return;
+    }
+    if (
       this.state.email.trim().length < 1 ||
       this._validateEmail(this.state.email) === false
     ) {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.INVALID_EMAIL
-      );
-    } else {
-      this._updateButtonClick();
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.INVALID_EMAIL,
+        },
+      });
+      return;
     }
+    this._updateButtonClick();
   };
 
   _validateEmail = (text) => {
@@ -329,33 +301,97 @@ class ViewProfileScreen extends Component {
     // Actions.homeTabBar();
     navigate("homeTabBar");
   };
+
+    handlePassword = (text) => {
+    if (!this.props.customAlert) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: "Password Change",
+          message: "Do You Want To Change Password?",
+          buttons: [
+            {
+              text: "Cancel",
+              onPress: () => {
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+              style: "cancel",
+            },
+            {
+              text: "Ok",
+              onPress: () => {
+                this._navigateVerificationScreen();
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+            },
+          ],
+        },
+      });
+    }
+  };
+
+  _closeAlert = () => {
+    if (!this.props.customAlert) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: "Info",
+          message: "Do You Want To Discard Changes?",
+          buttons: [
+            {
+              text: "Cancel",
+              onPress: () => {
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+              style: "cancel",
+            },
+            {
+              text: "Ok",
+              onPress: () => {
+                nativationPop();
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+            },
+          ],
+        },
+      });
+    }
+  
+  };
+
   _chooseImageAlert = () => {
-    Alert.alert(
-      "Upload Profile Picture",
-      "Upload your profile picture Using?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {},
-          style: "cancel",
+    if (!this.props.customAlert) {
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: "Upload Profile Picture",
+          message: "Upload your profile picture Using?",
+          buttons: [
+            {
+              text: "Cancel",
+              onPress: () => {
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+              style: "cancel",
+            },
+            {
+              text: "Gallery",
+              onPress: () => {
+                this._openGallery();
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+            },
+            {
+              text: "Camera",
+              onPress: () => {
+                this._clickPicture();
+                this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT });
+              },
+            },
+          ],
         },
-        {
-          text: "Gallery",
-          onPress: () => {
-            this._openGallery();
-          },
-        },
-        {
-          text: "Camera",
-          onPress: () => {
-            this._clickPicture();
-          },
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
+      });
+    }
   };
 
   _clickPicture = () => {
@@ -374,7 +410,13 @@ class ViewProfileScreen extends Component {
                 if (permission === "granted") {
                   this._launchCamera();
                 } else {
-                  Alert.alert("Please Allow access to Take Picture");
+                    this.props.dispatch({
+                      type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                      payload: {
+                        title: Constants.ALERT.TITLE.ERROR,
+                        message: "Please Allow access to Take Picture",
+                      },
+                    });
                 }
               }
             );
@@ -394,7 +436,14 @@ class ViewProfileScreen extends Component {
         console.log("ImagePicker Error: ", response.error);
       } else if (response?.customButton) {
         console.log("User tapped custom button: ", response.customButton);
-        Alert.alert(response?.customButton);
+        // Alert.alert(response?.customButton);
+                  this.props.dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                // title: Constants.ALERT.TITLE.ERROR,
+                message: response?.customButton
+              },
+            });
       } else {
         const fileData = {
           fileUri: response.assets[0].uri,
@@ -417,10 +466,13 @@ class ViewProfileScreen extends Component {
               }
             );
           } else {
-            Utility.showAlert(
-              Constants.ALERT.TITLE.ERROR,
-              "File size should be less than " + this._convertByteToMB()
-            );
+            this.props.dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.ERROR,
+                message: "File size should be less than " + this._convertByteToMB(),
+              },
+            });
           }
         } else {
           this.setState(
@@ -457,7 +509,13 @@ class ViewProfileScreen extends Component {
                 if (permission === "granted") {
                   this._chooseGallery();
                 } else {
-                  Alert.alert("Please Allow access to open Gallery");
+                  this.props.dispatch({
+                    type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                    payload: {
+                      title: Constants.ALERT.TITLE.ERROR,
+                      message: "Please Allow access to open Gallery",
+                    },
+                  });
                 }
               }
             );
@@ -506,10 +564,13 @@ class ViewProfileScreen extends Component {
               }
             );
           } else {
-            Utility.showAlert(
-              Constants.ALERT.TITLE.ERROR,
-              "File size should be less than " + this._convertByteToMB()
-            );
+            this.props.dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.ERROR,
+                message: "File size should be less than " + this._convertByteToMB(),
+              },
+            });
           }
         } else {
           this.setState(
@@ -647,7 +708,7 @@ class ViewProfileScreen extends Component {
           <TouchableOpacity
             onPress={() =>
               this.state.isEditable ? this._chooseImageAlert() : {}
-            }
+            } 
             style={styles.innerContainer}
           >
             <Text style={styles.headerText}>{ProfileName}</Text>
@@ -774,24 +835,29 @@ const mapStateToProps = (state, props) => {
   const {
     profileState: { isProfileLoading, profileDetails },
     configState: { profileUploadSize },
+    deviceState: { customAlert },
   } = state;
 
   return {
     isProfileLoading,
     profileDetails,
     profileUploadSize,
+    customAlert,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getProfileDetails,
-      updateProfileDetails,
-      setProfileImage,
-    },
-    dispatch
-  );
+  return {
+    dispatch,
+    ...bindActionCreators(
+      {
+        getProfileDetails,
+        updateProfileDetails,
+        setProfileImage,
+      },
+      dispatch
+    ),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewProfileScreen);

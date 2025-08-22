@@ -16,8 +16,9 @@ let initialState = {
   isSystemAlertShowing: false, //used to check whether system alert is showing or not
   isLocationEnable: true,// Check Location Enable or Not
   isLoggedIn: false, //User Login Check
-  locationAlert:'Kindly enable location'
-  ,customAlert: null // { title, message }
+  locationAlert:'Kindly enable location',
+  customAlert: null, // { title, message }
+  customLogAlert: null
 
 };
 
@@ -55,6 +56,10 @@ export const deviceState = (state = initialState, action) => {
       return { ...state, customAlert: action.payload };
     case Constants.ACTIONS.HIDE_CUSTOM_ALERT:
       return { ...state, customAlert: null };
+    case Constants.ACTIONS.SHOW_LOG_OUT_CUSTOM_ALERT:
+      return { ...state, customLogAlert: action.payload };
+    case Constants.ACTIONS.HIDE_LOG_OUT_CUSTOM_ALERT:
+      return { ...state, customLogAlert: null };
     case NETWORK_STATUS_CHANGED:
       return { ...state, isNetworkConnectivityAvailable };
     case GPS_LOCATION_CHANGE:

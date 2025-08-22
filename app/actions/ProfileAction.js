@@ -27,15 +27,21 @@ export const getProfileDetails = (userName) => {
             });
           } else {
             if (response.Message[0].Message != null) {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                response.Message[0].Message,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: response.Message[0].Message,
+                },
+              });
             } else {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                Constants.VALIDATION_MSG.NO_DATA_FOUND,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: Constants.VALIDATION_MSG.NO_DATA_FOUND,
+                },
+              });
             }
           }
         })
@@ -65,21 +71,30 @@ export const updateProfileDetails = (post, callback) => {
               type: Constants.ACTIONS.USER_PROFILE_IMAGE,
               url: response.Message[0].Collector_Profile_Image_Url,
             });
-            Utility.showAlert(
-              Constants.ALERT.TITLE.SUCCESS,
-              Constants.VALIDATION_MSG.PROFILE_UPDATE_SUCCESS,
-            );
+            dispatch({
+              type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+              payload: {
+                title: Constants.ALERT.TITLE.SUCCESS,
+                message: Constants.VALIDATION_MSG.PROFILE_UPDATE_SUCCESS,
+              },
+            });
           } else {
             if (response.Message[0].Message != null) {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                response.Message[0].Message,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: response.Message[0].Message,
+                },
+              });
             } else {
-              Utility.showAlert(
-                Constants.ALERT.TITLE.ERROR,
-                Constants.VALIDATION_MSG.NO_DATA_FOUND,
-              );
+              dispatch({
+                type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+                payload: {
+                  title: Constants.ALERT.TITLE.ERROR,
+                  message: Constants.VALIDATION_MSG.NO_DATA_FOUND,
+                },
+              });
             }
           }
         })

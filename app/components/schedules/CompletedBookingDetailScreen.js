@@ -47,6 +47,7 @@ import { nativationPop, navigate, navigationRef } from '../../rootNavigation';
 import RiyalPrice from '../common/RiyalPrice';
 import { IconFill, IconOutline } from '@ant-design/icons-react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomAlert from '../common/CustomAlert';
 
 const deviceHeight = Utility.isiPhoneX()
   ? Constants.SCREEN_SIZE.PLUS_SIZE
@@ -258,10 +259,13 @@ class CompletedBookingDetailScreen extends Component {
       // Actions.pdfReport({ pdf: this.props.pdfReport.Prescription_File1 });
       navigate('pdfReport', { pdf: this.props.pdfReport.Prescription_File1 });
     } else {
-      Utility.showAlert(
-        Constants.ALERT.TITLE.ERROR,
-        Constants.VALIDATION_MSG.NO_DATA_FOUND,
-      );
+      this.props.dispatch({
+        type: Constants.ACTIONS.SHOW_CUSTOM_ALERT,
+        payload: {
+          title: Constants.ALERT.TITLE.ERROR,
+          message: Constants.VALIDATION_MSG.NO_DATA_FOUND,
+        },
+      });
     }
   };
 
@@ -282,6 +286,17 @@ class CompletedBookingDetailScreen extends Component {
           {this._renderRatingsView()}
           {this._renderPostReviewsView()}
           {this._renderNavigationView()}
+          <CustomAlert
+            visible={!!this.props.customAlert}
+            title={this.props.customAlert?.title}
+            message={this.props.customAlert?.message}
+            onClose={() => {
+                this.props.dispatch({
+                  type: Constants.ACTIONS.HIDE_CUSTOM_ALERT
+                });
+              
+            }}
+        />
         </KeyboardAwareScrollView>
       </View>
     );
@@ -708,7 +723,8 @@ const mapStateToProps = (state, props) => {
     sampleCollectionSummaryState: { isSampleCollectionSummaryLoading },
     cancelBookingDetailState: { isCompletedDetailLoading, bookingDetail },
     pendingDetailState: { isPdfLoading, pdfReport },
-    deviceState: { isNetworkConnectivityAvailable },
+    deviceState: { isNetworkConnectivityAvailable, customAlert },
+
   } = state;
   return {
     currency,
@@ -719,22 +735,26 @@ const mapStateToProps = (state, props) => {
     isNetworkConnectivityAvailable,
     isCompletedDetailLoading,
     bookingDetail,
+    customAlert
     // bookingDetail
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getSubmitRating,
-      getSubmitReview,
-      getSubmitOrderData,
-      // completed Detail screen Api
-      getPdfReport,
-      getCompletedDetail,
-    },
+  return {
     dispatch,
-  );
+    ...bindActionCreators(
+      {
+        getSubmitRating,
+        getSubmitReview,
+        getSubmitOrderData,
+        // completed Detail screen Api
+        getPdfReport,
+        getCompletedDetail,
+      },
+      dispatch,
+    )
+  };
 };
 
 export default connect(

@@ -170,6 +170,7 @@ class SampleCollectionSummary extends Component {
 
   _renderBodyView = () => {
     console.log('render body view:: ', this.props.route.params.bookingDetail);
+    let postData = this.props.route.params.updateCollectionData;
     return (
       <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={200} style={styles.mainContainer}>
         {this._renderNameView()}

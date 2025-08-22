@@ -736,12 +736,14 @@ const styles = StyleSheet.create({
   specimanText: {
     color: 'black',
     fontWeight: '600',
-    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
+    paddingLeft: 10
   },
   specimanTextPending: {
     color: 'black',
     fontWeight: '600',
-    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
+    fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
+    paddingLeft: 10
     // paddingLeft: Platform.OS === 'ios' ? 20 : 15,
   },
 });

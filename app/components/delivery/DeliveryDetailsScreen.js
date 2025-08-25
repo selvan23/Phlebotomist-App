@@ -88,7 +88,9 @@ class DeliveryDetailsScreen extends Component {
           title={this.props.customAlert?.title}
           message={this.props.customAlert?.message}
           onClose={() => {
-            this.props.navigation.goBack()
+            if(this.props.customAlert.title === 'Success' && this.props.customAlert.message.includes("Sample No")) {
+              this.props.navigation.goBack()
+            }
             this.props.dispatch({ type: Constants.ACTIONS.HIDE_CUSTOM_ALERT })
           }}
         />

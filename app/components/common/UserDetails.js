@@ -165,8 +165,9 @@ export default class UserDetails extends Component {
                 borderRadius: 5,
                 borderColor: Constants.COLOR.GREEN_COLOR,
                 backgroundColor: "#F0FFF0",
-                width: "50%",
+                width: "75%",
                 marginTop: 5,
+                alignItems: 'center'
               }}
             >
               <Text
@@ -360,6 +361,6 @@ const styles = StyleSheet.create({
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
-    width: deviceWidth * 0.7,
+    maxWidth: deviceWidth * 0.65,
   },
 });

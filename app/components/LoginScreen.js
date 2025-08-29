@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   loginInnerView: {
     paddingLeft: 25,
     paddingRight: 25,
-    marginTop: 40,
+    marginTop: 20,
   },
   title: {
     fontSize: Constants.FONT_SIZE.XL,

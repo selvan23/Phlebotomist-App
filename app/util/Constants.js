@@ -318,7 +318,7 @@ module.exports = {
       "The Password should be 8 or more characters Alpha Numeric value",
     NO_DOB: "Date of Birth is required",
     NO_MOBILE_NO: "Valid Mobile Number is required",
-    USER_NAME_ERROR: "Enter a valid user name",
+    USER_NAME_ERROR: "Enter a valid Username",
     INVALID_EMAIL: "Invalid Email Address",
     CHECK_USERNAME_FAILED: "Unable to check username try again later",
     SIGNUP_FAILED:

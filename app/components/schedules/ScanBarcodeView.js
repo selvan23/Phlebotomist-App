@@ -82,7 +82,7 @@ export default class ScanBarcodeView extends Component {
                   color:
                     data.isVerifiedBarCode || data.IsAlready_Collected
                       ? Constants.COLOR.GREEN_COLOR
-                      : Constants.COLOR.THEME_COLOR,
+                      : Constants.COLOR.CASH_ON_HAND,
                 },
               ]}
             >

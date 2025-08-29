@@ -34,7 +34,7 @@ class NavigationBar extends Component {
     userName: PropTypes.string,
     userImageURL: PropTypes.string,
     isNotificationListLoading: PropTypes.bool,
-    count: PropTypes.string,
+    count: PropTypes.any,
     getNotificationCount: PropTypes.func,
     showOnBackNavigation: PropTypes.bool
   };
@@ -42,6 +42,29 @@ class NavigationBar extends Component {
   constructor(props) {
     super(props);
   }
+
+  _renderNotificationCount = () => {
+    if (
+      this.props.count !== undefined &&
+      this.props.count !== null &&
+      this.props.count !== 0 &&
+      this.props.count !== ""
+    ) {
+      return (
+        <View
+          style={styles.badge}
+        >
+          <Text
+            style={styles.badgeText}
+          >
+            {this.props.count < 10 ? this.props.count : this.props.count}
+          </Text>
+        </View>
+      );
+    } else {
+      return <View />;
+    }
+  };
 
   render() {
     const {showOnBackNavigation} = this.props
@@ -90,12 +113,10 @@ class NavigationBar extends Component {
                     this._navigateNotificationScreen();
                   }}
                 >
+                  <View>
                   <HeaderIcon icon={"bell"} width={40} height={40} />
-                  {this.props.count > 0 && (
-                    <View style={styles.badge}>
-                      <Text style={styles.badgeText}>{this.props.count}</Text>
-                    </View>
-                  )}
+                    {this._renderNotificationCount()}
+                  </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {

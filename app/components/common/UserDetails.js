@@ -43,12 +43,8 @@ export default class UserDetails extends Component {
             <Text style={styles.bookingIdText}>
               BOOKING ID: {this.props.arrUserDetails.Booking_No}
             </Text>
-            {this.props.isShowCashStatus ? <View style={{paddingVertical: 2, paddingHorizontal: 5, borderWidth: 1, borderRadius: 5, borderColor: Constants.COLOR.GREEN_COLOR, backgroundColor: '#F0FFF0'}}>
-              <Text style={{color: Constants.COLOR.GREEN_COLOR, fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD, fontSize: Constants.FONT_SIZE.S}}>{this.props.arrUserDetails.Payment_Full_Desc}</Text>
-            </View> : null}
+            {this._renderViewPrescription()}
           </View>
-
-          {this._renderViewPrescription()}
         </View>
 
         <View style={styles.bookingDateLocationSubView}>
@@ -63,8 +59,12 @@ export default class UserDetails extends Component {
               onPress={() => {}}
               style={styles.bookingDateRightInnerView}
             >
-              <IconOutline name="environment" size={deviceHeight / 35} />
-              <Text style={styles.bookingDateReportLink}>
+              <IconOutline
+                name="environment"
+                color="black"
+                size={deviceHeight / 35}
+              />
+              <Text numberOfLines={1} style={styles.bookingDateReportLink}>
                 {this.props.arrUserDetails.Branch_Name}
               </Text>
             </TouchableOpacity>
@@ -94,7 +94,6 @@ export default class UserDetails extends Component {
           }}
           style={styles.bookingIdRightInnerView}>
           <IconOutline name='file-pdf' size={30} color='red' style={styles.bookingIdReportImage} />
-          <Text style={styles.bookingIdReportLink}>View Prescription</Text>
         </TouchableOpacity>
       </View>
     );
@@ -125,9 +124,11 @@ export default class UserDetails extends Component {
           <View style={styles.nameAddressRightAgePhoneView}>
             <IconOutline name={`${this.props.arrUserDetails.Gender_Code === 'M' ? 'man' : 'woman'}`} size={deviceHeight/45} color={Constants.COLOR.FONT_COLOR_DEFAULT} />
             <Text style={styles.nameAddressRightAgeText}>
-              {this.props.arrUserDetails.Gender_Code}
+              {this.props.arrUserDetails.Gender_Desc}
             </Text>
-            <IconOutline color={Constants.COLOR.FONT_COLOR_DEFAULT} size={deviceHeight / 40} name='mobile' />
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
+          <IconOutline color={Constants.COLOR.FONT_COLOR_DEFAULT} size={deviceHeight / 40} name='phone' />
             <Text style={styles.nameAddressRightMobileText}>
               {this.props.arrUserDetails.Mobile_No}
             </Text>
@@ -155,6 +156,31 @@ export default class UserDetails extends Component {
               </View>
             </>
           }
+          {this.props.isShowCashStatus ? (
+            <View
+              style={{
+                paddingVertical: 2,
+                paddingHorizontal: 5,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Constants.COLOR.GREEN_COLOR,
+                backgroundColor: "#F0FFF0",
+                width: "50%",
+                marginTop: 5,
+              }}
+            >
+              <Text
+                style={{
+                  color: Constants.COLOR.GREEN_COLOR,
+                  fontFamily:
+                    Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD,
+                  fontSize: Constants.FONT_SIZE.S,
+                }}
+              >
+                {this.props.arrUserDetails.Payment_Full_Desc}
+              </Text>
+            </View>
+          ) : null}
         </View>
       </View>
     );
@@ -218,18 +244,24 @@ const styles = StyleSheet.create({
   bookingIdReportLink: {
     fontSize: Constants.FONT_SIZE.S,
     marginStart: 5,
-    color: Constants.COLOR.FONT_LINK_COLOR,
+    color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
-  bookingDateLocationSubView: {flexDirection: 'row', marginTop: 10},
+  bookingDateLocationSubView: {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'space-between',
+  },
   bookingDateLeftView: {
     alignSelf: 'center',
+    width: '65%',
   },
   bookingDateRightView: {
     flexDirection: 'column',
     alignItems: 'flex-end',
     alignSelf: 'center',
-    marginLeft: 10
+    width: '35%',
+    paddingLeft: 10
   },
   bookingDateRightInnerView: {flexDirection: 'row', alignItems: 'center'},
   bookingDateText: {
@@ -237,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: Constants.FONT_SIZE.SM,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
   },
   bookingDateReportImage: {
     width: deviceHeight / 30,
@@ -288,7 +320,11 @@ const styles = StyleSheet.create({
     fontSize: Constants.FONT_SIZE.M,
     fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
   },
-  nameAddressRightAgePhoneView: {flexDirection: 'row', marginTop: 10},
+  nameAddressRightAgePhoneView: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignItems: 'center'
+  },
   nameAddressRightAgeImage: {
     width: deviceHeight / 40,
     height: deviceHeight / 40,
@@ -310,7 +346,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+    marginTop: 5
   },
   nameAddressRightAddressView: {flexDirection: 'row', marginTop: 10},
   nameAddressRightAddressImage: {

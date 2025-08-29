@@ -304,7 +304,8 @@ class SampleCollectionSummary extends Component {
                   switchOn={this.state.cashSwitchValue}
                   onPress={this.cashSwitchOnPress}
                   duration={500}
-                  buttonStyle={{ backgroundColor: Constants.COLOR.GREEN_COLOR }}
+                  buttonStyle={{ backgroundColor: Constants.COLOR.PRIMARY_COLOR }}
+                  backgroundColorOn='#C4C4C4'
                 />
               </View>
             </View>
@@ -317,7 +318,8 @@ class SampleCollectionSummary extends Component {
                   switchOn={this.state.phonepePaymentValue}
                   onPress={this.phonepeSwitchOnPress}
                   duration={500}
-                  buttonStyle={{ backgroundColor: Constants.COLOR.GREEN_COLOR }}
+                  buttonStyle={{ backgroundColor: Constants.COLOR.PRIMARY_COLOR }}
+                  backgroundColorOn='#C4C4C4'
                 />
               </View>
             </View>

@@ -261,7 +261,7 @@ class DeliveryDetailsScreen extends Component {
               paddingRight: 20,
               fontFamily:Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_SEMI_BOLD
             }}>
-            Bar Code
+            Barcode
           </Text>
         </View>
         <View>
@@ -345,9 +345,9 @@ class DeliveryDetailsScreen extends Component {
               this._onPressUploadDownload(index);
             }}>
             {item.isShowTestList === false ? (
-              <IconOutline name={'down-circle'} size={22} />
+              <IconOutline name={'down-circle'} size={22} color={Constants.COLOR.THEME_COLOR} />
             ) : (
-                <IconOutline name={'up-circle'} size={22} />
+                <IconOutline name={'up-circle'} size={22} color={Constants.COLOR.THEME_COLOR} />
             )}
           </TouchableOpacity>
         </View>

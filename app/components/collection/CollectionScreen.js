@@ -106,6 +106,23 @@ class CollectionScreen extends Component {
       Collect_Date: moment().utcOffset("+05:30").format("YYYY/MM/DD"),
     };
     this.props.getCashCollectionList(postData);
+    this._unsubscribe = this.props.navigation.addListener("focus", () => {
+      this.onScreenFocus()
+    })
+  }
+
+  componentWillUnmount() {
+    if (this._unsubscribe) {
+      this._unsubscribe()
+    }
+  }
+
+  onScreenFocus = () => {
+    let postData = {
+      Collector_Code: this.props.collectorCode,
+      Collect_Date: moment().utcOffset("+05:30").format("YYYY/MM/DD"),
+    }
+    this.props.getCashCollectionList(postData)
   }
 
   _setDate = (date) => {

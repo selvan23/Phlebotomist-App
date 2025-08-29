@@ -140,7 +140,7 @@ class LoginScreen extends Component {
                 onPress={() => {
                 this._validateInputs();
               }}
-                title={'LogIn'}
+                title={'Login'}
               />
           </View>
         </View>

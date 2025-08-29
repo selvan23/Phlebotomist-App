@@ -128,7 +128,7 @@ class cancelBookingDetail extends Component {
         <UserDetails
           arrUserDetails={this.props.cancelBookingDetail}
           isShowPDF={false}
-          isShowCashStatus={true}
+          isShowCashStatus={false}
         />
       </View>
     );

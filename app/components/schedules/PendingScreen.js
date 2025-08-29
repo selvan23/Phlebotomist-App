@@ -17,6 +17,7 @@ import {
   StyleSheet,
   FlatList,
   Alert,
+  BackHandler,
 } from "react-native";
 import { useIsFocused } from '@react-navigation/native';
 import LoadingScreen from "../common/LoadingScreen";
@@ -56,7 +57,7 @@ class PendingScreen extends Component {
           : moment().utcOffset("+05:30").format("YYYY/MM/DD"),
       collectorCode: this.props.collectorCode,
       filter_Type: "P",
-      cancelBookingStatus: false
+      cancelBookingStatus: false,
     };
     this.focusRetrieved = false;
     console.log("pending constructor: ", this.props.pendingBookingList);
@@ -93,21 +94,52 @@ class PendingScreen extends Component {
   //   }
   // }
 
+  componentDidMount() {
+    this.focusListener = this.props.navigation.addListener("focus", () => {
+      this.backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        this.handleBackPress
+      );
+    });
+
+    // Remove listener on blur
+    this.blurListener = this.props.navigation.addListener("blur", () => {      
+      if (this.backHandler) this.backHandler.remove();
+    });
+  }
+
+  handleBackPress = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "No",
+        onPress: () => null,
+        style: "No",
+      },
+      { text: "Yes", onPress: () => BackHandler.exitApp() },
+    ]);
+    return true; // prevent default back action
+  };
+
   componentWillUnmount() {
+    if (this.focusListener) this.focusListener();
+    if (this.blurListener) this.blurListener();
+    if (this.backHandler) this.backHandler.remove();
     if (store.getState().deviceState.isNetworkConnectivityAvailable) {
       // this.willFocusSubscription();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('pending screen component updating ', prevProps);
     // if (this.props.isFocused && !this.focusRetrieved) {
     //   this._getAsyncAndAPICall();
     //   this.focusRetrieved = true;
     // }
-    if(prevState.cancelBookingStatus !== this.state.cancelBookingStatus && this.state.cancelBookingStatus){
+    if (
+      prevState.cancelBookingStatus !== this.state.cancelBookingStatus &&
+      this.state.cancelBookingStatus
+    ) {
       this.setState({
-        cancelBookingStatus: false
+        cancelBookingStatus: false,
       });
       let postData = {
         Collector_Code: this.state.collectorCode,
@@ -124,10 +156,9 @@ class PendingScreen extends Component {
         Schedule_Date: this.props.pendingDate,
         Filter_Type: this.state.filter_Type,
       };
-      console.log('pending component update pending payload', postData);
       setTimeout(() => {
-        this.props.getPendingList(postData, (isSuccess) => {});  
-      }, 200)
+        this.props.getPendingList(postData, (isSuccess) => {});
+      }, 200);
     }
   }
 
@@ -162,24 +193,31 @@ class PendingScreen extends Component {
         />
       );
     } else {
-      console.log("filter type screen", this.state.filter_Type, this.props);
-      console.log("booking list screen: ", this.props.pendingBookingList, this.props.pendingBookingList);
       if (
         this.props.pendingBookingList !== undefined &&
-        this.props.pendingBookingList.Booking_Detail !==
-          undefined &&
-        this.props.pendingBookingList.Booking_Detail !==
-          null &&
-        this.props.pendingBookingList.Booking_Detail.length >
-          0
+        this.props.pendingBookingList.Booking_Detail !== undefined &&
+        this.props.pendingBookingList.Booking_Detail !== null &&
+        this.props.pendingBookingList.Booking_Detail.length > 0
       ) {
         return this._renderBookingView();
       } else {
         return (
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: Constants.COLOR.WHITE_COLOR }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: Constants.COLOR.WHITE_COLOR,
+            }}
           >
-            <Text style={{ color: "black", fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR }}>No Data Found!</Text>
+            <Text
+              style={{
+                color: "black",
+                fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+              }}
+            >
+              No Data Found!
+            </Text>
           </View>
         );
       }
@@ -187,15 +225,12 @@ class PendingScreen extends Component {
   };
 
   _renderBookingView = () => {
-    console.log("render booking view: : ", this.props.pendingBookingList.Booking_Detail);
     return (
       <SafeAreaView style={styles.mainContainer}>
         <View>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={
-              this.props.pendingBookingList.Booking_Detail
-            }
+            data={this.props.pendingBookingList.Booking_Detail}
             renderItem={this._renderBookingRow}
             // keyExtractor={this._keyExtractor}
             onRefresh={() => this.onRefresh()}
@@ -238,11 +273,11 @@ class PendingScreen extends Component {
                 Booking_Date: item.Booking_Date,
                 Booking_Type: item.Booking_Type,
               },
-              cancelBookingStatusSuccess: (status)=>{
+              cancelBookingStatusSuccess: (status) => {
                 this.setState({
-                  cancelBookingStatus: status
+                  cancelBookingStatus: status,
                 });
-              }
+              },
             });
           }
         }}
@@ -275,7 +310,6 @@ class PendingScreen extends Component {
           backgroundColor: Constants.COLOR.WHITE_COLOR,
         }}
       >
-        { console.log("pending props changed", this.props.pendingBookingList) }
         <CalenderList setDate={this._setDate} isfromPending={"PENDING"} />
         {this._renderScreen()}
       </View>

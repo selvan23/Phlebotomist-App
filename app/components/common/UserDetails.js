@@ -359,6 +359,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     color: Constants.COLOR.FONT_COLOR_DEFAULT,
     fontSize: Constants.FONT_SIZE.SM,
-    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR
+    fontFamily: Constants.FONT_FAMILY.FONT_FAMILY_POPPINS_REGULAR,
+    width: deviceWidth * 0.7,
   },
 });

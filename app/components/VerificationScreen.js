@@ -144,7 +144,9 @@ class VerificationScreen extends Component {
   _renderVerificationMainViewAndroid = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView enableOnAndroid={true} extraScrollHeight={150}>
+        <KeyboardAwareScrollView  
+        contentContainerStyle={{ flexGrow: 1 }}
+         enableOnAndroid={true} extraScrollHeight={150}>
           <MaskBackground />
           <View
             style={[

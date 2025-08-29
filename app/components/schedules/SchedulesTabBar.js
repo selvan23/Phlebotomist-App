@@ -101,17 +101,7 @@ class SchedulesTabBar extends Component {
 
   componentDidMount() {
     this.initializeComponent();
-            this.focusListener = this.props.navigation.addListener('focus', () => {
-      this.backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        this.handleBackPress
-      );
-    });
 
-    // Remove listener on blur
-    this.blurListener = this.props.navigation.addListener('blur', () => {
-      if (this.backHandler) this.backHandler.remove();
-    });
   }
 
   componentDidUpdate(prevProps, prevState) {

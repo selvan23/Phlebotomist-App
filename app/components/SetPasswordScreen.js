@@ -108,7 +108,7 @@ class SetPasswordScreen extends Component {
   _renderSetPasswordMainView = () => {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <KeyboardAwareScrollView enableOnAndroid={true}>
+        <KeyboardAwareScrollView enableOnAndroid={true} contentContainerStyle={{ flexGrow: 1 }}>
           <MaskBackground />
           <View style={styles.bodyContainerTop}>
             <View style={styles.titleView}>

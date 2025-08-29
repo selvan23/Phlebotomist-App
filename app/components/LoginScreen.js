@@ -77,8 +77,10 @@ class LoginScreen extends Component {
     return (
       <SafeAreaView style={styles.mainContainer}>
         <KeyboardAwareScrollView 
-        enableOnAndroid={true} 
-        extraScrollHeight={150}>
+        enableOnAndroid={true}     
+        contentContainerStyle={{ flexGrow: 1 }}
+        extraScrollHeight={150}      
+        >
           <MaskBackground 
           />
           <View style={styles.bodyContainerBottom}></View>

@@ -11,9 +11,10 @@ export const serverName = 'Dev Server';
 
 // Stage Server Config
 // export const S3URL = 'http://110.44.126.145/SamyakApp/App_Config/Live_Phlebotomist/config.json';
-export const S3URL = 'https://product.sukraa.in/MobileApp/App_Config/Stage_Phlebotomist/config.json';
+// export const S3URL = 'https://product.sukraa.in/MobileApp/App_Config/Stage_Phlebotomist/config.json';
  // 'http://110.44.126.145:9090/SamyakApp_Stage/App_Config/Stage_Phlebotomist/config.json';
 //'http://112.133.223.241:7791/SukraaApp/App_Config/Stage_Phlebotomist/config.json';
+export const S3URL = 'https://product.sukraa.in/SlimsMobile/App_Config/Collector/config.json';
  
 // Live Server Config
 // export const S3URL =

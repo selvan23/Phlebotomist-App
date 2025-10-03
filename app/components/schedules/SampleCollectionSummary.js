@@ -161,7 +161,7 @@ class SampleCollectionSummary extends Component {
               color="red"
               style={styles.bookingIdReportImage}
             />
-            <Text style={styles.bookingIdReportLink}>View Prescription</Text>
+            {/* <Text style={styles.bookingIdReportLink}>View Prescription</Text> */}
           </TouchableOpacity>
         </View>
       </View>
@@ -305,7 +305,7 @@ class SampleCollectionSummary extends Component {
                   onPress={this.cashSwitchOnPress}
                   duration={500}
                   buttonStyle={{ backgroundColor: Constants.COLOR.PRIMARY_COLOR }}
-                  backgroundColorOn='#C4C4C4'
+                  backgroundColorOn='#c6d0f8ff'
                 />
               </View>
             </View>
@@ -319,7 +319,7 @@ class SampleCollectionSummary extends Component {
                   onPress={this.phonepeSwitchOnPress}
                   duration={500}
                   buttonStyle={{ backgroundColor: Constants.COLOR.PRIMARY_COLOR }}
-                  backgroundColorOn='#C4C4C4'
+                  backgroundColorOn='#c6d0f8ff'
                 />
               </View>
             </View>
